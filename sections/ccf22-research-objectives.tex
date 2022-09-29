@@ -93,7 +93,51 @@ In {\tool}, we propose the following thrusts of research
 (Table~\ref{tab:milestones}):
 
 \vspace{3pt}
-\noindent \textbf{Thurst 1. Neural ...} ({\em Section~\ref{}}) ...
+\noindent \textbf{Thurst 1. Neural Structural Analysis Infrastructure
+  \code{NeuralStruct}.} ({\em Section~\ref{}}) Source code has
+well-defined structures and semantics. Thus, the basic infrastructure
+in {\tool} is the neural structural analysis (\code{NeuralStruct})
+component.  This component has two main tasks. First, it learns from
+the syntactic structures of the complete code in the training dataset
+collected from large-scale code repositories, to derive the abstract
+syntax tree (AST) that best represents the syntactic structure of the
+given partial code, i.e., with the highest likelihood/probability.
+The traditional lexical analyzer still works for partial code due to
+the independence nature of lexical tokens. The second task of this
+component is to tag the code tokens with the types of the syntactic
+units including the statement types (\code{if}, \code{for}, etc.),
+variables, fields, methods, classes, etc. Both of the tasks can be
+performed with our learning-based approaches in a dual-learning
+manner.
+  
+\vspace{3pt}
+\noindent \textbf{Thurst 2. Neural Semantic Analysis Infrastructure.}
+({\em Section~\ref{}}) The basis components for several program
+analysis techniques include the following:
+
+1) the identification of the APIs of the external libraries in the
+external references in the partial code: this is needed because the
+partial code contains the undeclared reference and/or
+declaration/reference ambiguity without explicit declaration of the
+APIs in the external libraries.
+
+2) the inference of the type information for the entities in the
+partial code: due to the ambiguity in the declaration, the types of
+the variables and statements are not always obviously defined. Thus,
+the type inference is a basic service within {\tool}.
+
+3) the inference of the program dependencies among the statements in
+the partial code: several program analysis techniques are based on the
+program dependencies, which are not always obtainable due to the
+incompleteness of the given code fragment.
+
+\vspace{3pt}
+\noindent \textbf{Thurst 3. Neural Execution Analysis Infrastructure.}
+({\em Section~\ref{}}) ...
+
+\vspace{3pt}
+\noindent \textbf{Thurst 4. Neural Partial Program Analysis Applications.}
+({\em Section~\ref{}}) ...
 
 
 \input{sections/ccf22-plan-table}

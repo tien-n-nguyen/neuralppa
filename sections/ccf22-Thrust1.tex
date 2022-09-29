@@ -1,0 +1,352 @@
+
+
+%\section{Thrust 1. Ongoing Evaluation of Existing Code Representation Learnings in Bug Fixing Processes}
+
+%\section{\Tone}
+%\label{thrust1:sec}
+
+%\subsection{Challenge 1. Ongoing Empirical Study on which statistical NLP models and their characteristics that fit with source code and API code synthesis}
+
+%\subsection{Challenge 1. Mine a large-scale corpus of texts and API usage code}
+\vspace{-5pt}
+\subsection{Empirical Evaluation on Code Representation Learning for Bug Detect-Fix Approaches}
+
+\label{prelim-study:sec}
+
+Our goal was to show that the bug detect-fix approaches using the
+general-purpose CRLs do not perform well and there is no silver
+bullet CRL for all the approaches. We collected a large-scale dataset
+of bugs and fixes in Java~\cite{yioopsla19} with $\approx$5 million
+Java methods and their bug fixes by crawling on-line GitHub
+repositories.
+
+
+%The first task is to build large scale datasets with bug-fixes in
+%different program languages: Java, Python, JavaScripts.  We built a
+%Java corpus~\cite{yioopsla19} with $\approx$5 million Java methods and
+%their bug fixes by crawling on-line resources, e.g., Github,
+%collecting source code and commits from the Github repository, and bug
+%reports from the issue tracking systems. Specifically, (1) We
+%downloaded all bug reports marked as resolved or closed and bugs from
+%issue tracking systems. (2) We used the same approach as the ones used
+%in prior studies, e.g.,~\cite{mockus-2000, Ray-2014, Ray-2016}, to
+%process each commit message and mark it as a bug-fix if the message
+%contains a bug id and at least one of the error related keywords:
+%{error, bug, fix, issue, mistake, incorrect, fault, defect, flaw and
+%  type}. (3) We downloaded source code as a clean version and use
+%the bug-fix commits to recover the buggy version from the source code,
+%as a code commit records all of the changes.
+%Following the above steps, we will continue to collect more bug fixes
+%from Java, Python and JavaScripts projects in on-line resources.
+
+
+%
+\iffalse
+
+\begin{table}[h]
+	\caption{Statistics on Collected Java Dataset}
+	%	\vspace{-15pt}
+	{\footnotesize
+	\begin{center}
+		\renewcommand{\arraystretch}{1}
+		\begin{tabular}{p{3cm}<{\centering}p{3cm}<{\centering}p{2cm}<{\centering}p{3cm}<{\centering}p{4cm}<{\centering}}
+			%\hline
+			\hline
+			\textbf{Project Name} & \textbf{ \# of Versions} & \textbf{\# of Files} & \textbf{\# of Methods} & \textbf{\# of Buggy Methods}\\ \toprule
+			\hline
+			pig & 9 & 8k & 95k & 21k\\\hline
+			avro & 7 & 2k & 30k & 1k\\\hline
+			lucene-solr & 14 & 93k & 1.032M & 518k\\\hline
+			hbase & 9 & 14k & 318k & 258k\\\hline
+			flink & 14 & 49k & 419k & 173k\\\hline
+			hive & 18 & 53k & 981K & 411k\\\hline
+			cloudstack & 11 & 55k & 766k & 307k\\\hline
+			camel & 10 & 172k & 1.332M & 135k\\
+			\hline
+			Total& 92 & 402K & 4.973M & 1.824M\\ \bottomrule
+			\hline
+		\end{tabular}
+		\label{javadata}
+	\end{center}
+}
+		\vspace{-25pt}
+\end{table}
+
+\fi
+
+
+%\subsection{T1-Task 2. Ongoing Evaluation of Code Representation Learning (CRL) for Bug Detection}
+
+%This task is to provide comprehensive and systematic empirical knowledge
+%on pros and cons of existing CRL approaches in bug detection.
+
+We first compared different state-of-the-art CRL approaches learning
+code vectors from various code representations in the context of bug
+detection: \textbf{DeepSim} (DS)~\cite{Zhao-2018} used feature values
+to encode control and data flows into a semantic matrix and a
+feed-forward neural network for learning for code functional
+similarity.  \textbf{Code2Vec} (C2V)~\cite{Alon-2018} built
+vocabulary-based embeddings for frequent paths on the ASTs and applied
+a fully connected layer (in \cnn) with an attention for general
+CRL. \textbf{Code Vectors} (CV)~\cite{Henkel-2018} encoded
+abstractions of traces from symbolic execution as words and sentences
+using word2vec~\cite{word2vec}.  \textbf{Deep Learning Similarity}
+(DLS)~\cite{Tufano-2018} used Recursive Autoencoders on Identifiers
+and ASTs, a graph Embedding (HOPE~ \cite{goyal2018graph}) on CFGs and
+adopt ensemble learning techniques: Algebraic combiners and Random
+Forest, to detect code clones. \textbf{Tree LSTM} (TL)~\cite{Tai-2015}
+trained a tree-structured LSTM model with the AST of the source code
+of a method.  \textbf{Graph-based Generative Modeling
+  (GGM)}~\cite{brockschmidt2018generative} generated code by
+interleaving grammar-driven expansion steps with graph augmentation
+and neural message passing steps.
+
+
+\begin{wraptable}{r}{6.8cm}
+		\vspace{-20pt}
+	%\caption{RQ2. Comparison with the Baselines in the Cross-Project Setting.}
+	{\footnotesize	
+	\caption{Comparison of CRL on Bug Detection.}
+		\vspace{-10pt}
+	\begin{center}
+	
+		%	\vspace{-10pt}
+		\renewcommand{\arraystretch}{1}
+		\begin{tabular}{p{1.2cm}<{\centering}|p{0.8cm}<{\centering}|p{0.8cm}<{\centering}|p{0.8cm}<{\centering}|p{0.8cm}<{\centering}|p{0.8cm}<{\centering}|p{1cm}<{\centering}}
+			%\hline
+			\hline
+			\textbf{Category} & \textbf{DS} & \textbf{DLS} & \textbf{C2V} & \textbf{TL} & \textbf{CV} & \textbf{GGM}\\
+			\hline
+			Recall & 0.67 & 0.71 & 0.69 & 0.82 & 0.70&0.73\\
+			Precision & 0.19 & 0.24 & 0.17 & 0.09 & 0.15&0.30\\
+			F-score & 0.30 & 0.36 & 0.27 & 0.16 & 0.25&0.43\\
+			FP Rate & 0.35 & 0.36 & 0.43 & 0.69 & 0.45 &0.28\\
+			\hline
+		\end{tabular}
+		\label{RQ2_cross}
+
+	\end{center}
+}
+	\vspace{-20pt}
+%\end{table}
+\end{wraptable}
+
+%As those CRL approaches are not aimed for bug detection, to be fair,
+
+Those approaches focused on the detection models, however, used
+off-the-shelf CRL to learn vectors to represent the code.  For each
+approach, we used a customized CRL~\cite{yioopsla19} to learn vectors
+to represent code snippets (incl. buggy and non-buggy).  We applied
+the same basic \cnn on the learned code vectors to build a model to
+classify a given code snippet into buggy or non-buggy.
+Table~\ref{RQ2_cross} shows that with proper CRL, a model achieved
+superior performance (Details are in our OOSLA'19
+paper~\cite{yioopsla19}). The generic, off-the-shelf CRLs (word2vec,
+code2vec) work on other SE tasks, but they are not ideal for bug
+detection. For example, Code2Vec obtained a high false positive rate
+of 43\% and low precision of 17\%.  In conclusion, {\em no code
+  representations and learning models are silver bullet for every
+  task, and customized CRLs are needed to improve accuracy}.
+
+
+%\subsection{T1-Task 3. Plan-to-Do: Evaluation of Code Representation Learning on FL, RT-CI, and APR}
+
+%This task is to provide comprehensive empirical knowledge of existing
+%CRL approaches on Fault Localization (FL), Regression Testing in CI
+%(RT-CI), and Automated Program Repair (APR). In FL, one very recent
+%deep learning based FL work, DeepFL~\cite{DeepFL}, was proposed to
+%improve method-level FL.  DeepFL collects over 200 features from
+%different aspects of information of a method, such as code metrics,
+%spectrum and mutation based testing, into one vector containing
+%feature values, then apply a Multilayer Perceptrons Model (\MLP) on
+%the method vectors to locate faulty methods.  However, DeepFL does not
+%conduct representation learning on code or test coverage information.
+%In RT-CI, the most state-of-the-art
+%approach~\cite{bertolino2020learning} utilizes learning-to-rank
+%algorithms consuming code and history test metrics. However, it still
+%lacks the extraction of deep features on code under test, test cases,
+%and their relations.  In APR, the state-of-the-art approaches are
+%pattern-based approaches that mine and learn fixing patterns from
+%prior bug fixes. There are several deep learning (DL) based APR, e.g.,
+%\Ratchet, \CODIT, \Tufano and \CoCo. We compared existing approaches
+%on a benchmark dataset, Defects4J~\cite{defects4j}. Our preliminary
+%results show that (1) The best DL APR with fault localization can only
+%correctly fix 33 out of 395 bugs. (2) Recent pattern-based approaches
+%outperform any DL APR approaches significantly, as all existing DL APR
+%approaches model code as a sequence of tokens or mine rules from ASTs,
+%and directly utilize the neural translation models to generate
+%fixes. Obviously, modeling code as a sequence of tokens is not ideal
+%solution in APR. Additionally, the existing DL-based APR tools can
+%mainly fix one-statement and one-hunk bugs, and rarely fix
+%multi-statement and multi-hunk bugs.
+
+%\begin{wraptable}{r}{0.75\textwidth}
+%	\vspace{-35pt}
+%	\begin{center}
+%		\footnotesize{
+%			\caption{Comparison with Pattern and DL APR Baselines on Defects4J.}\label{thust1APR}
+%			\begin{tabular}{p{1.1cm}<{\centering}|p{1.25cm}<{\centering}|p{1.3cm}<{\centering}|
+%					p{1.2cm}<{\centering}|p{1cm}<{\centering}|p{0.7cm}<{\centering}|p{1.2cm}<{\centering}|p{1.2cm}<{\centering}|p{1.2cm}<{\centering}|p{1.3cm}<{\centering}}
+%				\hline
+%				\textbf{}&\textbf{ELIXIR}&\textbf{FixMiner}&\textbf{AVATAR}&\textbf{SimFix}&\textbf{TBar}&\textbf{Ratchet}&\textbf{CODIT}&\textbf{Tufano}&\textbf{CoCoNut}\\
+%				\hline
+%				
+%				\# Fix&  26  & 25 & 27  & 34 & 43 &2 & 9 & 16 &33\\
+%				\hline
+%			\end{tabular}
+%		}
+%	\end{center}
+%	\vspace{-22pt}
+%\end{wraptable}
+
+
+%There is a clear need for comprehensive and systemic knowledge on CRL in FL, RT-CI and APR. We replicate the analysis procedure of Task 2 in FL, RT-CI and APR. Specifically, we plan to apply existing code representations and their learning models in CRL from other software engineering tasks to model FL, RT-CI, and APR. Furthermore, we conduct more ablation studies to study the effects of various code representations and their models in FL, RT-CI, and APR.
+
+\subsection{Vector Locality and Vector Offsetting for API Elements}
+\label{embedding-study:sec}
+
+\begin{wrapfigure}{l}{0.45 \textwidth}
+%\vspace{2mm}
+\scriptsize
+\begin{lstlisting}[basicstyle=\scriptsize\sffamily, stepnumber=1, numbers=left, numbersep=-8pt, framexleftmargin=-2mm,
+     framexrightmargin=-2mm, emph ={HashMap,FileWriter,String,Integer,for,new,put,keySet,append,get,close}]
+   HashMap dict = new HashMap();
+   dict.put("A", 1);
+   FileWriter writer = new FileWriter("Vocabulary.txt");
+   for (String vocab: dict.keySet())
+      writer.append(vocab + " " + dict.get(vocab)+"\r\n");
+   writer.close();
+\end{lstlisting}
+\vspace{-0.12in}
+\caption{An API Usage in Java JDK}
+\label{usageexample}
+\vspace{-10pt}
+\end{wrapfigure}
+
+To gain the knowledge on the vector representations built from the
+standard Word2Vec model on source code, we conducted an empirical
+study on the embeddings of the API elements. First, we colllected a
+dataset of 14,807 Java projects (2.1M classes, 7M methods, 352M LOCs,
+123K unique APIs), and a dataset of 7,724 C\# projects (900K classes,
+2.3M methods, 292M LOCs, 130K unique APIs). For each method in a
+project, we built a tool to parse and {\em collect the sequence of
+  only API method calls, field accesses, and classes' names}.
+For example, in the code in Figure~\ref{usageexample}, we produce
+\code{HashMap}\#var \code{HashMap}.new,  
+%
+\code{String}\#ret \code{HashMap}\#rec \code{HashMap.put} \code{String}\#arg \code{Integer}\#arg, 
+%
+\code{FileWriter}\#var \code{FileWriter.new} \code{String}\#arg,
+%
+\code{for} \code{String}\#var \code{String[]}\#ret \code{HashMap}\#rec \code{HashMap.keySet},
+%
+\code{String}\#ret \code{HashMap}\#rec \code{HashMap.get} \code{String}\#arg \code{FileWriter}\#rec \code{FileWriter.append} \code{String}\#arg,
+%
+\code{FileWriter}\#rec \code{FileWriter.close}. Such sequences for all
+methods in a dataset is used to train CBOW. We use the context
+window's size of 10. After training, the output of the hidden layer
+gives the vector for the current API, which is called {\em API
+  embedding}.
+
+\subsubsection*{Nearby Vectors Represent APIs with Similar Contexts and Vice Versa?}
+
+%{\bf Nearby Vectors Represent APIs with Similar Contexts and Vice Versa?}
+We first randomly selected 1,000 JDK API methods and fields in our
+dataset. For each API, we computed the top-5 API method calls and
+field accesses that are closest to that~API in the vector space.  We
+processed those 1,000 groups of 6 API methods/fields (one main API of
+the group and top-5 closest ones) to verify if each of those 5
+elements shares similar usage contexts with the main API. For such
+verification, we wrote a program to take two APIs $a$ and $b$ and
+search through our Java dataset to compute two sets $A$ and $B$ of API
+elements that have been frequently occurred with $a$ and $b$,
+respectively (80\% threshold), in the methods in the dataset. If $A$
+and $B$ overlaps more than 80\%, we consider $a$ and $b$ share similar
+surrounding APIs.
+
+Among 5,000 pairs of APIs (1,000 groups and 5 comparisons each), we
+found that 4,632 pairs (92.64\% of them)~have similar surrounding APIs
+For the other 7.36\%, this is because an API has multiple contexts and
+some contexts with infrequently used APIs were not captured with
+insufficient~data. In brief, in a vector space for the APIs,
+nearby vectors represent the APIs that have similar usage contexts and
+vice versa.
+
+Our results also showed that the APIs in the same class/package
+perform functions relevant to the class/package's theme, and often
+share similar surrounding APIs. They tend to have nearby vectors.
+
+\subsubsection*{Similar Vector Offsets Reflect Similar Relations?}
+%{\bf Similar Vector Offsets Reflect Similar Relations?}
+\label{vector-offset-section}
+%This experiment focuses on studying {\em whether similar usage
+%  relations among two APIs can be reflected with similar vector
+%  offsets}.
+We first mined the frequent pairs of APIs by collecting~all the
+pairs of the APIs in the same methods in our Java~dataset. We ranked
+the pairs by their occurrence frequencies.
+%used an API usage pattern mining tool, GrouMiner~\cite{fse09}, to
+%detect the frequent pairs of API elements in our Java code corpus.
+We~then manually checked the most frequent pairs
+and collected 120 of them, which are placed into 14 groups of
+pairs representing 14 different relations. Similarly, we collected a
+set of 138 correct pairs of C\texttt{\#} APIs placed into 16
+groups.~We used those two sets of pairs in JDK and .NET as our
+benchmarks.
+
+\input{sections/eval-table-offset-new}
+
+We processed the pairs as follows. For each group of pairs of APIs
+(representing a relation), we randomly picked a seed pair, e.g.,
+(\code{List\#var}, \code{List.add}). For each of the other pairs in
+the group, e.g., (\code{Map\#var}, \code{Map.put}), we applied the
+vector offset from the seed pair to the vector of the first API of the
+current pair to compute the resulting vector, e.g., \textit{X =
+  V(\code{List.add}) $-$ V(\code{List\#var}) $+$
+  V(\code{Map\#var})}. We then searched for the vectors that are
+closest to $X$ (e.g., \code{Map.put}) and considered them as the
+candidates (ranked by their respective cosine distances). If the
+second API of the current pair in the benchmark is in the top-$k$ of
+the candidate list, we count it as a hit. Accuracy is the ratio
+between the number of hits over the total number of cases.
+%,otherwise, it is a~miss.
+
+%We considered the rank of the correct API in the candidate list as
+%well.
+
+There are 94.2\% of the correct APIs in those relations~show\-ing up in the
+top-5 candidate lists. 74.1\% are actually at the top
+one. Table~\ref{offsetJava} shows examples of 5 groups of relations in
+our oracle for JDK APIs and the ranks of the correct APIs~in the
+candidate lists. As seen, 
+%with simple vector computation, 
+the model can capture similar relations between APIs and rank highly
+the correct APIs, even when the respective names are different. For
+example, in the relation {\em ``add an element to various types of
+  collections''}, as using \code{List}, one uses \code{List.add},
+however, \code{Map.put} is used for \code{Map}.
+%when using
+%\code{Map}, one must use \code{Map.put}.
+
+
+We were also able to observe/interpret the same relations in
+C\texttt{\#}: 1) {\em ``Check size before removal''}, e.g.,
+  \code{Dictionary.Count} -- \code{Dictionary.Remove}; 2) {\em ``Add
+    an element to a collection''}, e.g., \code{Hashtable.new} --
+  \code{Hashtable.Add}; 3) {\em ``Read a file with different types''},
+  e.g., \code{BinaryReader.ReadInt64} -- \code{System.Int64}; 4) {\em
+    ``Check the current element before retrieval''}, e.g.,
+  \code{IEnumerator.MoveNext} -- \code{IEnumerator.Current}, etc.
+
+
+%We also build a tool to derive pairs of API elements with the
+%same/similar relations. The tool takes as input a pair of API elements
+%in the same class, e.g., \code{List\#var} and \code{List.add}, and
+%another API in a different class, e.g., \code{Hashtable\#var}. It then
+%uses the vector offsetting operation to derive the corresponding API
+%\code{Hashtable.put}, without understanding the meaning of the
+%relation. One could use this tool to derive that \code{List.add} could
+%be used to achieve the similar functionality as \code{Hashtable.put}. 
+%This is useful for developers who are new to the APIs.
+
+

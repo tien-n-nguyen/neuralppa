@@ -1,0 +1,189 @@
+\documentclass[11pt]{article}
+
+\usepackage{graphicx,times}
+\usepackage{wrapfig}
+\usepackage{amsmath,epsfig}
+\usepackage{setspace,array}
+\usepackage{cite}
+
+\usepackage{sectsty}
+\sectionfont{\large}
+\subsectionfont{\normalsize}
+\subsubsectionfont{\normalsize}
+
+\usepackage[compact]{titlesec}
+
+\renewcommand{\theequation}{\thesection.\arabic{equation}}
+\renewcommand{\baselinestretch}{1.0}
+
+\newtheorem{Definition}{Definition}
+\newtheorem{Claim}{Claim}
+\newtheorem{Lemma}{Lemma}
+\newtheorem{Theorem}{Theorem}
+\newtheorem{Property}{Property}
+
+\newcommand{\revise} {\bf}
+
+\newcommand{\code}[1]{{\small\texttt{#1}}}
+\newcommand{\op}{\tau}
+\newcommand{\refac}{\rho}
+\newcommand{\edit}{\sigma}
+\newcommand{\T}{\theta}
+\newcommand{\comp}{;}
+\newcommand{\pre}{\prec_P}
+\newcommand{\meth}{KSISA}
+
+\newcommand{\MyParagraph}[1]{\textbf{#1}{ }}
+
+\usepackage{vmargin}
+\setpapersize{USletter}
+\setmarginsrb{1.0in}{1in}{1.0in}{1in}%
+           {0pt}{0mm}{0pt}{10mm}
+\newcommand{\remove}[1]{}
+
+\usepackage{tweaklist}
+\renewcommand{\enumhook}{\setlength{\topsep}{0pt}%
+  \setlength{\itemsep}{0pt}}
+\renewcommand{\itemhook}{\setlength{\topsep}{0pt}%
+  \setlength{\itemsep}{0pt}}
+\renewcommand{\descripthook}{\setlength{\topsep}{0pt}%
+  \setlength{\itemsep}{0pt}}
+
+\begin{document}
+
+% Collaborative Research: SHF: Small: 
+
+\begin{center}
+  {\bf Project Summary: Code Representation Learning for Bug Detection and Fixing
+    Processes}
+\end{center}
+\vspace{-.1in}
+
+
+{\bf Overview.}
+Detecting and fixing bugs are important in developing reliable and
+high-quality software. Recognizing the importance of bug detecting and fixing processes,
+several approaches have been proposed to support developers. With the
+advances of {\em machine learning (ML)} (incl. {\em deep learning}
+(DL)), the bottom-up, data-driven software engineering (SE) research
+in automated bug detection and fixing that relies on ML/DL has drawn
+extensive attention from academic and industry. For the entire process
+of bug detecting/fixing to be fully effective, it is crucial to have
+an effective {\bf code representation learning (CRL)}, which is aimed
+to {\em produce effective, high-quality vector representations that
+  capture the code features} that are important the bug detect-fix
+ML/DL models. Code as data has rich structures and semantics with high
+dimensional features, making large-scale learning and reasoning over
+massive high dimensional features challenging. Thus, it is crucial to
+{\em learn to convert high-dimensional, structural, semantics-rich
+  features into low-dimensional vectors} to be used as the input for
+the application-specific ML/DL models in the downstream bug
+detecting/fixing tasks.  The state-of-the-art {\em learning to
+  represent code features produced by any program analysis algorithms
+  in term of vector representations, is still in its infancy
+  stage}. Most of the existing approaches in SE and PL for bug
+detection and fixing lack adequate research in CRL and comprehensive
+knowledge on advantages of CRL in different bug detect-fix
+tasks. They simply use {\em off-the-shelf, general-purpose vector
+  learning techniques in ML or SE}, leading to low performance of the
+entire bug detecting/fixing process.
+
+In our preliminary work, we have studied and evaluated several
+existing CRL approaches to bug detect-fix tasks. Our empirical results
+showed that {\em there is no silver bullet CRL for all bug detect-fix
+  models}, i.e., general-purpose CRL techniques are not effective for
+all those models. Our philosophy is that the modeling and learning of
+representations of program elements and their features must be
+accurate, effective, and especially customized to specific
+algorithms/models for bug detection/fixing.
+
+\noindent {\bf Intellectual Merits.}  Aiming to have an effective
+customization for CRL in bug detect-fix tasks, we propose the
+following thrusts of research: (1) {\bf Design Framework and
+  Environment for Code Representation Learning (CRL)}. We aim to
+abstract our CRL designing experience and define the conceptual CRL
+design framework with design principles and building blocks: entities,
+relations among entities, representation learning models generating
+code vectors. We will build a visual environment in which users can
+graphically customize/add their own blocks at any design points, and
+our editor recommends the best choices learned from practice and they
+use them to define their workflows.
+(2) {\bf Quality Evaluation Framework for Code Representation
+  Learning.} If the vectors do not represent well the features that
+they are supposed to capture (e.g, code structures or dependencies),
+the models for the downstream tasks cannot perform well. Thus, we
+propose a quality evaluation framework with various metrics that rely
+on vector locality and vector offsetting to measure the quality of
+vector representations. (3) {\bf Applications of CRL Framework in Bug
+  Detection, Testing, Fault Localization, and Auto Program Repair.}
+We will leverage our CRL framework to advance the state-of-the-art bug
+detection/fixing research in those areas. The CRL framework
+will be used to make innovation on code RL, test coverage RL, program
+dependence RL, code transformation RL, etc.
+
+\noindent {\bf Broader Impacts.}  (1) Our results will be {\em
+  transformative and directly benefit to our society}, leading to
+increasing developers’ productivity and software quality. Our
+validation involves students and professionals, promoting teaching and
+learning of software qualities that have wide impacts in industry and
+academic communities. (2) Our results will {\em foster research
+  activities} in related fields such as deep learning and software
+quality and reliability. This project will produce theoretical
+concepts and techniques that are novel even in deep learning, e.g.,
+novel neural networks for modeling and learning code. The collected
+large-scale bug/fix corpus will be useful for software quality and
+reliability research.
+(3) The research will enhance the infrastructure for teaching and
+research by providing tools and data sets for use by students and
+practitioners, and for enhancement by other researchers. We will
+provide related learning modules for students.
+
+\noindent {\bf Keywords:} Code Representation Learning, Deep Learning, Code Vector Representation, Bug Detection/Fix.
+
+
+%Finding and fixing bugs are vital to produce reliable and high-quality
+%software. Failing to fix a bug could result in severe consequences.
+%In 1996, the Ariane 5 rocket, the European Space Agency's \$1 billion,
+%was destroyed less than a minute after launch, due to a bug in the
+%on-board guidance computer program. A study commissioned by the US
+%Department of Commerce' National Institute of Standards and Technology
+%(NIST) concluded that software bugs, or errors, are so prevalent and
+%so detrimental that they cost the US economy an estimated \$59 billion
+%annually, or about 0.6 percent of the gross domestic product.
+
+%\textbf{- We could learn to fix a bug from similar ones}.
+
+%There is no known, established straightforward methodology for bug
+%fixing. Thus, like other problem-solving tasks, developers generally
+%base on their own knowledge and experience with the systems, or learn
+%from the others to do this task. In other words, they could
+%effectively find and fix a bug by consulting the similar bugs and
+%fixes to the one they are dealing with. However, currently, such
+%learning is still ad-hoc, manually, and un-systematically. For
+%example, when facing a bug, people could go to a forum to post a
+%question and wait for the help from the others. They could also
+%compile the reference manuals, as well as reports, tutorials,
+%discussions to find a suitable fix.
+
+%If we have automatic tool support that captures knowledge about bugs
+%and fixes and leverages it in fixing the recurring/similar bugs, we
+%could reduce the cost for software development.
+
+%\textbf{- Current approaches supporting fixing recurring bugs are still limited}.
+
+%However, current tool support that captures knowledge of known fixes
+%and leverage it in fixing/patching in similar bugs are still
+%limited. Some automatic tools are limited in recognize and synchronize
+%the fixes, etc. For example, there is no any extensive research that
+%discover the cause, the nature, and the characteristics of recurring
+%bugs and fixes? That is, why are they recurring? How popular they are?
+%How they are alike? What features help us recognize their
+%recurrence/similarity? 1. How could we identify the API-related code
+%peers within and across software projects and assess their popularity?
+%. Does the limited support to their co-evolution affect the quality
+%of the software system and the effectiveness of the development
+%process? 3. How could we synchronize their changes, i.e. given the
+%fix/patch of a peer, recommend developers the fixes/patches for its
+%other peers?
+
+\end{document} 

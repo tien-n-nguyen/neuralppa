@@ -1,0 +1,75 @@
+fse22main-p639-p
+
+
+\tool is designed to capture two basic insights about program
+structure: intra-statement context, and inter-statement context. This
+is facilitated via a hierarchical, self-attention network (SAN)-based
+model architecture. The motivation behind intra-statement context
+learning (IntraS-CL), which aims to learn the context within individual
+statements, is that Intra-SCL provides the knowledge for a model to
+learn better the roles and relations among the code tokens in a
+statement (e.g., definition or usage of a variable), thus, leading
+to the better discovery of dependencies between two statements. In contrast,
+inter-statement context learning (InterS-CL) helps a 
+model recognize the dependence of one statement on the other 
+taking into consideration the surrounding statements.
+
+Assessing the performance of {\tool} is not straightforward, mainly due
+to the lack of ground-truth inter-statement program dependencies for
+partial code fragments. Thus, we intrinsically evaluated it on
+programs in Java and C/C++ as follows. First, we trained {\tool} on
+complete code. For testing, we treated each method individually and
+chose a consecutive portion within the method to predict the program
+dependencies, and compared them against the actual
+dependencies. Overall, \tool predicts CFG and PDG edges in Java with
+an F-score of 94.29\%, and in C++ with an F-score of 92.46\%. Upon
+further investigation, we discovered that for Java, \tool predicts
+{\em sequential} CFG edges, \textit{if-else} CFG edges, {\em
+data-dependence} edges, and {\em control-dependence} edges with an
+accuracy of 99.4\%, 95.52\%, 82.78\%, and 96.33\%
+respectively. Additionally, we performed an ablation study on various
+model components in \tool, which enabled us~to tie the fine-grained
+performance gains to each component.
+
+To evaluate the usefulness of the PDGs predicted by \tool (say,
+PDG\textsuperscript{*}), we designed experiments around the task of
+vulnerability detection at two levels of granularity: complete code at
+the method-level, and partial code at the snippet-level. For the
+method-level VD task, we leveraged VulCNN~\cite{wu2022vulcnn}, an
+image-inspired DL-based VD model which utilizes PDGs to predict
+whether a given method has vulnerabilities or not. Here, we aimed to
+estimate how well PDG\textsuperscript{*}s predicted for the methods in
+the dataset approximate the performance of the actual PDGs retrieved
+from a program-analysis tool. For this task, VulCNN achieved an
+F-score of 73.26\% with the PDGs predicted by \tool, as opposed to
+74.01\% in the case of the actual PDGs. For the task of partial code
+VD, we first trained VulCNN on a VD dataset comprising complete C++
+methods~\cite{fan2020msr}. Next, we leveraged \tool to predict PDGs
+for the vulnerable S/O code snippets in Verdi {\em et
+  al.}~\cite{verdi-tse22}. Utilizing the predicted PDGs from \tool,
+VulCNN was able to correctly identify 14 code snippets as vulnerable.
+
+
+\begin{enumerate}
+%[leftmargin=*]
+
+\item {\tool} is the first neural network tool to predict program
+  dependencies in complete as well as partial programs, which are
+  accurate as well as {\bf \underline{380$\times$}} faster to generate. This
+  opens up a research direction for improving program analysis (PA)
+  for partial programs by combining our ML/DL approach and top-down PA
+  approaches.
+
+\item An extensive evaluation showing {\tool}'s high accuracy in
+  deriving program dependencies and its usefulness in the application
+  of vulnerability detection for both complete and incomplete
+  snippets. Code and data are available~\cite{deeppda}.
+
+%\item A comparative evaluation showing the usefulness of the predicted PDGs against the actual PDGs in SE tasks that are tolerant to PDGs with a low level of errors.
+
+    \item An analysis showing the usefulness of intra-statement and
+      inter-statement context learning, capturing the
+      higher-order interaction features between statements in a code
+      snippet.
+%    \item
+\end{enumerate}

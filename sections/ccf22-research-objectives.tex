@@ -1,0 +1,106 @@
+\subsection{Research Objectives and Anticipated Results}
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.9\textwidth]{graphs/neuralppa}
+    \vspace{-12pt}
+    \caption{{\tool}: Machine Learning-based Program Analysis Infrastructure}
+    \label{fig:arch}
+\end{figure}
+
+
+While the state-of-the-art research and practice has been
+well-established for the analysis of the entire programs, very little
+research and knowledge has been achieved for partial program
+analysis.
+%
+In this proposal, we set out to investigate and develop {\tool}, a
+{\em \underline{Neural}-network-based \underline{P}artial
+  \underline{P}rogram \underline{A}nalysis infrastructure}. We aim to
+develop {\bf a scientific foundation, novel methodologies, frameworks,
+  models, and algorithmic solutions for neural partial program
+  analysis}. {\tool} {\bf enpowers program analysis (PA) with advanced
+machine learning (ML) and artificial intelligence (AI) to enable the
+program analysis on incomplete code fragments} (Figure~\ref{fig:arch}).
+{\tool} will allow the constructions of the program analysis
+techniques for partial code on which downstream software
+engineering applications can be built.
+
+
+Our key philosophy is that {\em the analysis of partial code can be
+  learned from the analysis of entire programs in the wealth of
+  information from ultra-large-scale, open-source software
+  repositories}.
+
+
+
+Specifically, we draw our motivation for such a data-driven,
+learning-based approach from the following. First, ultra-large-scale
+software repositories, e.g. GitHub (7M+ projects) and SourceForge
+(700k+ projects) contain an enormous collection of programs. These
+repositories amount to 1,000,000,000+ lines of code, 10,000,000+
+revision logs, and 3,000,000+ issue reports. This wealth of knowledge
+is an excellent source for {\tool}. Hindle {\em et
+  al.}~\cite{naturalness-icse12} have shown that code has high
+repetitiveness and predictability, and can be captured well by
+statistical models. Thus, we expect to build ML models to learn from
+those repositories. Second, in an empirical study on the
+repetitiveness, containment, and composability of PDGs in open-source
+projects, the PI group~\cite{msr16} reported that among 17.5M PDGs
+with 1.6B PDG subgraphs, 14.3\% of the PDGs have all of their
+subgraphs repeated across different projects. Furthermore, in 15.6\%
+of the PDGs, at least 90\% of their subgraphs are likely to have
+appeared before in other projects. Thus, {\tool} could learn from PDGs
+with complete program dependencies retrieved from existing code
+repositories and derive the dependencies for the (partial) code
+fragment under study. The PI group also reported a high
+repetitiveness level for AST code structure in open-source
+projects~\cite{icse15}. Finally, such a program analysis
+infrastructure like {\tool} can be drawn from the spirit and successes
+of the approaches in natural language processing (NLP). For example,
+at the lexical level, the task of deriving the token types for source
+code tokens could be analogous to the part-of-speech (PoS) tagging in
+NLP. At the syntax level, the task of learning the syntactic structure
+in AST of the partial code can be inspired by the approaches to build
+parse trees for natural-language texts. At the semantic level, the
+partial program dependence analysis infrastructure is similar in
+spirit to the the neural network-based dependency parsing in NLP,
+which learns the dependencies signifying the semantic relationships
+between words in a sentence from text corpora.
+
+Toward this theme, in our preliminary work, we developed DeepPDA, a neural
+network-based partial program dependence analysis approach that learns
+to derive the program dependencies for any code fragments (i.e., both
+complete and incomplete). In our preliminary empirical evaluation, we
+intrinsically evaluated it on Java and C/C++ programs. First, we
+trained {\tool} on complete code. For testing, we treated each method
+individually and chose a consecutive portion within the method to
+predict the program dependencies, and compared them against the actual
+dependencies. Overall, DeepPDA predicts CFG and PDG edges in Java
+with an F-score of 94.29\%, and in C++ with an F-score of
+92.46\%.
+%
+We also developed as an approach to derive the data
+types of the variables in the code snippets. We treat the problem as
+statistical machine translation from source code with partially
+qualified names to source code with FQNs of the APIs. Our empirical
+evaluation on real-world code and StackOverflow posts shows that our
+technique achieves high accuracy with 97.6\% precision and 96.7\%
+recall in deriving data types in code snippets.
+
+
+
+
+
+
+
+In {\tool}, we propose the following thrusts of research
+(Table~\ref{tab:milestones}):
+
+\vspace{3pt}
+\noindent \textbf{Thurst 1. ...} ({\em Section~\ref{}}) ...
+
+
+\input{sections/ccf22-plan-table}
+
+

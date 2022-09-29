@@ -1,0 +1,262 @@
+%
+\usepackage{cite}
+\usepackage[T1]{fontenc}
+\usepackage{times}
+\usepackage{url}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{fancyvrb}
+\usepackage{fancybox}
+\usepackage{color}
+\usepackage{colortbl}
+\usepackage[table]{xcolor}
+%\usepackage{tex-helpers/mathpartir}
+\usepackage{amssymb}
+\usepackage{xspace}
+\usepackage{comment}
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+\usepackage{epsfig}
+\usepackage{wrapfig}
+\usepackage{multirow}
+\usepackage{subfig}
+
+% Added listing for code listings
+\usepackage{listings}
+\usepackage{relsize}
+\usepackage{setspace}
+\usepackage{sidecap}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+\textwidth=16.5cm 
+\textheight=22.5cm 
+\textwidth=16.5cm 
+\textheight=55.5pc
+\topmargin=-0.5cm 
+\headsep=0cm 
+\headheight=0cm 
+\oddsidemargin=0cm
+\evensidemargin=0cm 
+\marginparwidth=0cm
+\parskip=0cm
+\itemsep=0.1pt
+\parindent=0.5cm
+
+%Set table separation 
+\setlength{\tabcolsep}{1pt}
+
+% Allow figures to take up the entire page
+\renewcommand\floatpagefraction{.99}
+\renewcommand\topfraction{.99}
+\renewcommand\bottomfraction{.90}
+\renewcommand\textfraction{.01}   
+\setcounter{totalnumber}{50}
+\setcounter{topnumber}{50}
+\setcounter{bottomnumber}{50}
+
+% formatting for grammars
+%\input{tex-helpers/obey}
+%\input{tex-helpers/grammar}
+%\renewcommand{\nonterm}[1]{\mbox{\textit{#1}}}
+\newcommand{\oneormore}[1]{#1\ensuremath{^+}}
+
+\newcommand{\opt}[1]{\textbf{[}#1\textbf{]}}
+
+\newcommand{\mc}[1]{\mbox{\rm \ensuremath{\text{\code{#1}}}}} 
+\newcommand{\loc}{\ensuremath{\mathord{\mathit{loc}}}}
+\newcommand{\ec}{\ensuremath{\mathop{\mathbb{E}}}}
+\newcommand{\hole}{\ensuremath{\mathord{\mathit{-}}}}
+\newcommand{\reducesto}{\hookrightarrow}
+
+\newcommand*{\seq}[1]{\ensuremath{\left\langle {#1} \right\rangle}}
+\newcommand{\config}{\seq}
+\newcommand{\udot}{\mathbin{\sqcup \kern-0.53em \cdot \,}}
+
+% Aux functions
+\newcommand{\auxFunc}[1]{\ensuremath{\mathop{\mathit{#1}}}}
+\newcommand{\concat}{\auxFunc{concat}}
+\newcommand{\reverse}{\auxFunc{reverse}}
+
+% Type checking macros
+% change symbol type of : from mathrel 
+%\DeclareMathSymbol{:}{\mathbin}{operators}{"3A} 
+\newcommand{\OK}{\mbox{OK}}
+\newcommand{\OKin}{\mbox{OK in }}
+\newcommand{\isType}{\mbox{\textit{isType}}}
+\newcommand{\isThunkType}{\mbox{\textit{isThunkType}}}
+\newcommand{\isClass}{\mbox{\textit{isClass}}}
+\newcommand{\Types}{\mbox{\textit{Types}}}
+\newcommand{\Names}{\mbox{\textit{Names}}}
+\newcommand{\TypeEnv}{\mbox{\textit{TypeEnv}}}
+\newcommand{\VD}{\mbox{\textit{VD}}}
+\newcommand{\TypesInOrder}{\mbox{\textit{typesInOrder}}}
+\newcommand{\dom}{\mbox{\textit{dom}}}
+\newcommand{\rng}{\mbox{\textit{rng}}}
+\newcommand{\POWERSET}[1]{\mbox{\textit{PowerSet}}(#1)}
+\newcommand{\delete}{\mbox{\textit{delete}}}
+\newcommand{\mklist}{\mbox{\textit{mksupers}}}
+\newcommand{\uminus}{\mbox{$\cup\!\!\!\!-$}}
+\newcommand{\iminus}{\mbox{$\cap\!\!\!\!-$}}
+\newcommand{\rname}[1]{$\TirName{(#1)}$} % for inline inferrule names
+\newcommand{\STO}{\ensuremath{<:}}  % ``subtype of''
+\newcommand{\consistent}{\ensuremath{\approx}}
+
+% Notations 
+\newcommand{\produces}{\rightsquigarrow}
+\newcommand{\refinedBy}{\sqsubseteq}
+
+% Macros for the Figure Editor Example
+\newcommand{\FElement}{\mbox{\texttt{FElement}~}}
+\newcommand{\ChangedFE}{\mbox{\texttt{changedFE}~}}
+\newcommand{\FEChange}{\mbox{\texttt{FEChange}~}}
+
+
+% Macros for defining phase transition analysis
+\newcommand{\cfg}{\ensuremath{{\cal CFG}}\xspace}
+\newcommand{\globTypeMap}{\ensuremath{T}\xspace}
+
+%Redefinition of some math commands widely used outside
+%mathmode
+\newcommand{\memOf}{\ensuremath{\in}\xspace}
+
+% Help LaTeX not violate the column margins
+\tolerance=50000
+
+% settings for listings
+\definecolor{lightgray}{gray}{0.97}
+\definecolor{darkgray}{gray}{0.5}
+\definecolor{OliveGreen}{cmyk}{0.64,0,0.95,0.40}
+\definecolor{DarkGreen}{cmyk}{0.58,0,0.66,0.26}
+\definecolor{LightRed}{cmyk}{0,0.682,0.728,0}
+\definecolor{purple}{cmyk}{0.41,0.73,0,0}
+
+\lstset{
+	language=bash, emph={},
+	mathescape=false, escapechar=@,
+	backgroundcolor=\color{lightgray},
+	commentstyle=\color{darkgray},
+	keywordstyle=\color{OliveGreen}\bfseries,
+	basicstyle=\relsize{-3}\sffamily,
+	numberstyle=\scriptsize\sffamily,
+	emphstyle=\color{purple},
+	emphstyle={[2]\color{LightRed}},
+	commentstyle=\color{DarkGreen},
+	stringstyle=\color{OliveGreen},
+	numbers=left, stepnumber=1,
+	numberblanklines=false,
+	numberstyle=\tiny,
+	numbersep=-3pt,
+	frame=none, framexleftmargin=0pt, framexrightmargin=0pt, 
+	%xleftmargin=15pt, xrightmargin=4pt,
+	columns=flexible, breaklines=true,
+	showspaces=false, showstringspaces=false, showtabs=false, tabsize=2,
+	morekeywords={input,exists,foreach,ifall,output,of,weight,stop,visit,before,after},
+	emph={int,string,bool,time,array,stack,map,visitor,%
+true,false,%
+top,sum,mean,maximum,minimum,set,collection,%
+Project,CodeRepository,Revision,ChangedFile,ASTRoot,Namespace,Declaration,Type,Method,Variable,Statement,Expression,Modifier,%
+ExpressionKind,NEW,LITERAL,EQ,NEQ,%
+TypeKind,CLASS,ANONYMOUS,%
+ModifierKind,OTHER,%
+ChangeKind,DELETED,%
+StatementKind,IF,%
+RepositoryKind,SVN},
+	emph={[2]isfixingrevision,getast,iskind,hasfiletype,isliteral,getsnapshot,has_modifier_public,%
+format,def,len,match,lowercase,yearof,haskey,remove,strfind,push,pop},
+}
+
+% could use \relsize{-2} instead of \scriptsize below
+\newcommand{\FIGCODEFONT}{\relsize{-2.5}\ttfamily}
+
+% cross referencing
+%\newcommand{\algref}[1]{Algorithm~\ref{#1}}
+%\newcommand{\figref}[1]{Figure~\ref{#1}\xspace}
+%\newcommand{\tabref}[1]{Table~\ref{#1}\xspace}
+%\newcommand{\fignref}[1]{Figure~\ref{#1}\xspace}
+%\newcommand{\secref}[1]{Section~\ref{#1}\xspace}
+%\newcommand{\secnref}[1]{Section~\ref{#1}\xspace}
+
+%\newcommand{\etal}{~\textit{et al.}\@\xspace}
+\newcommand{\kind}{\textit{kind}\xspace}
+\newcommand{\KIND}{\textit{KIND}\xspace}
+
+\newcommand{\lang}{\textit{Boa}\@\xspace}
+
+% Theorems environments...
+%{theorems}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{axiom}[theorem]{Axiom}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{fact}[theorem]{Fact}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{conjecture}[theorem]{Conjecture}
+% Some helpful notation
+\newcommand{\PROOF}{{\em Proof:\/}~~}
+\newcommand{\PROOFSKETCH}{{\em Proof Sketch:\/}~~}
+\newcommand{\QED}{\rule{0.4em}{0.65em}}
+
+\definecolor{light-gray}{gray}{0.9}
+\definecolor{very-light-gray}{gray}{0.95}
+
+% Change section headings to look nicer
+\makeatletter
+\renewcommand\thesection{{\large\Alph{section}.}}
+\renewcommand\section{\@startsection {section}{1}{\z@}%
+                                   {-3.5ex \@plus -1ex \@minus -.2ex}%
+                                   {2.3ex \@plus.2ex}%
+                                   {\large\scshape\bf}}
+\makeatother
+
+\renewcommand\thesubsection{{\normalsize\Alph{section}.}{\normalsize\arabic{subsection}}}
+
+\makeatletter
+\renewcommand\subsection{\@startsection {subsection}{1}{\z@}%
+                                   {-3.5ex \@plus -1ex \@minus -.2ex}%
+                                   {2.3ex \@plus.2ex}%
+                                   {\normalsize\scshape\bf}}
+\makeatother
+
+\renewcommand\thesubsubsection{{\normalsize\Alph{section}.}{\normalsize\arabic{subsection}.}{\normalsize\arabic{subsubsection}}}
+
+\makeatletter
+\renewcommand\subsubsection{\@startsection {subsubsection}{1}{\z@}%
+                                   {-3.5ex \@plus -1ex \@minus -.2ex}%
+                                   {2.3ex \@plus.2ex}%
+                                   {\normalsize\scshape\bf}}
+\makeatother
+
+\newcommand\para[1]{\vspace{-1em}\paragraph{#1\ }}
+
+% Different font in captions
+\newcommand{\captionfonts}{\footnotesize}
+
+% formatting of initial section quotations
+\newcommand{\QUOTATION}[1]{\begin{flushright}\begin{footnotesize}\emph{#1}\end{footnotesize}\end{flushright}}
+ 
+\makeatletter  % Allow the use of @ in command names
+\long\def\@makecaption#1#2{%
+  \vskip\abovecaptionskip
+  \sbox\@tempboxa{{\captionfonts #1: #2}}%
+  \ifdim \wd\@tempboxa >\hsize
+    {\captionfonts #1: #2\par}
+  \else
+    \hbox to\hsize{\hfil\box\@tempboxa\hfil}%
+  \fi
+  \vskip\belowcaptionskip}
+\makeatother   % Cancel the effect of \makeatletter
+
+%\usepackage[ps2pdf,bookmarks=true]{hyperref}
+
+\definecolor{light-gray}{gray}{0.9}
+\definecolor{dark-gray}{gray}{0.7}
+
+\newcommand\doctitle[1]{\newpage \setcounter{page}{1}\thispagestyle{fancyplain} \headheight=14pt%
+                        \fancyhead[C]{\large{\bf #1}}\xspace\vspace{0.5em}}
+
+
+                                                                        

@@ -1,0 +1,43 @@
+\begin{table}[h]
+	\vspace{-15pt}
+	
+	
+	\begin{center}
+		%\renewcommand{\arraystretch}{1}
+		\footnotesize{
+			\caption{Building Blocks and Design Guidelines. A list of blocks is not an exhausted list.}\label{framework}
+			\vspace{-10pt}
+		%	\begin{tabular}{p{6.5cm}<{\centering\raggedright}|p{10cm}<{\centering\raggedright}}
+		\begin{tabular}{p{16.5cm}<{\centering\raggedright}}
+				
+				\hline
+			\textbf{Blocks} and \textbf{\textit{Explanation}} and \textbf{Examples}\\
+				\hline
+				
+			\textbf{Code Representations}: \textit{Data structures representing software entities}. \textbf{Examples}: Identifiers, sequences of tokens at statement and method -level, Program Dependency Graph (PDG) at method and project -level, Control-Flow Graph (CFG), Data-Flow Graph (DFG), Abstract Syntax Tree (AST), Paths in AST, sub-AST at statement-level, Paths in PDG at method-level, Paths in CFG and DFG, Class Dependency Graph, execution paths of statements, intermediate representations.\\
+				\hline
+			\textbf{Relations}: \textit{Modeling relations among entities}. 
+			\textbf{Examples}: Sequential relations among tokens in a statement (or a whole method), sequential relations among AST nodes in an AST path, 			sequential relations among statements in a PDG path, sequential relations among statements, relations between code and testing information, relations among test cases.  \\
+				\hline
+			\textbf{Embeddings}: \textit{Techniques directly encoding raw code into vectors}. 
+			\textbf{Examples}: one-hot encoding, word2vec~\cite{word2vec} and Glove~\cite{Glovepennington2014glove} modeling sequential relations among words, WordMoverDistance~\cite{huang2016supervised}, vocabulary-based encoding (e..g, identifier-based, key concepts extracted from a method), ELMo~\cite{peters2019knowledge}, CoVe~\cite{mccann2017learned}, BERT~\cite{devlin2018bert} and GPT~\cite{GPTradford2018improvingGPT} for contextual word embeddings, Tree-LSTM~\cite{Tai-2015} for encoding a tree structure, Node2Vec~\cite{Grover-2016} and DeepWalk~\cite{perozzi2014deepwalk} for encoding nodes a graph.\\
+				\hline
+			\textbf{Learning Models}: \textit{Learning techniques taking vectors as inputs. The vectors can be initially obtained from Embedding techniques}. \textbf{Examples}: LSTM~\cite{hochreiter1997long}, GRU~\cite{Cho-2014}, HMRNN~\cite{chung2016hierarchical}, basic CNN, H-CNN~\cite{gao2018hierarchical}, R-CNN~\cite{girshick2015region}, Densely-CNN~\cite{wang2018densely}, fully connected layers in~\cnn, multi-head attention~\cite{Vaswani-2017}, MLP~\cite{bourlard1988auto}\\
+			\hline
+			
+		%	Connecting Vectors & Techniques combining multi-vectors (2 or more) into one vector. &LSTM~\cite{}, GRU~\cite{}, HMRNN~\cite{}, basic CNN, H-CNN~\cite{}, R-CNN~\cite{}, Densely-CNN~\cite{}, fully connected layers, multi-head attention, MLP\\
+		%	\hline
+			
+			\textbf{Existing CRLs}: \textit{A CRL takes code and learns vectors to represent the code. A CRL can be built on several code representations, Embeddings, and learning models}. \textbf{Examples}: DeepSim\cite{Zhao-2018}, code2vec\cite{Alon-2018}, Code Vectors \cite{Henkel-2018}, Deep Learning Similarity\cite{Tufano-2018}, Tree-based LSTM \cite{Tai-2015}, Ratchet\cite{Rachet}, Tufano et al. (2018)\cite{tufano2018empirical}, CODIT\cite{CODIT}, Tufano et al.~\cite{Tufano}, DeepFL\cite{DeepFL}, cuBERT~\cite{kanade2020learning}.\\
+			\hline
+			
+		    \textbf{Design Principles}: \textit{Empirically obtained best practices and design rules}. \textbf{Examples}: LSTM is not good for combining vectors from different information sources, but multi-head attention is designed for combining multiple vectors from distinct sources.\\
+			\hline
+			
+			\end{tabular}
+			%~(P: the probability of generated plausible patches to be correct)
+		}
+		
+	\end{center}
+	\vspace{-15pt}
+\end{table}

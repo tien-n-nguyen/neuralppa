@@ -1,0 +1,76 @@
+\subsection{T3 Task 2. Test Code Representation Learning for Regression Testing in CI}
+
+%We use code representation learning to improve the
+%selection and prioritization of test cases in Continuous
+%Integration (CI)~\cite{duvall2007continuous}.
+%
+Regression Testing (RT) in Continuous
+Integration~\cite{duvall2007continuous} (RT-CI) differs from the
+traditional RT because most traditional RT techniques cannot be
+applied at the scale of modern CI
+practices~\cite{elbaum2014techniques} that require frequent commits to
+the shared code base and cause the cost of continuous RT escalate
+dramatically~\cite{memon2017taming}.
+%
+%RT-CI requires to identify and prioritize a subset of test cases that
+%can timely and effectively uncover potential regression faults in the
+%latest committed changes.
+%
+%Test selection and prioritization approaches in RT-CI are
+%mainly in two directions: heuristics-based approaches
+%(e.g.,~\cite{elbaum2014techniques,gligoric2015practical,yu2018study})
+%and machine learning based approaches. However, existing approaches,
+%e.g.,~\cite{bertolino2020learning,spieker2017reinforcement} still have
+%limitations in accuracy and scalability as they lack the learning of
+%deep features of test cases and source code and their relations.
+
+
+%^Both only selection without prioritization or vise versa may be
+%unsatisfactory, as time intervals among commits are very short and not
+%all selected tests can be run or avoiding running many non-failing or
+%irrelevant tests is the goal.
+We will design a deep learning approach that leverages code representation
+learning to select test cases and then prioritizes them in
+each CI cycle.  
+(1) \textbf{Test Selection.}  We use a hybrid strategy to select a subset of test cases, considering
+static class-level dependencies among test cases and the ones between
+changed source code and test cases, newly added test cases, diverse
+test cases (e.g., \cite{jiang2009adaptive,henard2016comparing}). 
+Static techniques are preferred over dynamic ones that are impractical
+in CI due to runtime overhead~\cite{bertolino2020learning}. 
+(2) \textbf{Test Prioritization.} Unlike previous approaches
+(e.g.,\cite{bertolino2020learning}) modeling source code and test
+history using hand-crafted metrics, we use CRL techniques (e.g.,
+preferably unsupervised word embedding algorithms such as
+Word2Vec~\cite{word2vec}, ELMo~\cite{peters2019knowledge},
+FastText~\cite{bojanowski2017enriching}) to learn deep features of the
+code under test to vectors, selected test cases, annotations for tests in code, 
+similarities between
+test cases and changed code, history-based test information (e.g., the
+failed tests in the current commit and their similarities with the
+changed code, the failed tests per test class in previous commits
+before the current one, execution times).  Then, we utilize
+learning-to-rank framework or active learning to prioritize test cases. 
+In terms of
+time complexity, existing approaches still have to generate graphs
+(e.g., call/control graphs) for building metrics in a cycle, which can
+take a longer time. In our approach, we build a language model
+off-line and apply it on the natural sequences (or just tokens or AST)
+of code under test into a vector in a cycle, which may not add overhead and even faster.  
+Based on our previous experience, CRL can generate deeper and more representative
+features than the hand-crafted metrics, leading to better results. 
+We will further (1) investigate different
+strategies for selection with CRL; (2) explore new fast and efficient
+embeddings and learning models to propose new CRL approaches
+specialized for RT-CI; (3) study to propose new practical
+CRL-based approaches for test prioritization.
+
+
+
+%study to propose a new off-line training for costly but potentially useful features and on-line prediction approach. 
+
+
+%We exclude coverage-test selection and prioritization as they are very costly in CI due to the costs of instrumentation, recording and maintaining coverage data per release, in addition, they provide low accuracy due to the quick cycles and code changes
+
+
+%different relationships: test cases dependency, dependency between test cases and source code, source code analysis for selecting and prioritizing test cases

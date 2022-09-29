@@ -133,11 +133,22 @@ incompleteness of the given code fragment.
 
 \vspace{3pt}
 \noindent \textbf{Thurst 3. Neural Execution Analysis Infrastructure.}
-({\em Section~\ref{}}) ...
+({\em Section~\ref{}}) All the dynamic analysis techniques require the
+analysis and understanding of the execution. However, for an
+incomplete code, we first need to design a component that can wrap
+around the given code fragment with the minimum code so that the code
+fragment can be executed. When the code is executed, we also need the
+approaches that represent the executed statements and their relations,
+model the execution and stack traces, and model the code coverages
+for an execution.
 
 \vspace{3pt}
-\noindent \textbf{Thurst 4. Neural Partial Program Analysis Applications.}
-({\em Section~\ref{}}) ...
+\noindent \textbf{Thurst 4. Neural Partial Program Analysis
+  Applications.}  ({\em Section~\ref{}}) Our last thrust of research
+is aimed to evaluate our basic partial program analysis infrastructure
+in a few applications. We choose the following software engineering
+applications: 1) software vulnerability detection for code snippets,
+2) fault localization, and 3) code completion.
 
 
 \input{sections/ccf22-plan-table}

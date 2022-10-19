@@ -130,7 +130,7 @@
 
 %\newcommand\tool{NeuralPPA}
 
-\newcommand{\tool}{\textsc{NeuralPA}\xspace}
+\newcommand{\tool}{\textsc{NeuralPDA}\xspace}
 
 \newcommand\deepbugs{\textbf{DeepBugs}~\cite{Pradel-2018}}
 \newcommand\bugram{\textbf{Bugram}~\cite{Wang-2016}}
@@ -154,33 +154,56 @@
 
 % FL
 \newcommand\MLP{\textbf{MLP}~\cite{bourlard1988auto}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\usepackage{pgfgantt}
+%\definecolor{barblue}{RGB}{153,204,254}
+%\definecolor{groupblue}{RGB}{51,102,254}
+%\definecolor{linkred}{RGB}{165,0,33}
+%\renewcommand\sfdefault{phv}
+%\renewcommand\mddefault{mc}
+%\renewcommand\bfdefault{bc}
+%\sffamily
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{array}
+\usepackage{ragged2e}
+%\newcolumntype{L}[1]{>{\raggedright\arraybackslash\hspace{0pt}}p{#1}}
+\newcolumntype{L}[1]{l}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+
 \begin{document}
 
 \begin{center}
-{\large \bf Neural Program Analysis Infrastructure and Its Applications}
+{\large \bf Enabling Partial Program Dependence Analysis Using Neural Networks}
 \end{center}
 \vspace{-.1in}
 \hrule
 
-PI: Tien N. Nguyen, Professor, Department of Computer Science, The University of Texas at Dallas
-%Co-PI: <PI name>, <title>, <department name>, <university name>
+\vspace{1em}
+Principal Investigator: Tien N. Nguyen
 
+\hspace{9em} \textit{Professor}
+
+\hspace{9em} \textit{Erik Johnson School of Engineering and Computer Science}
 Cash funding needed: \$80,000
 
+\hspace{9em} \textit{The University of Texas at Dallas}
+%Co-PI: <PI name>, <title>, <department name>, <university name>
+
+Cash Funding Needed: USD 80,000
 %AWS Promotional Credits needed: 
 
 Amazon contact: Dr. Hoan Anh Nguyen, nguyenanhhoan@gmail.com
 
+\hspace{7.1em} \textit{nguyenanhhoan@gmail.com}
+\vspace{0.5em}
 
 \input{sections/ara-abstract}
+\vspace{0.5em}
 
 \input{sections/ara-intro}
 \input{sections/ara-fund-request}
-%\input{sections/ccf22-related}
-%\input{sections/ccf22-approach}
-%\input{sections/ccf22-education}
-%\input{sections/ccf22-evaluation}
-%\input{sections/ccf22-prior}
 
 \newpage
 \setcounter{page}{1}
@@ -189,7 +212,5 @@ Amazon contact: Dr. Hoan Anh Nguyen, nguyenanhhoan@gmail.com
 \bibliographystyle{IEEEtran}
 %\nobibliography{oopsla19,icse20,FL,ref,autofixTools}
 \bibliography{oopsla19,icse20,FL,ref,autofixTools,testPri,embeddingEva,reference,icse21IntVD}
-
-%\bibliography{oopsla19, icseAutoFix20,bibliography,icse18,t2api17,ccf18,refs,securesync,tc10,tien,ccf09,ase10,ccf12,anomalies,completion,groums,usagemining,pattern,urls,other}
 
 \end{document}

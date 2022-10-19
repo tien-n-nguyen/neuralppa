@@ -1,0 +1,61 @@
+
+\begin{ganttchart}[
+    canvas/.append style={fill=none, draw=black!5, line width=.75pt},
+    hgrid style/.style={draw=black!5, line width=.75pt},
+    vgrid={*1{draw=black!5, line width=.75pt}},
+    today=0,
+    today rule/.style={
+      draw=black!64,
+      dash pattern=on 3.5pt off 4.5pt,
+      line width=1.5pt
+    },
+    today label font=\small\bfseries,
+    title/.style={draw=none, fill=none},
+    title label font=\bfseries\footnotesize,
+    title label node/.append style={below=7pt},
+    include title in canvas=false,
+    bar label font=\mdseries\small\color{black!70},
+    bar label node/.append style={left=2cm},
+%    bar/.append style={draw=none, fill=black!63},
+    bar/.append style={draw=none, fill=barblue},
+    bar incomplete/.append style={fill=barblue},
+    bar progress label font=\mdseries\footnotesize\color{black!70},
+    group incomplete/.append style={fill=groupblue},
+    group left shift=0,
+    group right shift=0,
+    group height=.5,
+    group peaks tip position=0,
+    group label node/.append style={left=.6cm},
+    group progress label font=\bfseries\small,
+    link/.style={-latex, line width=1.5pt, linkred},
+    link label font=\scriptsize\bfseries,
+    link label node/.append style={below left=-2pt and 0pt}
+  ]{1}{13}
+  \gantttitle[
+    title label node/.append style={below left=7pt and -3pt}
+  ]{MONTHS:\quad1}{1}
+  \gantttitlelist{2,...,12}{1} \\
+%  \ganttgroup[progress=57]{Research Award Timeline}{1}{12} \\
+  \ganttbar[
+%    progress=75,
+    name=WBS1A
+%  ]{\textbf{Task A.} Data Collecttion}{1}{2} \\
+  ]{\textbf{Task A}}{1}{2} \\
+  \ganttbar[
+%    progress=67,
+    name=WBS1B
+  ]{\textbf{Task B}}{3}{4} \\
+  \ganttbar[
+    name=WBS1C
+  ]{\textbf{Task C}}{5}{7} \\
+  \ganttbar[
+    name=WBS1D
+  ]{\textbf{Task D}}{6}{9} \\
+  \ganttbar[
+    name=WBS1E
+  ]{\textbf{Task E}}{10}{12}
+  [grid]
+\end{ganttchart}
+
+
+%\end{document}

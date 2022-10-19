@@ -16,5 +16,14 @@ To accomplish this task, we propose the following thrusts of research:
 \vspace{3pt}
 \noindent \textbf{[Thrust 2] Neural Network-Based Program Dependence Analysis Infrastructure.} The basic infrastructure for learning-based program dependence analysis has two main tasks. First, it learns the well-defined syntactic and semantic information in source code by leveraging the program representations obtained for complete programs in the benchmark datasets. Next, given either a complete or partial code fragment, the trained model infers the inter-statement program dependencies to realize the CFG/PDG for the fragment.
 
+\begin{figure*}[ht]
+\begin{center}
+    \includegraphics[width=\textwidth]{model-abstract.jpg}
+    \caption{Preliminary Design for \tool Model Infrastructure.}
+    \label{fig:model}
+%    \vspace{-12pt}
+\end{center}
+\end{figure*}
+
 \vspace{3pt}
 \noindent \textbf{[Thrust 3] Enabling Fragment-Level Vulnerability Detection with \tool.} Vulnerability detection in code fragments can be facilitated as follows: (a) employing \tool infrastructure to predict the CFG/PDG for a given code fragment; (b) leveraging an existing automated VD tool that utilizes the predicted CFG/PDGs to identify the presence of vulnerabilities in partial code fragments.

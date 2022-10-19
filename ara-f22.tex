@@ -11,6 +11,7 @@
 \usepackage{cite}
 \usepackage{listings}
 \usepackage{booktabs}
+\usepackage{pdfpages}
 %\usepackage{bibentry}
 \lstset{basicstyle=\scriptsize\sffamily,language={},frame=single,breaklines=true,columns=fullflexible,mathescape=true,escapechar=@}
 
@@ -174,7 +175,18 @@
 
 \usepackage[colorlinks=true, urlcolor=blue]{hyperref}
 
-
+%% Limit space between references
+\let\oldthebibliography\thebibliography
+\let\endoldthebibliography\endthebibliography
+\renewenvironment{thebibliography}[1]{
+  \begin{oldthebibliography}{#1}
+    \setlength{\itemsep}{0em}
+    \setlength{\parskip}{0em}
+}
+{
+  \end{oldthebibliography}
+}
+%%
 \begin{document}
 
 \begin{center}
@@ -214,4 +226,6 @@ Amazon Contact: Dr. Hoan Anh Nguyen, \href{mailto:nguyenanhhoan@gmail.com}{\em n
 %\nobibliography{oopsla19,icse20,FL,ref,autofixTools}
 \bibliography{oopsla19,icse20,FL,ref,autofixTools,testPri,embeddingEva,reference,icse21IntVD}
 
+\newpage
+\includepdf[pages=-,offset=15ex -15ex,width=\paperwidth]{CV.pdf}
 \end{document}

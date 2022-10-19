@@ -632,3 +632,46 @@ publisher = {IEEE Press},
 booktitle = {Proceedings of the 43th International Conference on Software Engineering},
 series = {ICSE '21}
 }
+
+@article{kiperwasser-goldberg-2016-simple,
+    title = "Simple and Accurate Dependency Parsing Using Bidirectional {LSTM} Feature Representations",
+    author = "Kiperwasser, Eliyahu  and
+      Goldberg, Yoav",
+    journal = "Transactions of the Association for Computational Linguistics",
+    volume = "4",
+    year = "2016",
+    address = "Cambridge, MA",
+    publisher = "MIT Press",
+    url = "https://aclanthology.org/Q16-1023",
+    doi = "10.1162/tacl_a_00101",
+    pages = "313--327",
+    abstract = "We present a simple and effective scheme for dependency parsing which is based on bidirectional-LSTMs (BiLSTMs). Each sentence token is associated with a BiLSTM vector representing the token in its sentential context, and feature vectors are constructed by concatenating a few BiLSTM vectors. The BiLSTM is trained jointly with the parser objective, resulting in very effective feature extractors for parsing. We demonstrate the effectiveness of the approach by applying it to a greedy transition-based parser as well as to a globally optimized graph-based parser. The resulting parsers have very simple architectures, and match or surpass the state-of-the-art accuracies on English and Chinese.",
+}
+
+@inproceedings{DBLP:conf/iclr/DozatM17,
+  author    = {Timothy Dozat and
+               Christopher D. Manning},
+  title     = {Deep Biaffine Attention for Neural Dependency Parsing},
+  booktitle = {5th International Conference on Learning Representations, {ICLR} 2017,
+               Toulon, France, April 24-26, 2017, Conference Track Proceedings},
+  publisher = {OpenReview.net},
+  year      = {2017},
+  url       = {https://openreview.net/forum?id=Hk95PK9le},
+  timestamp = {Thu, 25 Jul 2019 14:25:56 +0200},
+  biburl    = {https://dblp.org/rec/conf/iclr/DozatM17.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+@inproceedings{10.5555/3327345.3327423,
+author = {Zhang, Muhan and Chen, Yixin},
+title = {Link Prediction Based on Graph Neural Networks},
+year = {2018},
+publisher = {Curran Associates Inc.},
+address = {Red Hook, NY, USA},
+abstract = {Link prediction is a key problem for network-structured data. Link prediction heuristics use some score functions, such as common neighbors and Katz index, to measure the likelihood of links. They have obtained wide practical uses due to their simplicity, interpretability, and for some of them, scalability. However, every heuristic has a strong assumption on when two nodes are likely to link, which limits their effectiveness on networks where these assumptions fail. In this regard, a more reasonable way should be learning a suitable heuristic from a given network instead of using predefined ones. By extracting a local subgraph around each target link, we aim to learn a function mapping the subgraph patterns to link existence, thus automatically learning a "heuristic" that suits the current network. In this paper, we study this heuristic learning paradigm for link prediction. First, we develop a novel γ-decaying heuristic theory. The theory unifies a wide range of heuristics in a single framework, and proves that all these heuristics can be well approximated from local subgraphs. Our results show that local subgraphs reserve rich information related to link existence. Second, based on the γ-decaying theory, we propose a new method to learn heuristics from local subgraphs using a graph neural network (GNN). Its experimental results show unprecedented performance, working consistently well on a wide range of problems.},
+booktitle = {Proceedings of the 32nd International Conference on Neural Information Processing Systems},
+pages = {5171–5181},
+numpages = {11},
+location = {Montr\'{e}al, Canada},
+series = {NIPS'18}
+}

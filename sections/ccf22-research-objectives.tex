@@ -2,7 +2,7 @@
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=0.9\textwidth]{graphs/neuralppa}
+    \includegraphics[width=0.83\textwidth]{graphs/neuralppa}
     \vspace{-12pt}
     \caption{{\tool}: Machine Learning-based Program Analysis Infrastructure}
     \label{fig:arch}
@@ -55,38 +55,22 @@ PDGs with complete program dependencies retrieved from existing code
 repositories and derive the dependencies for the (partial) code
 fragment under study. The PI group also reported a high repetitiveness
 level for AST code structure in open-source
-projects~\cite{icse15}. Finally, such a program analysis
-infrastructure like {\tool} can be drawn from the spirit and successes
-of the approaches in natural language processing (NLP). For example,
-at the lexical level, the task of deriving the token types for source
-code tokens could be analogous to the part-of-speech (PoS) tagging in
-NLP. At the syntax level, the task of learning the syntactic structure
-in AST of the partial code can be inspired by the approaches to build
-parse trees for natural-language texts. At the semantic level, the
-partial program dependence analysis infrastructure is similar in
-spirit to the the neural network-based dependency parsing in NLP,
-which learns the dependencies signifying the semantic relationships
-between words in a sentence from text corpora.
+projects~\cite{icse15}.
 
-Toward this theme, in our preliminary work, we developed DeepPDA, a neural
-network-based partial program dependence analysis approach that learns
-to derive the program dependencies for any code fragments (i.e., both
-complete and incomplete). In our preliminary empirical evaluation, we
-intrinsically evaluated it on Java and C/C++ programs. First, we
-trained {\tool} on complete code. For testing, we treated each method
-individually and chose a consecutive portion within the method to
-predict the program dependencies, and compared them against the actual
-dependencies. Overall, DeepPDA predicts CFG and PDG edges in Java
-with an F-score of 94.29\%, and in C++ with an F-score of
-92.46\%.
-%
-We also developed as an approach to derive the data
-types of the variables in the code snippets. We treat the problem as
-statistical machine translation from source code with partially
-qualified names to source code with FQNs of the APIs. Our empirical
-evaluation on real-world code and StackOverflow posts shows that our
-technique achieves high accuracy with 97.6\% precision and 96.7\%
-recall in deriving data types in code snippets.
+Finally, such a program analysis infrastructure like {\tool} can be
+drawn from the spirit and successes of the approaches in natural
+language processing (NLP). For example, at the lexical level, the task
+of deriving the token types for source code tokens could be analogous
+to the part-of-speech (PoS) tagging in NLP. At the syntax level, the
+task of learning the syntactic structure in AST of the partial code
+can be inspired by the approaches to build parse trees for
+natural-language texts. At the semantic level, the partial program
+dependence analysis infrastructure is similar in spirit to the the
+neural network-based dependency parsing in NLP, which learns the
+dependencies signifying the semantic relationships between words in a
+sentence from text corpora.
+
+
 
 
 In {\tool}, we propose the following thrusts of research
@@ -157,4 +141,20 @@ for an execution.
 
 \input{sections/ccf22-plan-table}
 
-
+Toward this theme, in our preliminary work, we developed DeepPDA, a
+neural network-based partial program dependence analysis approach that
+learns to derive the program dependencies for any code fragments
+(i.e., both complete and incomplete). In our preliminary empirical
+evaluation, we intrinsically evaluated it on Java and C/C++
+programs. First, we trained {\tool} on complete code. For testing, we
+treated each method individually and chose a consecutive portion
+within the method to predict the program dependencies, and compared
+them against the actual dependencies. Overall, DeepPDA predicts CFG
+and PDG edges in Java with an F-score of 94.29\%, and in C++ with an
+F-score of 92.46\%. We also developed as an approach to derive the
+data types of the variables in the code snippets. We treat the problem
+as statistical machine translation from source code with partially
+qualified names to source code with FQNs of the APIs. Our empirical
+evaluation on real-world code and StackOverflow posts shows that our
+technique achieves high accuracy with 97.6\% precision and 96.7\%
+recall in deriving data types in code snippets.

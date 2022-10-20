@@ -65,10 +65,11 @@ to the part-of-speech (PoS) tagging in NLP. At the syntax level, the
 task of learning the syntactic structure in AST of the partial code
 can be inspired by the approaches to build parse trees for
 natural-language texts. At the semantic level, the partial program
-dependence analysis infrastructure is similar in spirit to the the
-neural network-based dependency parsing in NLP, which learns the
-dependencies signifying the semantic relationships between words in a
-sentence from text corpora.
+dependence analysis infrastructure is similar in spirit to the neural
+network-based dependency parsing in NLP, which learns the dependencies
+signifying the semantic relationships between words in a sentence from
+text corpora. In addition, there is much room for innovations in AI/ML
+for source code.
 
 
 
@@ -80,14 +81,14 @@ In {\tool}, we propose the following thrusts of research
 \noindent \textbf{Thurst 1. Neural Structural Analysis Infrastructure
   \code{NeuralStruct}.} ({\em Section~\ref{}}) Source code has
 well-defined structures and semantics. Thus, the basic infrastructure
-in {\tool} is the neural structural analysis (\code{NeuralStruct})
-component.  This component has two main tasks. First, it learns from
-the syntactic structures of the complete code in the training dataset
-collected from large-scale code repositories, to derive the abstract
-syntax tree (AST) that best represents the syntactic structure of the
-given partial code, i.e., with the highest likelihood/probability.
-The traditional lexical analyzer still works for partial code due to
-the independence nature of lexical tokens. The second task of this
+in {\tool} is the neural structural analysis component.  This
+component has two main tasks. First, it learns from the syntactic
+structures of the complete code in the training dataset collected from
+large-scale code repositories, to derive the abstract syntax tree
+(AST) that best represents the syntactic structure of the given
+partial code, i.e., with the highest likelihood/probability.  The
+traditional lexical analyzer still works for partial code due to the
+independence nature of lexical tokens. The second task of this
 component is to tag the code tokens with the types of the syntactic
 units including the statement types (\code{if}, \code{for}, etc.),
 variables, fields, methods, classes, etc. Both of the tasks can be
@@ -96,8 +97,8 @@ manner.
   
 \vspace{3pt}
 \noindent \textbf{Thurst 2. Neural Semantic Analysis Infrastructure.}
-({\em Section~\ref{}}) The basis components for several program
-analysis techniques include the following:
+({\em Section~\ref{}}) The basis components for several analysis
+techniques on the semantics of the program include the following:
 
 1) the identification of the APIs of the external libraries in the
 external references in the partial code: this is needed because the
@@ -107,8 +108,9 @@ APIs in the external libraries.
 
 2) the inference of the type information for the entities in the
 partial code: due to the ambiguity in the declaration, the types of
-the variables and statements are not always obviously defined. Thus,
-the type inference is a basic service within {\tool}.
+the variables and statements are not always obviously
+identified. Thus, the type inference is a basic service within
+{\tool}.
 
 3) the inference of the program dependencies among the statements in
 the partial code: several program analysis techniques are based on the
@@ -117,7 +119,16 @@ incompleteness of the given code fragment.
 
 \vspace{3pt}
 \noindent \textbf{Thurst 3. Neural Symbolic Execution Infrastructure.}
-...
+Symbolic execution is a means of analyzing a program to determine what
+inputs cause each part of a program to execute. Symbolic execution
+performs executing a program abstractly, so that one abstract
+execution covers multiple possible inputs, which are assumed to have
+symbolic values. We aim to explore the novel area in AI named
+neuro-symbolic learning, which seeks to combine traditional
+rules-based AI approaches with modern deep learning techniques.  We
+will leverage traditional program analysis rules to enhance the
+learning of the characteristics on the execution of the partial code
+fragment.
 
 \vspace{3pt}
 \noindent \textbf{Thurst 4. Neural Partial Program Analysis
@@ -127,16 +138,16 @@ in a few applications. We choose the following software engineering
 applications: 1) software vulnerability detection for code snippets,
 2) fault localization, and 3) code completion.
 
-\vspace{3pt}
-\noindent \textbf{Thurst ???. Neural Execution Analysis Infrastructure.}
-({\em Section~\ref{}}) All the dynamic analysis techniques require the
-analysis and understanding of the execution. However, for an
-incomplete code, we first need to design a component that can wrap
-around the given code fragment with the minimum code so that the code
-fragment can be executed. When the code is executed, we also need the
-approaches that represent the executed statements and their relations,
-model the execution and stack traces, and model the code coverages
-for an execution.
+%\vspace{3pt}
+%\noindent \textbf{Thurst ???. Neural Execution Analysis Infrastructure.}
+%({\em Section~\ref{}}) All the dynamic analysis techniques require the
+%analysis and understanding of the execution. However, for an
+%incomplete code, we first need to design a component that can wrap
+%around the given code fragment with the minimum code so that the code
+%fragment can be executed. When the code is executed, we also need the
+%approaches that represent the executed statements and their relations,
+%model the execution and stack traces, and model the code coverages
+%for an execution.
 
 
 \input{sections/ccf22-plan-table}

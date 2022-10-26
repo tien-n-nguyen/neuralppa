@@ -1,4 +1,379 @@
 \section{Ongoing Work on Type Inference for Partial Code}
 \label{sec:statype}
 
+\subsection{An Example of a StackOverflow Code Snippet}
 
+\begin{figure}[t]
+\begin{lstlisting}[basicstyle=\footnotesize\sffamily, stepnumber=1, numbers=left, numbersep=-6pt, framexleftmargin=0mm, framexrightmargin=0mm, language=Java, emph ={Event,sinkEvents,iframe,setEventListener,EventListener,StyleElement,Document,get,createStyleElement,setInnerText,resources,css,getText,getContentDocument,getHead,getBody,appendChild,ParagraphElement,createPElement,addClassName,whatever}]
+    Event.sinkEvents(iframe, Event.ONLOAD);
+    Event.setEventListener(iframe, new EventListener() {
+        public void onBrowserEvent(Event event) {
+            StyleElement style = Document.get().createStyleElement();
+            style.setInnerText(resources.css().getText());
+            iframe.getContentDocument().getHead().appendChild(style);
+
+            ParagraphElement pEl = Document.get().createPElement();
+            pEl.setInnerText("Hello World");
+            pEl.addClassName(resources.css().getText());
+            iframe.getContentDocument().getBody().appendChild(pEl);
+        }
+    });
+\end{lstlisting}
+\vspace{-0.1in}
+\caption{StackOverflow post \#34595450 on GWT Widgets~\cite{soexample}}
+\label{example}
+\end{figure}
+
+StackOverflow is a good resource of high quality code snippets that
+show correct API usages. However, due to the discussion context and
+the informal nature of the forum, code snippets rarely contain
+sufficient declarations and references to fully-qualified names.
+
+%This example illustrates three key challenges in resolving ype
+%information.
+
+Let us use a real-world example to illustrate the 
+challenges in~resolving 
+%fully qualified names (FQNs) 
+the FQNs for an SO code snippet. Figure~\ref{example} shows a
+code snippet of an answer for an SO post
+%\#34595450 
+on Widgets in the GWT library. 
+
+First, the snippets are not often embedded in methods or classes. In
+Figure~\ref{example}, the code does not have an enclosing method or
+class.
+
+Second, they may refer to variables whose {\em declarations are not
+  included}, and~their {\em identifiers are largely unqualified}. For
+example, the variable \code{iframe} at lines 1, 2, 6, and 11 do not
+have a declaration because the responder assumes that users would add
+a declaration of type \code{IFrameElement} for \code{iframe} or add a
+method call to the API \code{createIFrameElement} to get an object of
+the type \code{IFrameElement}.
+%
+%\code{iframe} was declared earlier with the type \code{IFrameElement}
+%a declaration of the type \code{IFrameElement} for \code{} 
+%or an access to such an object by a prior call to
+%\code{createIFrameElement}. 
+%
+
+Third, {\em the external references in code snippets are also often
+  undeclared}. Specifically, code snippets frequently refer to
+external types without specifying their FQNs since the
+responder assumes that those FQNs could be implicitly understood in
+the context of~the post.
+%Tien
+%
+%assumes that users would add the required imported libraries when
+%using the snippet in their programs in an IDE.
+%
+%
+For example, the types \code{Event}, \code{EventListener},
+\code{StyleElement}, \code{Document}, and \code{ParagraphElement} are
+referenced by simple names only.
+
+%Therefore, if a user copies the code snippet into an IDE for editing,
+%(s)he needs to add the \code{import} statements for the required
+%packages in GWT.
+
+Fourth, {\em name ambiguity occurs in the references to external
+  libraries}. For example, the type \code{EventListener} at line 2 is
+a common unqualified type name. In this snippet, it refers to
+\code{com.google.gwt.user.client.\-Event\-Listener}. However, it is
+ambiguous with \code{java.util.EventListener} in JDK. Similarly, the
+simple type name \code{Document} at line 4 is also popular
+(\code{com.google.gwt.dom.client.Document},
+\code{org.eclipse.jface.text.Document}, \code{org.w3c.dom.Document},
+etc).
+%Thus, if the code snippet is placed inside a class within an IDE, it
+%will not be compiled due to missing \code{import} statements for
+%needed packages.
+%In fact, the phenomenon of 
+In fact, external reference ambiguity is
+popular~\cite{dagenais-icse12}.
+%has been reported before.
+%by Dagenais and Robillard~\cite{dagenais-icse12}: 89\% of method names
+%in their study are ambiguous and on average, a method name has 13
+%candidate FQNs.
+%
+%Subramanian {\em et al.}~\cite{liveapi14} reported that 
+For example, the simple names \code{getId} and \code{Log} occur 27,434
+and 284 times respectively in various Java libraries~\cite{liveapi14}.
+
+
+%In a later version, it uses a dictionary of all the APIs of the
+%libraries of interest. This is tedious to build a dictionary.
+
+
+To address those ambiguities,
+%in resolving the FQNs, for the elements in a code snippet,
+existing approaches rely on rules and heuristics mainly from
+program analysis. 
+%
+%ACE~\cite{rigby-icse13} focuses on resolving types for API names
+%within texts via text analysis of the enclosing SO posts, thus, is
+%inapplicable for this example.
+%
+RecoDoc~\cite{dagenais-icse12} uses heuristics in the partial program analysis tool,
+PPA~\cite{dagenais-oopsla08}, 
+%to apply heuristics on syntactic constructs to recover the declared
+%types of certain expressions (\eg assignments). Unfortunately, 
+however, in many cases, the heuristics help recover only partially
+qualified names, due to much missing information. For example, at line
+6, Figure~\ref{example}, the types of the receiver \code{iframe} and
+method call \code{getContentDocument}, are not known. In contrast,
+Baker~\cite{liveapi14} uses a dictionary of all the API names of
+interest. Each API name has multiple candidates of FQNs. Baker
+iteratively cuts off the candidates by overlapping the candidate lists
+of API names in the same scopes in the code snippet. However, scoping
+rule or other rules/heuristics are not always effective in incomplete
+code snippets. In this example, lines 4--6 in Figure~\ref{example}
+have only one scope with the popular API names having many potential
+FQNs (\code{Document}, \code{getText}, \code{appendChild}). Moreover,
+building and updating a dictionary of the APIs require
+much~effort~\cite{dagenais-fse10}.
+
+
+%{\em program analysis}, {\em text analysis}, or {\em deductive
+%  analysis}, and/or the use of {\em an oracle of APIs of
+%  interest}. 
+%
+%Specifically, partial program analysis (PPA)
+%technique~\cite{dagenais-oopsla08} performs partial parsing and type
+%resolution with several heuristics. PPA disambiguates the names by
+%applying a set of heuristics on the syntactic constructs to recover
+%the declared types of certain expressions in an incomplete code
+%snippet. Unfortunately, in many cases, the heuristics help recover
+%only partially qualified names, due to much missing information. For
+%example, at line 6, the types of the receiver, method call, and
+%arguments are not known.
+%
+%RecoDoc~\cite{dagenais-icse12} suffers the same issues since it uses
+%PPA to link an API and documentation.
+%
+%ACE~\cite{rigby-icse13} focuses on resolving types for API names
+%within texts via text analysis of the enclosing SO posts, thus, is
+%inapplicable for this example. 
+%Baker~\cite{liveapi14} uses a dictionary of all the API names of
+%interest. Each API name has multiple candidates of FQNs.  Baker
+%iteratively cuts off the candidates by overlapping the candidate lists
+%of API names in the same scopes in the code snippet. However, scope
+%rules are not always effective in incomplete code with few scopes or
+%in popular names with many potential FQNs, \eg \code{Document},
+%\code{getText}, \code{appendChild} on lines 4--6. Moreover, building
+%and updating an oracle of the APIs require
+%much~effort~\cite{dagenais-fse10}.
+
+%=========================================================================
+%To address those ambiguities in resolving the FQNs for the elements in
+%a code snippet, existing approaches rely on {\em program analysis},
+%{\em text analysis}, or {\em deductive analysis}, and/or the use of
+%{\em an oracle of APIs of interest}.
+%
+%Specifically, partial program analysis (PPA)
+%technique~\cite{dagenais-oopsla08} performs partial parsing and type
+%resolution with several heuristics. PPA disambiguates the names by
+%applying a set of heuristics on the syntactic constructs to recover
+%the declared types of certain expressions in an incomplete code
+%snippet. Unfortunately, in many cases, the heuristics help recover
+%only partially qualified names, due to much missing information. For
+%example, at line 1, the types of the receiver, method call, and
+%arguments are not known. RecoDoc~\cite{dagenais-icse12} suffers the
+%same issues since it uses PPA to link an API and documentation.
+%ACE~\cite{rigby-icse13} focuses on resolving types for API names
+%within texts via text analysis of the enclosing SO posts, thus, is
+%inapplicable for this example. Baker~\cite{liveapi14} uses a
+%dictionary of all the API names of interest. Each API name has
+%multiple candidates of FQNs.  Baker iteratively cuts off the
+%candidates by overlapping the candidate lists of API names in the same
+%scopes in the code snippet. However, scope rules are not always
+%effective in incomplete code with few scopes or in popular names with
+%many potential FQNs, \eg \code{Document}, \code{getText},
+%\code{appendChild} on lines 4--6. Moreover, building and updating an
+%oracle of the APIs require much~effort~\cite{dagenais-fse10}.
+%=======================================================================
+
+%--------------------------------------------------------------
+%To address those ambiguities in resolving the FQNs for the program
+%elements in a code snippet, existing approaches rely on {\em program
+%  analysis}, {\em text analysis}, and/or the use of {\em an oracle of
+%  APIs of interest}. Specifically, partial program analysis (PPA)
+%technique~\cite{dagenais-oopsla08} performs partial parsing and type
+%resolution with several heuristics. PPA disambiguates the names by
+%applying a set of heuristics on~the syntactic constructs to recover
+%the declared types of certain expressions in an incomplete code
+%snippet. Unfortunately, in many cases,~the heuristics help recover
+%only partially qualified names, due to much missing information.  For
+%example, at line 1, the types of the receiver, method call, and
+%arguments are not known. RecoDoc~\cite{dagenais-icse12} suffers the
+%same issues since it uses PPA to link an API and documentation. With
+%context analysis, ACE~\cite{rigby-icse13} analyzes the API names by
+%considering the {\em textual contexts} surrounding them in SO
+%posts. However, it might not be always effective since the surrounding
+%texts might not be sufficient and code snippets were not analyzed.
+%Baker~\cite{liveapi14} uses a dictionary of all the API names in the
+%libraries of interest. Each API name has multiple candidates of FQNs.
+%Baker iteratively cuts off the candidates by overlapping the candidate
+%lists of multiple names in the same scopes in the code
+%snippet. However, scope rules are not always effective in incomplete
+%code or in popular names with many potential FQNs, \eg
+%\code{Document}, \code{getText}, \code{appendChild} on lines 4--6.
+%Thus, after its process, the resulting API names from Baker still have
+%multiple potential FQNs. Moreover, building and updating an oracle of
+%the APIs require much~effort~\cite{dagenais-fse10}.
+%-----------------------------------------------------------------
+
+%is also time-consuming.
+
+%
+% many API elements have
+% more than one potential fully qualified type names
+
+%problem with oracle
+%overlapping
+
+%\vspace{-0.14in}
+\subsection{Key Ideas}
+
+%type references, method calls, and field references.
+
+%resolve the simple names
+
+In this work, we develop {\tool}, a technique to identify the FQNs for
+the simple names of {\em variables, API classes, method calls, and
+  field accesses} in a code snippet in online forums.
+%
+In our solution, we leverage two kinds of context in deriving FQNs for
+API elements. 
+
+The first one is the {\em type context} of API elements in a
+large code corpus. We call it the principle of {\em regularity of API
+  elements}.
+%FINAL
+%Hindle {\em et al.}~\cite{natural} has shown that software exhibits
+%its naturalness: source code has a higher degree of regularity than
+%English texts. We expect the same principle of naturalness of software
+%to occur for the API elements in the API code usages. 
+That is, in the API usages, the API elements including API classes,
+method calls, and field accesses of software libraries do not occur
+randomly. They appear regularly with certain other API elements due to
+the intent of the libraries' designers to provide certain
+functionality in API usages. For example, to manipulate style
+information for a frame in GWT, at lines 4--6 in Figure~\ref{example},
+a \code{StyleElement} in GWT could be created via a call to
+\code{createStyleElement} of a \code{Document} object. Then, the style
+is assigned with a name via \code{StyleElement.setInnerText} and
+associated with an \code{IFrameElement} object. Those API elements of
+those types repeatedly occur together because such tasks are provided
+by the GWT library and intended via such API usages. Thus, if {\tool}
+observes the API usages involving those API elements in a large corpus
+of programs using GWT, it can use the context of the given code
+snippet to derive the most likely FQNs for the APIs in the
+snippet. For example, the context of the API names
+\code{StyleElement}, \code{Document}, and \code{createStyleElement}
+could give {\tool} a hint on the FQNs of the undeclared variable
+\code{iframe}, the method calls \code{getContentDocument},
+\code{appendChild}, and vice versa.
+
+To learn the context, we rely on the basis of regularity with a large
+corpus: the API elements regularly going together in API
+usages have higher impact in deciding the FQNs than the less
+regular~ones.
+
+%ones that
+%are project-specific and less likely to appear frequently~together.
+
+%To learn the context, we rely on the basis of regularity with a large
+%corpus containing the APIs of interest. That is, the API elements that
+%regularly go together in API usages will have higher impact in
+%deciding the FQNs than the ones that are project-specific and less
+%likely to appear frequently~together. 
+
+%
+%For example, with a large corpus of programs using GWT, a model could
+%learn that \code{com.google.gwt.user.client.Event.setEventListener}
+%often goes with \code{com.google.gwt.user.client.Event.EventListener},
+%and \code{com.google.\-gwt.user.client.Event.sinkEvents}.
+
+The second context is called {\em resolution context} on how the types
+of API names surrounding an API name have been resolved. The
+undeclared/ambiguous references are expected to be disambiguated with
+{\em the most likely FQNs with regard to the FQNs of the surrounding
+  names}.
+%
+For example, at lines 3--4, when resolving \code{Event},
+\code{StyleElement}, and \code{Document}, we could use an effective
+search strategy to maintain the sequences of FQNs with the highest
+probabilities. For \code{Event}, we have multiple candidates. However,
+if we chose \code{com.google.gwt.user.client.Event} for \code{Event},
+then based on their regularity, we could maintain the option
+\code{com.google.gwt.dom.client.Document} for \code{Document}, with a
+higher score than \code{org.w3c.dom.Document}. Finally, the sequence
+with the highest score will be reported as the~result.
+
+%Then, we use it to decide the type for the next API.
+
+%with a large corpus of programs using GWT, a model could
+%learn that \code{com.google.gwt.user.client.Event.setEventListener}
+%often goes with \code{com.google.gwt.user.client.Event.EventListener},
+%and \code{com.google.\-gwt.user.client.Event.sinkEvents}.
+
+
+
+% ---- old ---
+%In this work, to realize that philosophy, we use a data-driven
+%approach with the two following key ideas:
+
+%1) In the context of API usages, certain API elements need to be used
+%together because they have to follow the API specifications. For
+%example, with a large corpus of programs using GWT, a model could
+%learn that \code{com.google.gwt.user.client.Event.setEventListener}
+%often goes with \code{com.google.gwt.user.client.Event.EventListener},
+%and \code{com.google.\-gwt.user.client.Event.sinkEvents}.
+%To learn the contexts, we rely on the {\bf basis of regularity} with a
+%large corpus containing the APIs of interest. That is, the API
+%elements that regularly go together in API usages will have higher
+%impact in deciding the FQNs than the ones that are project-specific
+%and less likely to appear frequently~together.
+
+%2) To narrow the candidate FQN list for an API name, we could use the
+%{\bf context of its surrounding API names}. The undeclared/ambiguous
+%references are expected to be disambiguated with the most likely FQNs
+%with regard to the FQNs for surrounding names.
+%------------------------------------------------------------
+
+%
+%\code{com.google.gwt.user.client.Event.sinkEvents} receives two
+%arguments of the types \code{com.google.gwt.dom.client.Element} and
+%\code{int}, and it often goes with
+%\code{com.google.gwt.user.client.Event.setEventListener}, etc.
+%
+%For example, at line 1 of Figure~\ref{example}, even though we do not
+%have the declaration of \code{iframe}, however, with the large corpus
+%of open-source projects, the model could learn that the method
+%\code{com.google.gwt.user.client.Event.sinkEvents} receives two
+%arguments of the type \code{com.google.gwt.dom.client.Element} and
+%\code{int}, and it often goes with
+%\code{com.google.gwt.user.client.Event.setEventListener}.
+
+
+%Tien
+%\input{rules.tex}
+%\input{smt-motiv}
+
+
+
+%2) {\em Second}, because the translation takes into account {\bf the
+%  context consisting of surrounding API elements/names}, the
+%undeclared/ambiguous references will be disambiguated with the most
+%likely FQNs with regard to the FQNs of their surrounding names.
+
+%3) ambiguity: Third, not all the changes in the current context are useful in
+%recommendation because they can be project-specific and considered
+%as noise in the change patterns. Recent work [41] confirms
+%that not all code changes are repetitive. To address this, we rely on
+%the basis of consensus: given a large number of changes in many
+%projects, the project-specific changes are less likely to appear frequently
+%than the changes belonging to a higher-level intent pattern.
+%-==> undeclared types

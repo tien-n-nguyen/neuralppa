@@ -1,4 +1,4 @@
-\section{On-going Work on Neural Program Dependence Analysis}
+\subsection{On-going Work on Neural Program Dependence Analysis}
 \label{sec:deeppda}
 
 In the neural network-based dependency parsing
@@ -66,7 +66,7 @@ learn different aspects of contextualization.
 %details are as follows:
 
 \vspace{2pt}
-\subsection{{\bf Intra-Statement Context Learning (IntraS-CL)}}
+\subsubsection{{\bf Intra-Statement Context Learning (IntraS-CL)}}
 \label{sec:ppda_arch_intra}
 The syntactic and semantic knowledge of the code tokens within a
 single statement must be made available globally to other statements
@@ -130,7 +130,7 @@ are truncated to $M$ tokens.
 %passed on for inter-statement contextualization.
 
 \vspace{2pt}
-\subsection{\bf Inter-Statement Context Learning (InterS-CL)}
+\subsubsection{\bf Inter-Statement Context Learning (InterS-CL)}
 The knowledge of surrounding statements in the context of a given
 statement helps \tool model the dependencies between them better. We
 enable this via a multi-layer bidirectional Transformer encoder based
@@ -185,7 +185,7 @@ zero vectors ($\in \mathbb{R}^d$) are padded to the inputs.
 %statements. After this, we obtain the contextualized statement representations.
 
 \vspace{1pt}
-\subsection{\bf Pairwise Dependence Decoding}
+\subsubsection{\bf Pairwise Dependence Decoding}
 %Pairs of latent feature vectors $\langle v_i, v_j \rangle$ (1$\leq i, j\leq$ N) are taken from the sequence of intra and inter-statement contextualized statement representations corresponding to all statements in a program, to detect the presence of CFG/PDG edges between them. A combination of all such CFG/PDG edges extracted via the arc-factored approach is realized as the CFG/PDG for the given program. We leverage 2-layered multi-layer perceptron networks (one each for detecting CFG and PDG edges, i.e., MLP\textsubscript{CFG} and MLP\textsubscript{PDG} respectively) for the pairwise dependence decoding phase, which are scored as follows:
 
 From the sequence of contextualized statement representations $v_i \in
@@ -210,7 +210,7 @@ statement $s_i$ to statement $s_j$. The combination of all the CFG/PDG
 edges extracted via such an arc-factored approach is realized as the
 CFG/PDG for the given program.
 
-\subsection{\bf Training Process}
+\subsubsection{\bf Training Process}
 
 Training \tool requires the knowledge of ground-truth CFG and PDG edges between statements in a program. Thus, it can only be trained on complete programs (at a minimum, which are at a method-level granularity) so as to be able to leverage program analysis tools to extract them. The CFG and PDG edge information can then be utilized to compute the training objective loss (i.e., $\mathcal{L}$) for our model as follows: $\mathcal{L} = \mathcal{L}\textsubscript{CFG} + \mathcal{L}\textsubscript{PDG}$
 %\begin{equation}
@@ -221,7 +221,7 @@ where $\mathcal{L}\textsubscript{CFG}$ is the loss for CFG edge-decoding, and $\
 
 %Overall, \tool has about 39M parameters.
 
-\subsection{\bf Inference for Dependency Discovery}
+\subsubsection{\bf Inference for Dependency Discovery}
 \label{sec:inference}
 Despite being trained on only complete code, one can leverage \tool to extract the control-flow and program dependence edges for both complete and partial code. The following, however, are the important points of consideration:
 %\textit{Statement Types}: To extract the syntactic information encoded

@@ -3,8 +3,8 @@
 
 \subsection{An Example of a StackOverflow Code Snippet}
 
-\begin{figure}[t]
-\begin{lstlisting}[basicstyle=\footnotesize\sffamily, stepnumber=1, numbers=left, numbersep=-6pt, framexleftmargin=0mm, framexrightmargin=0mm, language=Java, emph ={Event,sinkEvents,iframe,setEventListener,EventListener,StyleElement,Document,get,createStyleElement,setInnerText,resources,css,getText,getContentDocument,getHead,getBody,appendChild,ParagraphElement,createPElement,addClassName,whatever}]
+\begin{wrapfigure}{l}{0.55\textwidth}
+\begin{lstlisting}[basicstyle=\scriptsize\sffamily, stepnumber=1, numbers=left, numbersep=-6pt, framexleftmargin=0mm, framexrightmargin=0mm, language=Java, emph ={Event,sinkEvents,iframe,setEventListener,EventListener,StyleElement,Document,get,createStyleElement,setInnerText,resources,css,getText,getContentDocument,getHead,getBody,appendChild,ParagraphElement,createPElement,addClassName,whatever}]
     Event.sinkEvents(iframe, Event.ONLOAD);
     Event.setEventListener(iframe, new EventListener() {
         public void onBrowserEvent(Event event) {
@@ -22,7 +22,7 @@
 \vspace{-0.1in}
 \caption{StackOverflow post \#34595450 on GWT Widgets~\cite{soexample}}
 \label{example}
-\end{figure}
+\end{wrapfigure}
 
 StackOverflow is a good resource of high quality code snippets that
 show correct API usages. However, due to the discussion context and
@@ -34,8 +34,8 @@ sufficient declarations and references to fully-qualified names.
 
 Let us use a real-world example to illustrate the 
 challenges in~resolving 
-%fully qualified names (FQNs) 
-the FQNs for an SO code snippet. Figure~\ref{example} shows a
+the fully qualified names (FQNs) 
+for an SO code snippet. Figure~\ref{example} shows a
 code snippet of an answer for an SO post
 %\#34595450 
 on Widgets in the GWT library. 
@@ -71,15 +71,10 @@ the context of~the post.
 %
 For example, the types \code{Event}, \code{EventListener},
 \code{StyleElement}, \code{Document}, and \code{ParagraphElement} are
-referenced by simple names only.
-
-%Therefore, if a user copies the code snippet into an IDE for editing,
-%(s)he needs to add the \code{import} statements for the required
-%packages in GWT.
-
-Fourth, {\em name ambiguity occurs in the references to external
-  libraries}. For example, the type \code{EventListener} at line 2 is
-a common unqualified type name. In this snippet, it refers to
+referenced by simple names only. Fourth, {\em name ambiguity occurs in
+  the references to external libraries}. For example, the type
+\code{EventListener} at line 2 is a common unqualified type name. In
+this snippet, it refers to
 \code{com.google.gwt.user.client.\-Event\-Listener}. However, it is
 ambiguous with \code{java.util.EventListener} in JDK. Similarly, the
 simple type name \code{Document} at line 4 is also popular
@@ -234,13 +229,13 @@ much~effort~\cite{dagenais-fse10}.
 %overlapping
 
 %\vspace{-0.14in}
-\subsection{Key Ideas}
+\subsection{Key Ideas in {\tool}}
 
 %type references, method calls, and field references.
 
 %resolve the simple names
 
-In this work, we develop {\tool}, a technique to identify the FQNs for
+As part of {\tool}, we will develop a technique to identify the FQNs for
 the simple names of {\em variables, API classes, method calls, and
   field accesses} in a code snippet in online forums.
 %

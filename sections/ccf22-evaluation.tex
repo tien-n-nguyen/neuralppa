@@ -10,51 +10,104 @@
 %3) How effectively do the proposed tools and methods help developers
 %in real development processes?
 
-\paragraph{{\bf (1) Comparative Studies - BD, FL, RT-CI and APR Approaches.}}
-{\em We evaluate how well our CRL-powered approaches in bug
-  detection (BD), fault localization (FL), Regression Testing in
-  Continuous Integration (RT-CI) and automated program repair (APR)
-  approaches are in comparison with the state-of-the-art approaches?}
-First, we use the large-scale cross-language datasets with bug fixes.
-To detect bugs, we will train our BD and FL approaches on buggy code
-with known buggy locations and non-buggy code. For APR, we
-train APR approaches on buggy code with its fixed versions to
-automatically learn fix patterns. Second, for evaluation, we follow
-prior research for BD, FL, and APR. \underline{In DB}, we will measure
-the precision, recall, F-measure, and the number of true bugs detected
-in Top-N (e.g., N=50). \underline{In FL}, we use the following:
-\textit{Recall at Top-N}, the number of faults with at least one
-faulty element located within the first N positions.  \textit{Mean
-  Average Rank (MAR)}: For precise localization of all faulty elements
-of each fault, we compute the average ranking of all the faulty
-elements for each fault.  \textit{Mean First Rank (MFR)}: For each
-project, we compute the mean of the first faulty element's rank for
-each fault.  \underline{In RT-CI}, we calculate APFD (Average
-Percentage of Faults Detected), Normalized APFD
-(NAPFD)~\cite{qu2007combinatorial} and Normalized Rank Percentile
-Average (NRPA)~\cite{bertolino2020learning}. Rank Percentile Average
-(RPA) was proposed to adapt the Average Fault Percentile to the
-prioritization problem for computing how much a predicted ranking is
-close to the actual ranking.  \underline{In APR}, we calculate the
-number of bugs automatically fixed and the ratio of correctly fixed
-bugs to the number of plausible patches when comparing with
-traditional APR approaches. Compared with DL ARP, we use: \textit{Top
-  K is the number of times that a correct patch is in the ranked list
-  of top K candidates, e.g., K=1,3,5}.
 
-\paragraph{{\bf (2) Comparative Study on Code Representation Learning (CLR) for BD, FL, RT-CI and APR.}}
-{\em Research question: How effective are our CRL for BD, FL, Testing and APR, and how well are they in comparison with the state-of-the-art approaches?} 
-We will perform controlled experiments to evaluate the effectiveness of our CRL in BD, FL, RT and APR, especially ablation studies on different factors in CRL. In addition, we will continue to compare our CRL with other existing CRL on other software engineering and program analysis topics. We use the same evaluation metrics as the ones in (1) for BD, FL, and APR.
+\paragraph{\bf (1) Partial Code Analysis Performance.} We aim
+to evaluate how well {\tool} can provide the structural analysis and
+semantic analysis for incomplete code fragments.  Assessing the
+performance of \tool is not straightforward, mainly due to the lack of
+ground-truth for partial code fragments. Thus, we could evaluate it on
+programs in Java and C/C++ as follows.  First, we trained {\tool} on
+complete code. For testing, we treated each method individually and
+chose a consecutive portion within the method to predict the actual
+elements and dependencies, and compared them against the actual ones.
+For example, in Thrust 1, if we evaluate the performance of structural
+analysis infrastructure, we could compare the recovered/predicted code
+structure in terms of ASTs against the actual ASTs of the original
+code. For Thrust 2 in dependency analysis, we could treat each method
+individually and chose a consecutive portion within the method to
+predict the program dependencies, and compared them against the actual
+dependencies. We will adopt the standard evaluation metrics, i.e.,
+\textit{Accuracy}, \textit{Precision}, \textit{Recall}, and
+\textit{F-Score}. $Accuracy = \frac{TN+TP}{TN+FP+TP+FN}$, $Recall =
+\frac{TP}{TP+FN}$, $Precision = \frac{TP}{TP+FP}$, and $F{-}Score =
+\frac{2*Recall*Precision}{Recall+Precision}$ where TP = True
+Positives; FP = False Positives; FN = False Negatives; TN = True
+Negatives.
 
-To evaluate our evaluation framework for CRL, we propose the following
-procedure. First, we will choose a well-known DL-based model for each
-application, BD, FL, RT-CI, and APR. For each of those DL-based
-models, we varied the CRL model using our design framework in Thrust
-1. We measure the quality of each CRL model and measure the
-performance of the DL-based model for each application. We will use
-statistical test to evaluate whether the high accuracy of CRL model
-leads to high performance of the same downstream model used in the
-application under study.
+\paragraph{\bf (2) Performance on Complete Code Analysis.}
+We aim to compare the performance of {\tool} (AI/ML + PA) against the
+traditional PA techniques in building structures and dependencies from
+source code. We could collect a set of tools, e.g., to build the
+program dependence graphs to obtain the benchmark. Then, we will
+compare the results from {\tool} and other tools w.r.t. the
+benchmark. We will also measure the time efficiency in building the
+infrastructures such as ASTs or PDGs from all the tools under
+comparison. We will use the same evaluation metrics as in the
+experiments for incomplete code.
+
+\paragraph{\bf (3) Usefulness Evaluation on Downstream Tasks.}
+
+{\em We evaluate how well {\tool} helps in the downstream software
+  engineering tasks for partial code}. For example, in bug and
+vulnerability detection for code snippets, to evaluate the usefulness
+of the PDGs predicted by \tool (say, PDG\textsuperscript{*}), we
+designed experiments around the task of vulnerability detection at two
+levels of granularity: complete code at the method-level, and partial
+code at the snippet-level. For the method-level VD task, we leveraged
+any ML-based vulnerability detection tool, e.g.,
+VulCNN~\cite{wu2022vulcnn}, an image-inspired DL-based VD model which
+utilizes PDGs to predict whether a given method has vulnerabilities or
+not. Here, we aimed to estimate how well PDG\textsuperscript{*}s
+predicted for the methods in the dataset approximate the performance
+of the actual PDGs retrieved from a program-analysis tool. We could
+use the same methodology for evaluating the usefulness of {\tool} in
+other types of software engineering tasks.
+
+
+
+%{\em in bug detection (BD), fault localization (FL), Regression
+%  Testing in Continuous Integration (RT-CI) and automated program
+%  repair (APR) approaches are in comparison with the state-of-the-art
+%  approaches?}  First, we use the large-scale cross-language datasets
+%with bug fixes.  To detect bugs, we will train our BD and FL
+%approaches on buggy code with known buggy locations and non-buggy
+%code. For APR, we train APR approaches on buggy code with its fixed
+%versions to automatically learn fix patterns. Second, for evaluation,
+%we follow prior research for BD, FL, and APR. \underline{In DB}, we
+%will measure the precision, recall, F-measure, and the number of true
+%bugs detected in Top-N (e.g., N=50). \underline{In FL}, we use the
+%following: \textit{Recall at Top-N}, the number of faults with at
+%least one faulty element located within the first N positions.
+%\textit{Mean Average Rank (MAR)}: For precise localization of all
+%faulty elements of each fault, we compute the average ranking of all
+%the faulty elements for each fault.  \textit{Mean First Rank (MFR)}:
+%For each project, we compute the mean of the first faulty element's
+%rank for each fault.  \underline{In RT-CI}, we calculate APFD (Average
+%Percentage of Faults Detected), Normalized APFD
+%(NAPFD)~\cite{qu2007combinatorial} and Normalized Rank Percentile
+%Average (NRPA)~\cite{bertolino2020learning}. Rank Percentile Average
+%(RPA) was proposed to adapt the Average Fault Percentile to the
+%prioritization problem for computing how much a predicted ranking is
+%close to the actual ranking.  \underline{In APR}, we calculate the
+%number of bugs automatically fixed and the ratio of correctly fixed
+%bugs to the number of plausible patches when comparing with
+%traditional APR approaches. Compared with DL ARP, we use: \textit{Top
+%  K is the number of times that a correct patch is in the ranked list
+%  of top K candidates, e.g., K=1,3,5}.
+
+%\paragraph{{\bf (2) Comparative Study on Code Representation Learning (CLR) for BD, FL, RT-CI and APR.}}
+%{\em Research question: How effective are our CRL for BD, FL, Testing and APR, and how well are they in comparison with the state-of-the-art approaches?} 
+%We will perform controlled experiments to evaluate the effectiveness of our CRL in BD, FL, RT and APR, especially ablation studies on different factors in CRL. In addition, we will continue to compare our CRL with other existing CRL on other software engineering and program analysis topics. We use the same evaluation metrics as the ones in (1) for BD, FL, and APR.
+
+%To evaluate our evaluation framework for CRL, we propose the following
+%procedure. First, we will choose a well-known DL-based model for each
+%application, BD, FL, RT-CI, and APR. For each of those DL-based
+%models, we varied the CRL model using our design framework in Thrust
+%1. We measure the quality of each CRL model and measure the
+%performance of the DL-based model for each application. We will use
+%statistical test to evaluate whether the high accuracy of CRL model
+%leads to high performance of the same downstream model used in the
+%application under study.
 
 %\subsection{Evaluation on usefulness of the approaches in helping developers in learning API usages}
 
@@ -75,12 +128,16 @@ application under study.
 %will perform surveys on the quality of the synthesized API usage code
 %to get the feedback for future improvement in the next step.
 
-\paragraph{{\bf (3) Evaluation on proposed tools and methods in helping developers in real-world development}}
+\paragraph{\bf (4) Evaluation on proposed tools and methods in helping developers in real-world development}
 
 We will perform a set of user studies on the usefulness of our
 proposed tools in the wild by releasing our
 tools in the actual real-world development. 
 %We will analyze all the aspects as in the previous studies and the total uptake of the tools.  
 We will record feedback to improve our tools.
-PI Wang will connect with the Industry through our \textit{The New Jersey Innovation Institute} (NJII)~\cite{njii}, an NJIT corporation focusing on helping private enterprise. NJII has a strong tie with companies like AT\&T, Facebook, and Bloomberg. PI Nguyen will work with his existing collaborators in Microsoft, IBM, ABB research.
-%to perform user studies on the groups of developers in certain tasks to evaluate the usefulness of our proposed tools.
+%PI Wang will connect with the Industry through our \textit{The New Jersey Innovation Institute} (NJII)~\cite{njii}, an NJIT corporation focusing on helping pri%vate enterprise.
+UT-Dallas has a strong tie with companies like AT\&T, Facebook, and
+Bloomberg. PI Nguyen will work with his existing collaborators in
+Microsoft, IBM, ABB research to perform user studies on the groups of
+developers in certain tasks to evaluate the usefulness of our proposed
+tools.

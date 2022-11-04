@@ -1,2 +1,11 @@
-\section{Thrust 3. Neural Symbolic Execution Infrastructure}
+\section{Thrust 3. Neural-Symbolic Execution Infrastructure}
 \label{sec:thrust3}
+
+%\subsection{Planned Work on Neural Network-Based Approaches to Symbolic Execution}
+
+Symbolic execution deals with applying constraints over the inputs to determine the execution paths in a program. The composition of these input spaces results in many possible paths an execution might cover. In \cite{10.1145/2338965.2336773}, Geldenhuys {\em et al}. proposed {\em probabilistic symbolic execution}, which counts the number of solutions to a path condition ({\em i.e.}, model counting), thus enabling the assignment of probabilities to program paths. However, this is a byproduct of the assumptions on the uniform distribution of the inputs within their domains. By enhancing the semantics of a program with such probabilities, model counting is useful in obtaining coverage information and bug finding/localization.
+
+%As a part of the neural-symbolic execution infrastructure, 
+We plan to leverage neural networks for determining all possible program paths with their occurrence probabilities. The basis of this work is {\em execution-trace modeling}, which, given an input and a program, determines the execution trace of the program. In our preliminary work on neural program dependence analysis, we observed that our model is able to learn the sense of an execution trace on different attention heads. Thus motivated, we plan to utilize a similar model architecture composed with the latent test input representations to predict the corresponding execution trace. We can also facilitate {\em code coverage modeling} with the knowledge of how a part of the program is executed as the domain of the input variables changes. 
+
+Next, we will extend this work to a model counting framework, where, we will predict the number of all possible execution traces for a given program. To enable this problem setting, we will use a trainable threshold parameter, which will be updated after each iteration in accordance with the criteria defined in the loss function (similar to any other parameters of the model). We can then re-adjust the probabilities corresponding to all program paths that breach this threshold parameter to sum to one, thus establishing the infrastructure for neural network-based probabilistic symbolic execution.  

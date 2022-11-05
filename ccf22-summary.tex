@@ -66,21 +66,24 @@
 \vspace{-.1in}
 
 
-{\bf Overview.}  Analyzing code snippets is not straightforward as
-they are often incomplete, un-parseable, contain declaration/reference
-ambiguity, and may be interspersed between user comments. Such an
-infrastructure must include fundamental supports/services at the
-structural and semantic levels, thus enabling the program analysis
-techniques to be built upon. The basic infrastructure for partial
-program analysis, i.e., for analyzing incomplete code is not yet
-available. No such infrastructure has lead to several limitations. For
-example, it is impossible to utilize vulnerability detection tools to
-find vulnerabilities in code snippets because they rely on program
-representations that cannot be built for the incomplete code. In
-addition to vulnerability detection, such an infrastructure is also
-beneficial to other software engineering (SE) tasks that can tolerate
-a low level of errors and imprecision in building program
-representations.
+%\noindent {\bf Overview.}
+
+\section{Overview}
+
+Analyzing code snippets is not straightforward as they are often
+incomplete, un-parseable, contain declaration/reference ambiguity, and
+may be interspersed between user comments. Such an infrastructure must
+include fundamental supports/services at the structural and semantic
+levels, thus enabling the program analysis techniques to be built
+upon. The basic infrastructure for partial program analysis, i.e., for
+analyzing incomplete code is not yet available. No such infrastructure
+has lead to several limitations. For example, it is impossible to
+utilize vulnerability detection tools to find vulnerabilities in code
+snippets because they rely on program representations that cannot be
+built for the incomplete code. In addition to vulnerability detection,
+such an infrastructure is also beneficial to other software
+engineering (SE) tasks that can tolerate a low level of errors and
+imprecision in building program representations.
 
 To this effect, we set out to investigate {\tool}, a {\em \underline{Neural} Network-Based \underline{P}rogram \underline{A}nalysis} infrastructure. We aim to establish {\em a scientific foundation, novel methodologies, frameworks, models, and algorithmic solutions for neural program analysis}. We address two major issues in Program Analysis:
 
@@ -92,42 +95,56 @@ partial program analysis;
 analysis techniques for (partial) code on which downstream software
 engineering applications can be built.
 
-\noindent {\bf Intellectual Merits.}  In this work, our key philosophy
-is that {\em the analysis of partial code can be learned from the
-  analysis of entire programs in the wealth of information from
-  ultra-large-scale, open-source software repositories}.  In {\tool},
-we propose the following thrusts of research. First, the basic
-infrastructure in {\tool} is the neural structural analysis component.
-It learns from the syntactic structures of the complete code in the
-training dataset collected from large-scale code repositories, to
-derive the abstract syntax tree (AST) that best represents the
-syntactic structure. Next, this component is to tag the code tokens
-with the types of the syntactic units.  Second, the basis components
-for several analysis techniques on the semantics of the program
-include 1) the identification of the APIs of the external libraries in
-the external references in the partial code, 2) the inference of the
-type information for the entities in the partial code, and 3) the
-inference of the program dependencies among the statements in the
-partial code. Third, we aim to explore the novel area in AI named
-neuro-symbolic learning, which seeks to combine traditional
-rules-based AI approaches with modern deep learning
-techniques. Fourth, symbolic execution is a means of analyzing a
-program to determine what inputs cause each part of a program to
-execute. Symbolic execution performs executing a program abstractly,
-so that one abstract execution covers multiple possible inputs, which
-are assumed to have symbolic values. Our last thrust of research is
-aimed to evaluate our basic partial program analysis infrastructure in
-a few applications. We choose the following software engineering
-applications: 1) software vulnerability detection for code snippets,
-2) fault localization, and 3) code completion.
+%\noindent {\bf Intellectual Merit.}
 
-\noindent {\bf Broader Impacts.}  (1) {\tool} will be {\em
-  transformative and directly benefit to our society}, leading to
-increasing developers’ productivity and software quality. It enables
-efficient \textit{impact analysis} during the integration of code
-snippets by identifying the potential consequences of the change. It
-enables \textit{partial program slicing} and \emph{empowers} dynamic
-analysis by identifying additional path conditions (neural
+\section{Intellectual Merit}
+
+%In this work,
+Our key philosophy is that {\em the analysis of partial code can be
+  learned from the analysis of entire programs in the wealth of
+  information from large-scale, open-source software
+  repositories}. We propose the following thrusts of
+research. First, the basic infrastructure in {\tool} is the neural
+structural analysis component. It learns from the syntactic structures
+of the complete code in the training dataset collected from
+large-scale code repositories, to derive the abstract syntax tree
+(AST) that best represents the syntactic structure.
+%Next, this component is to tag the code tokens with the types of the
+%syntactic units.
+Second, the basis components for several analysis techniques on the
+semantics of the program include 1) the identification of the APIs of
+the external libraries in the external references in the partial code,
+2) the inference of the type information for the entities in the
+partial code, and 3) the inference of the program dependencies among
+the statements in the partial code. Third, symbolic execution performs
+executing a program abstractly, so that one abstract execution covers
+multiple possible inputs, which are assumed to have symbolic
+values. We explore an AI area named neuro-symbolic
+learning, which seeks to combine rule-based AI approaches
+with modern deep learning techniques to facilitate symbolic execution.
+%Symbolic execution is a means of analyzing a
+%program to determine what inputs cause each part of a program to
+%execute.
+Our last thrust aims to evaluate our basic partial
+program analysis infrastructure in a few software engineering applications.
+%We choose the
+%following software engineering applications:
+%1) software vulnerability detection for code snippets, 2) fault
+%localization, and 3) code completion.
+
+%\noindent {\bf Broader Impacts.}
+
+\section{Broader Impacts}
+
+
+(1) {\tool} will be {\em transformative and directly benefit to our
+  society}, leading to increasing developers’ productivity and
+software quality.
+%It enables efficient \textit{impact analysis} during the integration
+%of code snippets by identifying the potential consequences of the
+%change.
+It enables \textit{partial program slicing} and \emph{empowers}
+dynamic analysis by identifying additional path conditions (neural
 constraints) for the SAT/SMT solvers which helps in exploring the
 right subset of the symbolic state space.
 %
@@ -135,12 +152,11 @@ Our validation involves students and professionals, promoting teaching
 and learning of software qualities that have wide impacts in industry
 and academic communities. (2) Our results will {\em foster research
   activities} in related fields such as deep learning and software
-reliability. This project will produce theoretical concepts and
-techniques that are novel even in deep learning, e.g., novel neural
-networks for code. (3) The research will enhance the infrastructure
-for teaching and research by providing tools and data sets for use by
-students and practitioners, and for enhancement by other
-researchers. We will provide related learning modules for students.
+reliability. This project will also produce novelties in deep learning,
+e.g., novel neural networks for code. (3) The research will enhance
+the tools for teaching and research by providing tools and
+data sets for use by students and practitioners, and for enhancement
+by other researchers. We will provide related learning modules.
 
 \noindent {\bf Keywords:} Deep Learning, Partial Program Analysis, Neural Networks.
 

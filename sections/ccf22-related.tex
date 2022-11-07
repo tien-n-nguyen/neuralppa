@@ -1,6 +1,6 @@
-\section{\color{red}{Related Work}}
+\section{Related Work}
 %Our project is closely related to the following research literature: 
-\textbf{Code Representation Learning (CRL).}  The recent success in
+\textbf{Representation Learning and ML for Code.}  The recent success in
 machine learning has lead to strong interests in applying machine
 learning, especially deep learning, to programming language (PL) and
 software engineering (SE) tasks, such as automated correction for
@@ -11,6 +11,12 @@ summarization~\cite{Allamanis-2016,Mou-2014}, code
 similarity~\cite{Zhao-2018,Alon-2018}, probabilistic model for
 code~\cite{Bielik-2016}, and path-based code representation,
 e.g., Code2Vec~\cite{Alon-2018} and Code2Seq~\cite{alon2018code2seq}. 
+
+In this proposal, we seek inspiration from Chen and Manning~\cite{chen-manning-2014-fast}, who first proposed a neural network-based approach to dependency parsing. The major benefits we envision to such a formulation include a significant speedup in dependency discovery and the extendibility of program dependence analysis to partial programs. 
+%In SE domain, 
+Specific to the SE domain, 
+the proposed research is loosely related to works that leverage probabilistic models to enhance the program dependence graph (PDG). Probabilistic PDG~\cite{baah-issta08-probabilistic} is an augmentation of the structural dependencies represented by a PDG with estimates of statistical dependencies between node states derived from test cases. Feng et al.~\cite{feng-paste10} propose Error-Flow Graph as a Bayesian Network, constructed from the dynamic dependence graphs of the runs. Bayesian Network-based Program Dependence Graph (BNPDG)~\cite{yu-jss17-bayesian} is capable of inferring the dependencies across non-adjacent nodes. MOAD (Modeling Observation-based Approximate Dependency)~\cite{lee-scam19-moad} reformulates program dependency as the likelihood that one program element is dependent on another, instead of a boolean relationship.  Lee~\cite{lee-icse20} proposes a scalable approximate program dependence analysis by estimating the likelihood of dependence. It uses lexical analysis~\cite{lee-jss20}, partial observations on executions, and the merging of static and observation-based approaches. Those approaches leverage the knowledge from the executions to enhance the PDG for complete code. In contrast, we aim to use neural networks for deriving dependencies for both partial and complete code.
+
 
 %In the above PL and SE tasks, 
 %All approaches learn code
@@ -24,7 +30,7 @@ e.g., Code2Vec~\cite{Alon-2018} and Code2Seq~\cite{alon2018code2seq}.
 %our CRL is more suitable for detecting bugs than the existing baselines.
 
 
-\textbf{Bug Detection.}
+\textbf{Bug and Vulnerability Detection.}
 %Many techniques have been developed for rule-based and learning-based bug detection. 
 Some existing rule-based bug detection approaches,
 such as
@@ -150,140 +156,32 @@ However, existing approaches, e.g.,~\cite{bertolino2020learning,spieker2017reinf
 %Moreover, very little research has been devoted to investigating deep learning for RT in CI. 
 
 
-\textbf{Automated Program Repair.}
-%The earlier approaches for automated program repair (APR) aim to derive {\em similar fixes for similar source code}. Ray and Kim~\cite{ray-fse12} automatically detect similar fixes for similar code that are ported or branched out. FixWizard~\cite{icse10} automatically derives {\em the fixes for similar code} that were cloned from one place to another.
-APR approaches have explored search-based SE to tackle more general
-types of bugs, e.g., GenProg~\cite{le2011genprog},
-RSRepair~\cite{qi2014strength}, MutRepair~\cite{martinez2016astor},
-PAR~\cite{kim2013automatic}, and SPR~\cite{long2015staged}.
-%\cite{le2011genprog,qi2014strength,LeGoues-icse12,martinez2016astor}.
-%A search strategy is performed in the space of potential solutions
-%produced by several operators that mutate the buggy code. Then, the
-%test cases and/or program verification are applied to select the
-%better candidate fixes~\cite{smith2015cure}. 
-%Smith et al.~\cite{smith2015cure} showed that 
-%However, these
-%approaches tend to overfit on test cases, by generating incorrect
-%patches that pass the test cases, mostly by deleting functionalities~\cite{smith2015cure}.
-%
-%GenProg~\cite{le2011genprog} uses genetic search on repair mutations
-%and works at statement-level by inserting, removing or replacing a
-%statement taken from other parts of the same
-%program. RSRepair~\cite{qi2014strength} fixes buggy programs with
-%random search to guide the patch generation
-%process. MutRepair~\cite{martinez2016astor} attempts to generate
-%patches by applying mutation operators on suspicious if-condition
-%statements. 
-%PAR~\cite{kim2013automatic} is based on {\bf fixing templates} that
-%were manually extracted from 60,000 human-written patches. 
-%Later
-%studies (e.g., \cite{le2016history}) showed that the six templates in PAR~\cite{kim2013automatic} could fix only a few bugs in Defects4J. 
-%Anti-patterns were integrated into search-based APR tools~\cite{tan2016anti}
-%Anti-patterns were integrated into search-based APR tools, e.g., GenProg~\cite{le2011genprog} and SPR~\cite{long2015staged}), to help alleviate the problem of incorrect or incomplete fixes.
-%Theses search-based approaches rely much on the quality of mutation operations and the fixing patterns.
-%
-%\textbf{Hard-coded Rules based APR.}  Some existing APR techniques are
-%mostly based on hard-coded rules and operators, defined by human
-%experts, used to generate potential patches obtained with mutation
-%operators for a buggy code.  For example, GenProg~\cite{le2011genprog}
-%uses genetic search on repair mutations and works at statement-level
-%by inserting, removing or replacing a statement taken from other parts
-%of the same program.  RSRepair~\cite{qi2014strength} tries to fix
-%buggy programs with the same mutation operations in GenProg but uses
-%random search to guide the patch generation process.
-%MutRepair~\cite{martinez2016astor} attempts to generate patches by
-%applying mutation operators on suspicious if-condition statements.
-%These approaches have several limitations, rooted in the fact that
-%they are based on handcrafted rules with limited scope (i.e., single
-%statements, limited number of mutation operators, specific parts of
-%expressions).  Moreover, Smith et al.~\cite{smith2015cure} showed that
-%these approaches tend to overfit on test cases, by generating
-%incorrect patches that pass the test cases, mostly by deleting
-%functionalities.
-%
-%Kim et al.~\cite{kim2013automatic} initiated with PAR a milestone of APR based on fix templates that were manually extracted from 60,000 human-written patches. Later studies (e.g., \cite{le2016history}) have shown that the six templates used by PAR could fix only a few bugs in Defects4J.
-%~\cite{tan2016anti} manually define a set of patterns for patch generating or filtering based on repair history.
-%Anti-pattern~\cite{tan2016anti} integrated anti-patterns into two existing
-%search-based automated program repair tools (namely, GenProg~\cite{le2011genprog} and SPR~\cite{long2015staged}) to help alleviate the problem of incorrect or incomplete fixes resulting from program repair.
-%In their study, the anti-patterns are defined by themselves and limited
-%to the control flow graph. Additionally, their anti-patterns are
-%not meant to solve the problem of deriving better patches
-%automatically, provide more precise repair hints to developers.
-%In contrast to search-based approaches, other approaches have aimed to
-%Another type of APR approaches {\bf mine and learn fixing patterns} from prior bug
-%fixes~\cite{nguyen2013semfix,le2016history,liu2019avatar,kim2013automatic}, \textit{generating the state-of-the-art performance}. 
-Another type of APR approaches {\bf mine and learn fixing patterns} from prior bug
-fixes, \textit{generating the state-of-the-art performance}. The fixing patterns (or namely fixing templates) could be automatically
-or semi-automatically mined, such as SemFix~\cite{nguyen2013semfix}, Prophet~\cite{long2016automatic}, Genesis~\cite{long2017automatic}, FixMiner~\cite{koyuncu2018fixminer}, HDRepair~\cite{le2016history}, CapGen~\cite{wen2018context}, SimFix~\cite{jiang2018shaping}, Avatar~\cite{liu2019avatar}, Nopol~\cite{Nopol}, ACS~\cite{ACS}, SketchFix~\cite{SketchFix}, ELIXIR~\cite{saha2017elixir}, and LSRepair~\cite{LSRepair}. Tbar~\cite{tbar-issta19} collects all existing fix-patterns.
-%exploit fix patterns of static analysis
-%violations as ingredients for patch generation.
-%
-%SemFix~\cite{nguyen2013semfix} uses symbolic execution and
-%constraint solving to synthesize a patch. 
-%Some studies extracts fix patterns from real human submitted patches or change histories, e.g., Prophet~\cite{long2016automatic}, Genesis~\cite{long2017automatic}, FixMiner~\cite{koyuncu2018fixminer}, and HDRepair~\cite{le2016history}.
-%
-%are based on the frequently
-%occurred code change operations (e.g., Insert If- Statement) extracted from the patches in developer change histories.
- %
-%Prophet~\cite{long2016automatic} learns code
-%correctness models from a set of successful human patches. 
-%Prophet learns a patch ranking model using machine learning algorithm based on
-%existing patches. 
-%Genesis~\cite{long2017automatic} can automatically
-%infer patch generation transforms from developer submitted patches for APR.
-%HDRepair~\cite{le2016history} repairs bugs by mining closed frequent bug fix patterns from
-%graph-based representations of real bug fixes.
-%ELIXIR~\cite{saha2017elixir} uses method call related templates from
-%PAR with local variables, fields, or constants, to construct more
-%expressive repair-expressions for synthesizing
-%patches. 
+%\textbf{Automated Program Repair.}
+%APR approaches have explored search-based SE to tackle more general
+%types of bugs, e.g., GenProg~\cite{le2011genprog},
+%RSRepair~\cite{qi2014strength}, MutRepair~\cite{martinez2016astor},
+%PAR~\cite{kim2013automatic}, and SPR~\cite{long2015staged}. Another
+%type of APR approaches {\bf mine and learn fixing patterns} from prior
+%bug fixes, \textit{generating the state-of-the-art performance}. The
+%fixing patterns (or namely fixing templates) could be automatically or
+%semi-automatically mined, such as SemFix~\cite{nguyen2013semfix},
+%Prophet~\cite{long2016automatic}, Genesis~\cite{long2017automatic},
+%FixMiner~\cite{koyuncu2018fixminer}, HDRepair~\cite{le2016history},
 %CapGen~\cite{wen2018context}, SimFix~\cite{jiang2018shaping},
-%Avatar~\cite{liu2019avatar} exploit fix patterns of static analysis
-%violations as ingredients for patch generation.
-%\textbf{Fix Pattern Mining and Learning based APR.}  Another direction
-%of APR approaches tend to automatically mine fix patterns or
-%templates.  For example, SemFix~\cite{nguyen2013semfix} instead uses
-%symbolic execution and constraint solving to synthesize a patch by
-%replacing only the right-hand side of assignments or branch
-%predicates.  Long and Rinard also proposed a patch generation system,
-%Prophet~\cite{long2016automatic}, that learns code correctness models
-%from a set of successful human patches. Prophet learns a patch ranking
-%model using machine learning algorithm based on existing patches.
-%They further proposed a new system, Genesis~\cite{long2017automatic},
-%which can automatically infer patch generation transforms from
-%developer submitted patches for automated program repair.  Motivated
-%by PAR~\cite{kim2013automatic}, more effective automated program
-%repair systems have been explored. HDRepair~\cite{le2016history} was
-%proposed to repair bugs by mining closed frequent bug fix patterns
-%from graph-based representations of real bug fixes.  Nevertheless, its
-%fix patterns, except the fix templates from PAR, still limits the code
-%change actions at abstract syntax tree (AST) node level, but are not
-%specific for some types of bugs.  ELIXIR~\cite{saha2017elixir}
-%aggressively uses method call related templates from PAR with local
-%variables, fields, or constants, to construct more expressive
-%repair-expressions that go into synthesizing patches.  More recently,
-%CapGen~\cite{wen2018context}, SimFix~\cite{jiang2018shaping},
-%FixMiner~\cite{koyuncu2018fixminer} are further proposed to fix bugs
-%automatically based on the frequently occurred code change operations
-%(e.g., Insert If- Statement) that are extracted from the patches in
-%developer change histories.  Avatar~\cite{liu2019avatar} exploits fix
-%patterns of static analysis violations as ingredients for patch
-%generation So far however, pattern-based APR approaches focus on
-%leveraging patches that developer applied to semantic bugs.
-%\textbf{Deep Learning based APR:} 
-Recently, deep learning has
-been applied to APR for directly generating patches.  
-%For example, DeepRepair~\cite{white2016deep} and DeepFix~\cite{gupta2017deepfix} learn similar source code for similar fixes.
-%The first group
-%of DL-based APR approaches {\em learn similar source code for similar fixes}. such as DeepRepair~\cite{white2016deep} and DeepFix~\cite{gupta2017deepfix}.
-%DeepRepair
-%leverages learned code similarities, captured with recursive
-%auto-encoders~\cite{white2016deep}, to select the repair ingredients
-%from code fragments that are similar to the buggy code.
-%DeepFix~\cite{gupta2017deepfix} learns the syntax rules and is
-%evaluated on syntax errors.
-Some work treats APR as a {\em statistical machine translation} translating the buggy code to the fixed
-code. A natural thinking is to use neural translation models to learn to recommend fixes, such as Ratchet~\cite{hata2018learning}, Tufano {\em et al.}~\cite{tufano2018empirical}, SequenceR~\cite{chen2018sequencer}, Tufano {\em et al.}~\cite{tufano2019learning}, CoCoNuT~\cite{lutellier2020coconut} and CODIT~\cite{CODIT}. 
+%Avatar~\cite{liu2019avatar}, Nopol~\cite{Nopol}, ACS~\cite{ACS},
+%SketchFix~\cite{SketchFix}, ELIXIR~\cite{saha2017elixir}, and
+%LSRepair~\cite{LSRepair}. Tbar~\cite{tbar-issta19} collects all
+%existing fix-patterns.
+
+%Recently, deep learning has been applied to APR for directly
+%generating patches.  Some work treats APR as a {\em statistical
+%  machine translation} translating the buggy code to the fixed code. A
+%natural thinking is to use neural translation models to learn to
+%recommend fixes, such as Ratchet~\cite{hata2018learning}, Tufano {\em
+%  et al.}~\cite{tufano2018empirical},
+%SequenceR~\cite{chen2018sequencer}, Tufano {\em et
+%  al.}~\cite{tufano2019learning}, CoCoNuT~\cite{lutellier2020coconut}
+%and CODIT~\cite{CODIT}.
 
 
 %learns code edits with encoding code structures in

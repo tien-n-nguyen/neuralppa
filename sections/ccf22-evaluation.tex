@@ -11,21 +11,21 @@
 %in real development processes?
 
 
-\paragraph{\bf (1) Partial Code Analysis Performance.} We aim
+\paragraph{\bf (1) Partial-Code Analysis Performance.} We aim
 to evaluate how well {\tool} can provide the structural analysis and
 semantic analysis for incomplete code fragments.  Assessing the
 performance of \tool is not straightforward, mainly due to the lack of
 ground-truth for partial code fragments. Thus, we could evaluate it on
-programs in Java and C/C++ as follows.  First, we trained {\tool} on
-complete code. For testing, we treated each method individually and
-chose a consecutive portion within the method to predict the actual
-elements and dependencies, and compared them against the actual ones.
+programs in Java and C/C++ as follows.  First, we will train {\tool} on
+complete code. For testing, we will treat each method individually and
+choose a consecutive portion within the method to predict the actual
+elements and dependencies, and compare them against the actual ones.
 For example, in Thrust 1, if we evaluate the performance of structural
 analysis infrastructure, we could compare the recovered/predicted code
 structure in terms of ASTs against the actual ASTs of the original
 code. For Thrust 2 in dependency analysis, we could treat each method
-individually and chose a consecutive portion within the method to
-predict the program dependencies, and compared them against the actual
+individually and choose a consecutive portion within the method to
+predict the program dependencies, and compare them against the actual
 dependencies. We will adopt the standard evaluation metrics, i.e.,
 \textit{Accuracy}, \textit{Precision}, \textit{Recall}, and
 \textit{F-Score}. $Accuracy = \frac{TN+TP}{TN+FP+TP+FN}$, $Recall =
@@ -34,7 +34,7 @@ dependencies. We will adopt the standard evaluation metrics, i.e.,
 Positives; FP = False Positives; FN = False Negatives; TN = True
 Negatives.
 
-\paragraph{\bf (2) Performance on Complete Code Analysis.}
+\paragraph{\bf (2) Complete-Code Analysis Performance.}
 We aim to compare the performance of {\tool} (AI/ML + PA) against the
 traditional PA techniques in building structures and dependencies from
 source code. We could collect a set of tools, e.g., to build the
@@ -51,13 +51,13 @@ experiments for incomplete code.
   engineering tasks for partial code}. For example, in bug and
 vulnerability detection for code snippets, to evaluate the usefulness
 of the PDGs predicted by \tool (say, PDG\textsuperscript{*}), we
-designed experiments around the task of vulnerability detection at two
+will design experiments around the task of vulnerability detection at two
 levels of granularity: complete code at the method-level, and partial
-code at the snippet-level. For the method-level VD task, we leveraged
+code at the snippet-level. For the method-level VD task, we leverage
 any ML-based vulnerability detection tool, e.g.,
 VulCNN~\cite{wu2022vulcnn}, an image-inspired DL-based VD model which
 utilizes PDGs to predict whether a given method has vulnerabilities or
-not. Here, we aimed to estimate how well PDG\textsuperscript{*}s
+not. Here, we aim to estimate how well PDG\textsuperscript{*}s
 predicted for the methods in the dataset approximate the performance
 of the actual PDGs retrieved from a program-analysis tool. We could
 use the same methodology for evaluating the usefulness of {\tool} in
@@ -128,7 +128,7 @@ other types of software engineering tasks.
 %will perform surveys on the quality of the synthesized API usage code
 %to get the feedback for future improvement in the next step.
 
-\paragraph{\bf (4) Evaluation on proposed tools and methods in helping developers in real-world development}
+\paragraph{\bf (4) Evaluation on proposed tools and methods in helping developers in real-world development.}
 
 We will perform a set of user studies on the usefulness of our
 proposed tools in the wild by releasing our

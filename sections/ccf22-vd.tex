@@ -58,7 +58,7 @@ was trained on a Java dataset
 %in Section~\ref{sec:effectiveness}
 %(Table~\ref{tab:intrinsic-java})
 to generate the PDGs (i.e., PDG\textsuperscript{*}) for all the
-complete methods in the VD dataset. We then used
+complete methods in the VD dataset. We then use
 PDG\textsuperscript{\#} and PDG\textsuperscript{*} as the input of
 VulCNN for VD.
 %VulCNN leverages centrality analysis to transform the PDGs into program semantics-capturing images. Following suit, we generate two image datasets corresponding to PDG\textsuperscript{\#} and PDG\textsuperscript{*}, each of which are input to a convolutional neural network (CNN) for detecting the presence of vulnerabilities in complete code.
@@ -76,9 +76,9 @@ negative label is given to a non-vulnerable method.
 \subsubsection*{\bf Preliminary Experimental Results}
 %In Table~\ref{tab:extr-method}, we report the performance of VulCNN
 %from both experiment settings,
-Table~\ref{tab:extr-method} shows VulCNN's performance in both
-settings, i.e., by using PDG\textsuperscript{\#} and
-PDG\textsuperscript{*}. We can observe that \tool predicts
+Table~\ref{tab:extr-method} shows the preliminary results from VulCNN
+in both settings, i.e., by using PDG\textsuperscript{\#} and
+PDG\textsuperscript{*} produced by {\tool}. We can observe that \tool predicts
 PDG\textsuperscript{*} with an overall F-score of 91.13\%. This
 further establishes the {\em generalizability of \tool}, more so,
 because the Java dataset that \tool was trained on, and the VD dataset

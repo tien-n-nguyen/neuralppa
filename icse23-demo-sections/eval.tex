@@ -1,8 +1,11 @@
 \section{Preliminary Evaluation}
-
 \subsection{Methodology}
+To enable an intrinsic evaluation and assess how accurately \tool generates CFG/PDGs for Java and C/C++ code, we collected: (a) 40,000 Java methods for training, and 4,000 each for validation and testing; (b) 12,767 C/C++ methods for training, and 1,500 each for validation and testing. We set the maximum number of tokens in a statement (i.e., $M$) to 32, and the maximum number of statements per code snippet (i.e., $N$) to 8. The training was carried out on an Nvidia Quadro P4000 GPU. Given that we model the CFG/PDG construction as a binary classification problem, we adopt the standard evaluation metrics, i.e., Precision, Recall, and F1-Score. Here, $Precision = \frac{TP}{TP+FP}$, $Recall = \frac{TP}{TP+FN}$, and $F1{-}Score = \frac{2\times Precision\times Recall}{Precision+Recall}$, where $TP$, $FP$, $FN$, $TN$ denote True Positives, False Positives, False Negatives, and True Negatives, respectively.
 
 \subsection{Results}
+
+Table~\ref{tab:intrinsic} shows the performance of \tool on the test set comprising complete methods from the Java and C/C++ datasets. Clearly, our model produces competitive results. Also, we can see that the efficacy of \tool is programming language-agnostic, as it approximates the combined CFG+PDG
+for Java methods with an F1-score of 94.29\%, and that of C/C++ methods with an F-score of 92.46\%.
 
 \begin{table}[H]
   \centering
@@ -20,5 +23,5 @@ Java                 & \textit{CFG}     & 98.31              & 98.58           &
                      & \textit{Overall} & 91.10            & 93.87         & \textbf{92.46}  \\
 \hline
 \end{tabular}
-\label{tab:intrinsic-java}
+\label{tab:intrinsic}
 \end{table}

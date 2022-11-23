@@ -16,6 +16,15 @@ In this work, we introduce \tool, a neural network-based tool to build
 program dependence graph (PDG) for both complete and partial
 programs. 
 
+\begin{figure*}[hbt!]
+\begin{center}
+    \includegraphics[width=0.8\textwidth]{icse23-demo-figures/demo-arch2.png}
+    \caption{\tool training and inference pipeline to enable dependence analysis for both partial and complete code.}
+    \label{fig:model}
+    \vspace{-10pt}
+\end{center}
+\end{figure*}
+
 We draw motivation for such a data-driven, learning-based approach
 from the following. First, ultra-large-scale software repositories,
 e.g., GitHub (7M+ projects) and SourceForge (700k+ projects), contain
@@ -38,10 +47,23 @@ subgraphs, 14.3\% of the PDGs have all of their subgraphs repeated
 across different projects. Furthermore, in 15.6\% of the PDGs, at
 least 90\% of their subgraphs are likely to have appeared before in
 other projects.
+%Second, Nguyen {\em et al.}~\cite{icse15} reported a high
+%repetitiveness level for AST code structure in open-source
+%projects. Thus, {\tool} infrastructure could help learn
+%structure-level information from the ASTs extracted for whole programs
+%in the existing code repositories and infer data types, partial ASTs
+%for partial programs. Third, in an empirical study on the
+%repetitiveness, containment, and composability of PDGs in open-source
+%projects, the PI group~\cite{msr16} reported that among 17.5M PDGs
+%with 1.6B PDG subgraphs, 14.3\% of the PDGs have all of their
+%subgraphs repeated across different projects. Furthermore, in 15.6\%
+%of the PDGs, at least 90\% of their subgraphs are likely to have
+%appeared before in other projects.
 %Thus, {\tool} could learn from PDGs with complete program dependencies retrieved from existing code repositories and derive the dependencies for the (partial) code fragment under study. The PI group also reported a high repetitiveness level for AST code structure in open-source projects~\cite{icse15}.
 Thus, {\tool} could learn semantic-level information from the PDGs
 with complete program dependencies retrieved from existing code
 repositories and infer such dependencies for the partial code.
+
 
 We design {\tool} to efficiently incorporate intra-statement and
 inter-statement contextual features into statement representations,

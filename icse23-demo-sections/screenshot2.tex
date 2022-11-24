@@ -1,8 +1,8 @@
 \begin{figure*}[hbt!]
 \centering
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{subfigure}[b]{.4\textwidth}
-\begin{lstlisting}[basicstyle=\scriptsize\sffamily, stepnumber=1, numbers=left, numbersep=-6pt, framexleftmargin=0mm, framexrightmargin=0mm, language=Java, emph={allGames}]
+\begin{subfigure}[b]{.47\textwidth}
+\begin{lstlisting}[basicstyle=\scriptsize\sffamily, stepnumber=1, numbers=left, numbersep=-8pt, framexleftmargin=-2mm, framexrightmargin=-2mm, emph ={allGames, game}]
     List<Game> allGames = gameMapper.getAllGamesByLeague(league);
     for (Game game : allGames) {
         game.getTeam1().setGame(game);
@@ -14,7 +14,7 @@
 \end{subfigure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{subfigure}[b]{.4\textwidth}
-\begin{lstlisting}[basicstyle=\scriptsize\sffamily, stepnumber=1, numbers=left, numbersep=-6pt, framexleftmargin=0mm, framexrightmargin=0mm, language=java, emph={annotationVersion}]
+\begin{lstlisting}[basicstyle=\scriptsize\sffamily, stepnumber=1, numbers=left, numbersep=-8pt, framexleftmargin=-2mm, framexrightmargin=-2mm, emph = {annotationVersion, annotation}]
     private boolean isValidUntil(Until annotation) {
         if (annotation != null) {
             double annotationVersion = annotation.value();
@@ -27,7 +27,7 @@
 \end{lstlisting}
 \end{subfigure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{subfigure}[b]{.45\textwidth}
+\begin{subfigure}[b]{0.45\textwidth}
   \centering
   \includegraphics[width=0.7\linewidth]{icse23-demo-figures/lst-partial2.png}
   \vspace{0.75cm}

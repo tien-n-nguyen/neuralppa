@@ -4,12 +4,12 @@
 
 %\subsection{Probabilistic Graphical Models}
 We seek inspiration for our problem formulation from Chen and Manning~\cite{chen-manning-2014-fast}, who first proposed a neural network-based approach to dependency parsing. 
-%The major benefits include a significant speedup in dependency discovery and the extendibility of program dependence analysis to partial programs. 
+%The major benefits we envision include a significant speedup in dependency discovery and the extendibility of program dependence analysis to partial programs. 
 %In SE domain, 
 Specific to the SE domain, this research is loosely related to works that leverage probabilistic models to enhance the program dependence graph (PDG).
 Probabilistic PDG~\cite{baah-issta08-probabilistic} is an augmentation of the structural dependencies represented by a PDG with estimates of statistical dependencies between node states derived from test cases. 
 Feng et al.~\cite{feng-paste10} propose Error-Flow Graph as a Bayesian Network, constructed from the dynamic dependence graphs of the runs. 
 Bayesian Network-based Program Dependence Graph (BNPDG)~\cite{yu-jss17-bayesian} is capable of inferring the dependencies across non-adjacent nodes. 
 %MOAD (Modeling Observation-based Approximate Dependency)~\cite{lee-scam19-moad} reformulates program dependency as the likelihood that one program element is dependent on another, instead of a boolean relationship.  
-%Lee~\cite{lee-icse20} proposes a scalable approximate program dependence analysis by estimating the likelihood of dependence. It uses lexical analysis~\cite{lee-jss20}, partial observations on executions, and the merging of static and observation-based approaches. 
+%Lee~\cite{lee-icse20} proposes a scalable approximate program dependence analysis by estimating the likelihood of dependence.  It uses lexical analysis~\cite{lee-jss20}, partial observations on executions, and the merging of static and observation-based approaches. 
 These approaches leverage the knowledge from the executions to enhance the PDG for complete code. In contrast, we aim to use neural networks for deriving dependencies for both partial and complete code.

@@ -25,7 +25,7 @@ After loading the pre-trained dependency inference model, \tool takes a blazing 
 $\sim$0.02 seconds on a machine with an Nvidia Quadro P4000 GPU.
 
 \subsection{Working Demo}
-In Figure~\ref{fig:demo}, we illustrate a working demonstration of \tool. At the top, we present two Java code snippets: partial (left), and complete (right). The corresponding CFG/PDGs drawn by \tool are drawn at the bottom. The control-flow edges and program dependence edges are highlighted in \textit{blue} and \textit{red} colors respectively. Clicking on a node bolds all edges coming to, or leaving the node. In addition, hovering over a node lists the corresponding statement in a text box.
+In Figure~\ref{fig:demo}, we illustrate a working demonstration of \tool. At the top, we present two Java code snippets: partial (left), and complete (right). The corresponding CFG/PDGs output by \tool are drawn at the bottom. The control-flow edges and program dependence edges are highlighted in \textit{blue} and \textit{red} colors respectively. Clicking on a node bolds all edges coming to, or leaving the node. In addition, hovering over a node lists the corresponding statement in a text box.
 
 In the partial code snippet (left), statement-block $S_3$--$S_4$ iterates over the variable \code{allGames} defined in statement $S_1$. Due to the loop dependence, program (data)-dependence edges $S_1{\rightarrow}S_3$ and $S_1{\rightarrow}S_4$ are identified (left-bottom). Besides, a \textit{def-use} chain and consequently, a data-dependence edge $S_1{\rightarrow}S_6$  over the identifier \code{allGames} is also identified.
 

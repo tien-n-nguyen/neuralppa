@@ -1,0 +1,122 @@
+%\section{Introduction}
+\subsection{Problem Description}
+
+%\url{https://www.nsf.gov/funding/pgm_summ.jsp?pims_id=503286}
+
+%NSF: Smart city digital twins (Ray: to speak to San Antonio city CIO) + below
+
+
+%{\em Develop integrated, automated methods for detecting and responding to cyber-security vulnerabilities and compromise. The solution would ultimately have thresholds for AI/ML responses versus those that require a human in the loop. It would also select the most appropriate action and quantify the impact of that action to achieve intended end states. While solutions that only address particular aspects (such as automated detection, response, and remediation) are acceptable, the ultimate goal is an integrated suite of solutions.}
+
+The need for cyber resilience is increasingly important in our
+technology-dependent society, where computing systems, devices and
+data have been, and will continue to be, the target of cyber
+attackers, particularly advanced persistent threat (APT) and
+nation-state / sponsored actors. For example, an individual pleaded
+guilty to participating in a distributed denial of service attack
+carried out by infecting compromised IoT devices with the Mirai
+malware, which impacted a domain name resolver that subsequently
+affected the websites of Sony, Twitter, Amazon, PayPal, Tumblr,
+Netflix, and Southern New Hampshire University with lost advertising
+revenues and remediation costs. Among them, Sony estimated that "its
+resultant losses included approximately \$2.7 million in net
+revenue"~\cite{USDoJMirai2020}. However, APT and
+nation-state/sponsored actors tend to be more sophisticated and have
+access to significantly more resources and time to facilitate their
+attacks, which in most cases are not financially driven (unlike
+typical cyber criminals). For example, the cyber security research
+community have reported observations of “false flag” cyber
+operations \cite{geers2014world,Leyden2019}, where an attack is staged
+by sophisticated attackers (e.g., APT actors) in such a way to mislead
+the intended victims into believing that another party (e.g., another
+nation/state) is responsible for the cyber attacks, e.g.,~by using or
+mimicking ``the tools, techniques, and even languages typically used
+by the group or country the attackers are trying to
+frame'' \cite{Fruhlinger2020}.
+%We also posit the importance of digital forensics (often considered to
+%be reactive) in human-in-the-loop cyber threat intelligence and
+%hunting solutions, as digital (forensic) investigations can also
+%facilitate attribution (tracing and identifying the attack source),
+%and help to answer the six key questions – {\em what, why, how, who,
+%when, and where} – of an incident occurrence.
+As an example, the SolarWinds attack was first discovered by the
+cybersecurity firm FireEye in December 2020, who reportedly found
+unusual data being sent to a server of unknown
+origin \cite{FireEyeUNC2452}. Upon further digital forensic
+investigations, it was uncovered that one of the servers that provides
+access to updates and patches for SolarWinds Orion tools was
+compromised, thus allowing the attackers to inject code into the
+software updates and infect multiple clients. The malicious code
+allowed data modification and exfiltration and remote access to
+devices that had the software installed. Based on the forensic
+investigations, the Cyber-security and Infrastructure Security Agency
+released a summary of tactics, techniques, and procedures associated
+with the incident~\cite{CISA2021}.
+
+While there are a broad range of commercial security information and
+event management (SIEM) systems, and other security orchestration,
+automation, and response (SOAR) solutions
+(see \cite{DBLP:journals/csur/IslamBN19} for an overview of SOAR
+solutions), a 2021 Gartner report observed that ``Security and risk
+management leaders are struggling with too many security tools from
+different vendors with little integration of data or incident
+response'' \cite{FirstbrookLawsonGartner2021}. The same report also
+noted the increasing importance of having in place ``a unified
+security incident detection and response platform that automatically
+collects and correlates data from multiple proprietary security
+components''.
+
+There are, however, a number of challenges we need to address in the
+design of a system to facilitate automated vulnerability detection.
+For example, an automated security vulnerability detection tool often
+runs as follows. First, a user runs the tool on the software to be
+analyzed. Then, the tool will report the potential vulnerabilities
+that it detects in the software. Finally, the user or a software
+analyst will go through the report and examine the potential
+vulnerabilities. A tool is considered as accurate if the vulnerability
+it reports is actually vulnerable. It is considered as having high
+coverage if it can cover and reveal all the vulnerabilities in the
+software / hardware. Balancing coverage and accuracy involves an
+inherent trade-off. The tool can list only true-positives (low
+coverage, high accuracy), or it can output all potential anomalies
+(high coverage, low accuracy). Achieving both high coverage and high
+accuracy in a fully automated tool can be impossible or prohibitively
+expensive, in terms of implementing the automation and/or sifting
+through the large number of erroneous results manually.
+%This is true for an IoT system with complex software and hardware
+%integration.
+Also, what is considered malicious in one application may be
+considered benign in another due to differences in the purpose and the
+context of these applications. For example, accessing of contacts by
+an e-mail client is a legitimate operation, but it is illegitimate,
+and probably malicious, in a surveillance camera
+application. Importantly, malicious activities and operations
+frequently blend their overt and malicious purposes. For example, an
+surveillance camera recording the regular activities at an ATM machine
+can leak the recordings to a malicious server without the knowledge of
+the users, which can be abused to steal the
+identification/passcode. Hence, there is a need to integrate
+artificial intelligence (AI; broadly defined to include both machine
+and deep learning) techniques to facilitate the identification of
+adversarial, anti-security and anti-forensics activities and
+techniques. A 2020 report by Gartner, for example, suggested that
+``[b]y 2022, 40\% of machine learning~model development and scoring
+will be done in products that do not have machine learning as their
+primary goal'' \cite{RichardsonGartner2020}.
+
+%Automating identification of malicious activities in large-scale IoT systems may require a large number of specific features and incur significant computation cost. In contrast, using automated tools for simple cases and leaving all the complex ones for a user to resolve is also not practical. We also note that AI techniques can facilitate the development, understanding, interpretation, and sharing of analytic content (collectively referred to as augmented analytic). Hence, this reinforces the importance of Human-in-the-Loop cyber threat intelligence and hunting solutions, which integrates information obtained from different systems. This provides the motivation and inspiration of this proposal. 
+
+Another key challenge with the state-of-the-art AI/ML-based
+vulnerability detection approaches is the lack of explanation on why
+the model determines the vulnerable code. They resolve complex
+scenario of security vulnerabilities as an output of an AI/ML model
+(e.g., a definitive outcome of yes or no, or a likelihood score for
+vulnerability degree). This hinders the understandability of the
+output. Developers would not know why the model makes that decision,
+and do not know where and what to look for and to fix the
+vulnerability in their code.
+
+In this proposal, we focus on two key factors, namely: automated AI/ML tools and human analysts. There exists some defined threshold for AI/ML solutions versus those that require human intervention. In \emph{ordinary scenarios}, the cost and complexity of the solutions are both low. Either human analysts or automated tools can handle them with minimal effort. However, the {\em automation wall} exists for \emph{complex scenarios} in which the cost for resolving complex scenarios escalates beyond that wall.
+
+
+

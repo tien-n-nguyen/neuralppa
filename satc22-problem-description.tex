@@ -95,8 +95,8 @@ frequently blend their overt and malicious purposes. For example, an
 surveillance camera recording the regular activities at an ATM machine
 can leak the recordings to a malicious server without the knowledge of
 the users, which can be abused to steal the
-identification/passcode. Hence, there is a need to integrate
-artificial intelligence (AI; broadly defined to include both machine
+identification/passcode. Hence, {\em there is a need to integrate
+artificial intelligence} (AI; broadly defined to include both machine
 and deep learning) techniques to facilitate the identification of
 adversarial, anti-security and anti-forensics activities and
 techniques. A 2020 report by Gartner, for example, suggested that
@@ -107,16 +107,30 @@ primary goal'' \cite{RichardsonGartner2020}.
 %Automating identification of malicious activities in large-scale IoT systems may require a large number of specific features and incur significant computation cost. In contrast, using automated tools for simple cases and leaving all the complex ones for a user to resolve is also not practical. We also note that AI techniques can facilitate the development, understanding, interpretation, and sharing of analytic content (collectively referred to as augmented analytic). Hence, this reinforces the importance of Human-in-the-Loop cyber threat intelligence and hunting solutions, which integrates information obtained from different systems. This provides the motivation and inspiration of this proposal. 
 
 Another key challenge with the state-of-the-art AI/ML-based
-vulnerability detection approaches is the lack of explanation on why
-the model determines the vulnerable code. They resolve complex
-scenario of security vulnerabilities as an output of an AI/ML model
-(e.g., a definitive outcome of yes or no, or a likelihood score for
-vulnerability degree). This hinders the understandability of the
-output. Developers would not know why the model makes that decision,
-and do not know where and what to look for and to fix the
-vulnerability in their code.
+vulnerability detection approaches is the {\em lack of explanation on
+why the AI/ML model determines the vulnerable code}. They resolve
+complex scenario of security vulnerabilities as an output of an AI/ML
+model (e.g., a definitive outcome of yes or no, or a likelihood score
+for vulnerability degree). This hinders the understandability for the
+security analysts regarding the potential vulnerabilty. The analysts
+would not know why the model makes that decision, and do not know
+where and what to look for and to fix the vulnerability in their code.
 
-In this proposal, we focus on two key factors, namely: automated AI/ML tools and human analysts. There exists some defined threshold for AI/ML solutions versus those that require human intervention. In \emph{ordinary scenarios}, the cost and complexity of the solutions are both low. Either human analysts or automated tools can handle them with minimal effort. However, the {\em automation wall} exists for \emph{complex scenarios} in which the cost for resolving complex scenarios escalates beyond that wall.
+In this proposal, we focus on two key factors, namely: automated AI/ML
+tools and their explanations. AI/ML helps security analysts deal with
+the complex scenarios, while the explanations from Explainable AI
+(XAI) help improve the effectiveness of AI/ML security/vulnerability
+detection tools.
+
+%There exists some defined threshold for AI/ML solutions versus those
+%that require human intervention. In \emph{ordinary scenarios}, the
+%cost and complexity of the solutions are both low. Either human
+%analysts or automated tools can handle them with minimal
+%effort. However, the {\em automation wall} exists for \emph{complex
+%scenarios} in which the cost for resolving complex scenarios escalates
+%beyond that wall.
+
+%In this proposal, we focus on two key factors, namely: automated AI/ML tools and human analysts. There exists some defined threshold for AI/ML solutions versus those that require human intervention. In \emph{ordinary scenarios}, the cost and complexity of the solutions are both low. Either human analysts or automated tools can handle them with minimal effort. However, the {\em automation wall} exists for \emph{complex scenarios} in which the cost for resolving complex scenarios escalates beyond that wall.
 
 
 

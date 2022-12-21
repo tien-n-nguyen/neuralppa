@@ -2,7 +2,7 @@
 %The objective is ``\textbf{Automated Risk Detection and Mitigation}''
 
 We propose XAI-enabled Vulnerability Detection and Assessment
-Framework (XAI-VDA). Instead of resolving complex scenarios of
+Framework ({\tool}). Instead of resolving complex scenarios of
 security vulnerability detection as an binary output of yes and no, we
 aim to leverage Explainable AI to amplify the human intelligence in
 detecting vulnerabilities and assessing their impacts in software
@@ -125,13 +125,60 @@ To accomplish our goal, we propose the following thrusts of research:
 %To realize our framework, we will pursue the following three key work
 %tasks.
 
-\noindent {\bf Work Task 1. HXAI-VDIM System Design and Implementation} (Section~\ref{section:T1}). In this work task, we will design and develop our HXAI-VDIM architecture to be concretized into a tool-suite of supports on (1) security vulnerability detection that pro-actively scans the potential risks and vulnerabilities; (2) security vulnerability investigation toolset that assists forensic analysts and experts in performing digital (forensic) investigations, tracing, and identifying the attack source of an incident occurrence; and (3) an integrated tool suite for the remedial and mitigation actions in the wake of such security incident.
+\noindent \textbf{Thrust 1. Proactive Software Vulnerability Detection
+  with Explainable AI.} ({\em Section~\ref{sec:thrust1}}) In this
+thrust, we will design and develop the core components relevant to
+proactive direction of our framework. We will develop the
+theoretical framework, algorithms, and models for proactive
+vulnerability detection to identify the vulnerable software at the
+source code level. Then, we will investigate and design the
+Explainable AI model that will provide the vulnerability detection
+results on the vulnerable code, and explain why the model
+predicts such a vulnerability by making connections from the result to
+the input for such an explanation.
+%Finally, we will develop a Human-in-the-Loop framework that leverages
+%the XAI-based vulnerability detection model to realize our HXAI-VDIM
+%framework shown in Figure~\ref{fig:overview}.
+
+\noindent \textbf{Thrust 2. Automated Software Vulnerability
+  Assessment with Explainable AI.} ({\em Section~\ref{sec:thrust2}})
+Several frameworks have been proposed to provide assessments on
+software vulnerabilities, which aim to quantify the exploitability,
+the impacts and the severity of the attacks, the level of damages in
+access control, etc. For example, the Common Vulnerability Scoring
+System (CVSS) captures the principal characteristics of a
+vulnerability and produces a numerical score and ratings reflecting
+the different aspects of a software vulnerability. The numerical score
+can then be translated into a qualitative representation (such as low,
+medium, high, and critical) to help organizations properly assess and
+prioritize their vulnerability management processes. In this thrust,
+we aim to develop an XAI-enabled Vulnerability Assessment Model to
+evaluate a changed code that is deemed to be vulnerable, and to
+provide the CVSS assessment grades for the vulnerability. The XAI
+model also provides the explanations for such assessment, helping the
+security analyst quickly understand the impacts of the potential
+vulnerability.
+
+\noindent \textbf{Thrust 3. Proactive, Explainable AI-enabled Binary
+  Vulnerability Detection.} ({\em Section~\ref{sec:thrust3}}) We will
+develop the techniques to leverage XAI to scan binary code to detect
+vulnerabilities. Finally, we will design and develop our architecture
+to be concretized into a tool-suite of supports on (1) security
+vulnerability detection that pro-actively scans the potential software
+risks and vulnerabilities; (2) security vulnerability investigation
+toolset that assists security analysts and experts in performing
+investigations.
 
 
-\noindent {\bf Work Task 2: Proactive Human-in-the-Loop Vulnerability Detection with Explainable AI} (Section~\ref{section:T2}). In this work task, we will design and develop the core components relevant to proactive direction of our HXAI-VDIM architecture. First, we will develop the theoretical framework,
-algorithms, and models for proactive vulnerability detection to identify the vulnerable IoT devices in an IoT network. Second, we will investigate and design the XAI model that will provide the vulnerability detection results on the vulnerable IoT devices, and explain why the model predicts such a vulnerability by making connections from the result to the input for such an explanation. Finally, we will develop a Human-in-the-Loop framework that leverages the XAI-based vulnerability detection model to realize our HXAI-VDIM framework shown in Figure~\ref{fig:overview}.  
 
-\noindent {\bf Work Task 3: Human-in-the-Loop, XAI-enabled Digital Forensic Investigation and Mitigation} (Section~\ref{section:T3}) In this work task, we will design and develop the core components relevant to forensic investigation and mitigation (reactive activities). The first module is the software vulnerability scanner. After the vulnerable IoT device is identified and isolated, we start scanning for software vulnerabilities in each isolated device. After software scanning, the forensic expert will use our XAI model to perform forensic investigation and start the mitigation process as needed. Thus, the second module in this work task is the Human-in-the-Loop framework for forensic investigation that is guided by the XAI-enabled Vulnerability Detection Model.
+
+%\noindent {\bf Work Task 1. HXAI-VDIM System Design and Implementation} (Section~\ref{section:T1}). In this work task, we will design and develop our HXAI-VDIM architecture to be concretized into a tool-suite of supports on (1) security vulnerability detection that pro-actively scans the potential risks and vulnerabilities; (2) security vulnerability investigation toolset that assists forensic analysts and experts in performing digital (forensic) investigations, tracing, and identifying the attack source of an incident occurrence; and (3) an integrated tool suite for the remedial and mitigation actions in the wake of such security incident.
+
+
+%\noindent {\bf Work Task 2: Proactive Human-in-the-Loop Vulnerability Detection with Explainable AI} (Section~\ref{section:T2}). In this work task, we will design and develop the core components relevant to proactive direction of our HXAI-VDIM architecture. First, we will develop the theoretical framework,
+%algorithms, and models for proactive vulnerability detection to identify the vulnerable IoT devices in an IoT network. Second, we will investigate and design the XAI model that will provide the vulnerability detection results on the vulnerable IoT devices, and explain why the model predicts such a vulnerability by making connections from the result to the input for such an explanation. Finally, we will develop a Human-in-the-Loop framework that leverages the XAI-based vulnerability detection model to realize our HXAI-VDIM framework shown in Figure~\ref{fig:overview}.  
+
+%\noindent {\bf Work Task 3: Human-in-the-Loop, XAI-enabled Digital Forensic Investigation and Mitigation} (Section~\ref{section:T3}) In this work task, we will design and develop the core components relevant to forensic investigation and mitigation (reactive activities). The first module is the software vulnerability scanner. After the vulnerable IoT device is identified and isolated, we start scanning for software vulnerabilities in each isolated device. After software scanning, the forensic expert will use our XAI model to perform forensic investigation and start the mitigation process as needed. Thus, the second module in this work task is the Human-in-the-Loop framework for forensic investigation that is guided by the XAI-enabled Vulnerability Detection Model.
 
 \subsection{NSF Research Objectives and Anticipated Results}
 

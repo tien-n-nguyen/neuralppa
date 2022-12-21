@@ -1,13 +1,12 @@
-\subsection{Goals and Objectives}
-%The objective is ``\textbf{Automated Risk Detection and Mitigation}''
+\subsection{NSF Research Goals, Objectives, and Anticipated Results}
 
 We propose XAI-enabled Vulnerability Detection and Assessment
 Framework ({\tool}). Instead of resolving complex scenarios of
-security vulnerability detection as an binary output of yes and no, we
+security vulnerability detection as a binary output of yes and no, we
 aim to leverage Explainable AI to amplify the human intelligence in
 detecting vulnerabilities and assessing their impacts in software
 systems. We aim to establish {\em a scientific foundation, novel
-  methodologies, frameworks, models, and algorithmic solutions for
+  methodologies, techniques, models, and algorithmic solutions for
   explanable AI-enabled vulnerability detection and assessment}.
 
 \begin{center}
@@ -17,11 +16,30 @@ The key philosophy that drives our work is that {\em the explainable
   human intelligence in the process of software vulnerability
   detection and assessment. Our explainable AI processes and methods
   will enable security analysts to comprehend and trust the results
-  and output created by AI models on the vulnerability detection and
+  and output created by the AI models on the vulnerability detection and
   assessment}.
     \end{minipage}
 \end{center}
 
+We draw our inspiration and motivation from the recent successes in
+Explainable AI. For example, in healthcare, a software called Sepsis
+Watch~\cite{sepsis-watch}, which would send an alert when a patient
+was at risk of developing sepsis. The researchers discovered that
+doctors were skeptical of its algorithm and reluctant to act on the
+warnings because they did not understand it. XAI technology has been
+developed that explains how each variable in an MRI image contributes
+to the technology identifying suspicious areas as probable for cancer
+while other suspicious areas are not. The diagnosis of human illness
+is similar in spirit to the scanning of vulnerabilities in software.
+We expect that XAI will improve the trusts and confidence in the
+automated tools as well as the detection and assessment process.
+Moreover, finance is another heavily regulated industry where
+decisions need to be explained. It is vital that AI-powered solutions
+are auditable. AI can help assign credit scores, assess insurance
+claims, and optimize investment portfolios, among other applications.
+With explainable AI, one can avoid biases by justifying the decision.
+The system would be able to justify its final decision and give
+clients a detailed explanation if their loan application was declined.
 
 Our primary focus thrusts of research can be summarized as follows:
 
@@ -37,7 +55,7 @@ of the detected vulnerability.
 (3) {\bf Explainable AI-enabled Binary Vulnerability Detection}, that
 makes the detection result more trust-worthy and comprenhensible.
 
-Figure~\ref{fig:arch} illustrates the framework for {\tool},
+Figure~\ref{fig:overview} illustrates our {\tool} framework,
           {\em which will leverage Explainable AI for Automated
             Software Vulnerability Detection and Assessment.}
 %In our proposed `Human-in-the-Loop Explainable-AI-Enabled
@@ -84,7 +102,7 @@ pointed to the key evidential features in the input code that explain
 the reason why the model arrives at the detection result. These
 explanations help security analysts quickly decide whether to
 investigate the alleged vulnerability or discard it to avoid the false
-positive case. Moreover, with our {\tool} framework, we will build the
+positive case. Moreover, with {\tool}, we will build the
 automated toolset to provide the assessments on software
 vulnerabilities, which aim to quantify the exploitability, the impacts
 and the severity of the attacks, the level of damages in access
@@ -125,11 +143,12 @@ To accomplish our goal, we propose the following thrusts of research:
 %To realize our framework, we will pursue the following three key work
 %tasks.
 
+\vspace{3pt}
 \noindent \textbf{Thrust 1. Proactive Software Vulnerability Detection
   with Explainable AI.} ({\em Section~\ref{sec:thrust1}}) In this
 thrust, we will design and develop the core components relevant to
 proactive direction of our framework. We will develop the
-theoretical framework, algorithms, and models for proactive
+theoretical models, algorithms, and techniques for proactive
 vulnerability detection to identify the vulnerable software at the
 source code level. Then, we will investigate and design the
 Explainable AI model that will provide the vulnerability detection
@@ -140,6 +159,7 @@ the input for such an explanation.
 %the XAI-based vulnerability detection model to realize our HXAI-VDIM
 %framework shown in Figure~\ref{fig:overview}.
 
+\vspace{3pt}
 \noindent \textbf{Thrust 2. Automated Software Vulnerability
   Assessment with Explainable AI.} ({\em Section~\ref{sec:thrust2}})
 Several frameworks have been proposed to provide assessments on
@@ -159,6 +179,7 @@ model also provides the explanations for such assessment, helping the
 security analyst quickly understand the impacts of the potential
 vulnerability.
 
+\vspace{3pt}
 \noindent \textbf{Thrust 3. Proactive, Explainable AI-enabled Binary
   Vulnerability Detection.} ({\em Section~\ref{sec:thrust3}}) We will
 develop the techniques to leverage XAI to scan binary code to detect
@@ -180,48 +201,71 @@ investigations.
 
 %\noindent {\bf Work Task 3: Human-in-the-Loop, XAI-enabled Digital Forensic Investigation and Mitigation} (Section~\ref{section:T3}) In this work task, we will design and develop the core components relevant to forensic investigation and mitigation (reactive activities). The first module is the software vulnerability scanner. After the vulnerable IoT device is identified and isolated, we start scanning for software vulnerabilities in each isolated device. After software scanning, the forensic expert will use our XAI model to perform forensic investigation and start the mitigation process as needed. Thus, the second module in this work task is the Human-in-the-Loop framework for forensic investigation that is guided by the XAI-enabled Vulnerability Detection Model.
 
-\subsection{NSF Research Objectives and Anticipated Results}
+%\subsection{NSF Research Objectives and Anticipated Results}
 
-\begin{figure}[t]
-    \centering
-%    \includegraphics[width=0.83\textwidth]{graphs/neuralppa}
-    \includegraphics[width=0.92\textwidth]{figures/infra-design-3.png}
-%    \vspace{-10pt}
-    \caption{{\tool}: Machine Learning-based Program Analysis Infrastructure}
-    \label{fig:arch}
-\end{figure}
+%\begin{figure}[t]
+%    \centering
+%    \includegraphics[width=0.92\textwidth]{figures/infra-design-3.png}
+%    \caption{{\tool}: Machine Learning-based Program Analysis Infrastructure}
+%    \label{fig:arch}
+%\end{figure}
 
 
-In this proposal, we seek to address these issues and advance the state-of-the-art in traditional program analysis by means of {\tool}, a {\em \underline{Neural} Network-Based \underline{P}rogram \underline{A}nalysis} infrastructure. We aim to establish {\em a scientific foundation, novel methodologies, frameworks, models, and algorithmic solutions for neural program analysis}. Our primary focus areas can be summarized as follows: 
+%In this proposal, we seek to address these issues and advance the state-of-the-art in traditional program analysis by means of {\tool}, a {\em \underline{Neural} Network-Based \underline{P}rogram \underline{A}nalysis} infrastructure. We aim to establish {\em a scientific foundation, novel methodologies, frameworks, models, and algorithmic solutions for neural program analysis}. Our primary focus areas can be summarized as follows: 
 
 %(1) {\bf Enabling analysis of incomplete code fragments}, i.e., partial program analysis;
-(1) {\bf enabling analysis of incomplete code fragments}, i.e., partial program analysis;
+%(1) {\bf enabling analysis of incomplete code fragments}, i.e., partial program analysis;
 
 %(2) {\bf Empowering existing PA tools by making them more sound and complete}. 
-(2) {\bf empowering existing PA tools with advanced AI/ML
+%(2) {\bf empowering existing PA tools with advanced AI/ML
 %techniques
-} to make them more sound and complete.
+%} to make them more sound and complete.
 
-\noindent Figure~\ref{fig:arch} illustrates the 
+%\noindent Figure~\ref{fig:arch} illustrates the 
 %general 
-framework for {\tool}, which will allow the construction of efficient program analysis techniques for (partial) code, also based on which downstream 
+%framework for {\tool}, which will allow the construction of efficient program analysis techniques for (partial) code, also based on which downstream 
 %software engineering 
-SE applications can be built.
+%SE applications can be built.
 
 
-\begin{center}
-    \begin{minipage}{36em}
-The key philosophy that drives our work is that the {\em structural, semantic, and symbolic execution-level analyses of partial code can be learned from the analysis of entire programs in the wealth of information obtained from ultra-large-scale, open-source software repositories}.
-    \end{minipage}
-\end{center}
+%\begin{center}
+%    \begin{minipage}{36em}
+%The key philosophy that drives our work is that the {\em structural, semantic, and symbolic execution-level analyses of partial code can be learned from the analysis of entire programs in the wealth of information obtained from ultra-large-scale, open-source software repositories}.
+%    \end{minipage}
+%\end{center}
 
 
 
-We draw motivation for such a data-driven, learning-based approach from the following. First, ultra-large-scale software repositories, e.g., GitHub (7M+ projects) and SourceForge (700k+ projects), contain an enormous collection of programs. These repositories amount to 1B+ lines of code, 10M+ revision logs, and 3M+ issue reports. This wealth of knowledge is an excellent source for {\tool}. Hindle {\em et al.}~\cite{naturalness-icse12} have shown that code has high repetitiveness and predictability and can be captured well by statistical models. Thus, we expect to build ML/DL models to learn from those repositories. 
-Second, the PI group reported a high repetitiveness level for AST code structure in open-source projects~\cite{icse15}. Thus, {\tool} infrastructure could help learn structure-level information from the ASTs extracted for whole programs in the existing code repositories and infer data types, partial ASTs for partial programs. Third, in an empirical study on the repetitiveness, containment, and composability of PDGs in open-source projects, the PI group~\cite{msr16} reported that among 17.5M PDGs with 1.6B PDG subgraphs, 14.3\% of the PDGs have all of their subgraphs repeated across different projects. Furthermore, in 15.6\% of the PDGs, at least 90\% of their subgraphs are likely to have appeared before in other projects. 
-%Thus, {\tool} could learn from PDGs with complete program dependencies retrieved from existing code repositories and derive the dependencies for the (partial) code fragment under study. The PI group also reported a high repetitiveness level for AST code structure in open-source projects~\cite{icse15}.
-Thus, {\tool} could learn semantic-level information from the PDGs with complete program dependencies retrieved from existing code repositories and infer such dependencies for the partial code fragment. Execution can also be modeled
-from the ones in the past.
+%We draw motivation for such a data-driven, learning-based approach
+%from the following. First, ultra-large-scale software repositories,
+%e.g., GitHub (7M+ projects) and SourceForge (700k+ projects), contain
+%an enormous collection of programs. These repositories amount to 1B+
+%lines of code, 10M+ revision logs, and 3M+ issue reports. This wealth
+%of knowledge is an excellent source for {\tool}. Hindle {\em et
+%al.}~\cite{naturalness-icse12} have shown that code has high
+%repetitiveness and predictability and can be captured well by
+%statistical models. Thus, we expect to build ML/DL models to learn
+%from those repositories.  Second, the PI group reported a high
+%repetitiveness level for AST code structure in open-source
+%projects~\cite{icse15}. Thus, {\tool} infrastructure could help learn
+%structure-level information from the ASTs extracted for whole
+%programs in the existing code repositories and infer data types,
+%partial ASTs for partial programs. Third, in an empirical study on
+%the repetitiveness, containment, and composability of PDGs in
+%open-source projects, the PI group~\cite{msr16} reported that among
+%17.5M PDGs with 1.6B PDG subgraphs, 14.3\% of the PDGs have all of
+%their subgraphs repeated across different projects. Furthermore, in
+%15.6\% of the PDGs, at least 90\% of their subgraphs are likely to
+%have appeared before in other projects.  Thus, {\tool} could learn
+%from PDGs with complete program dependencies retrieved from existing
+%code repositories and derive the dependencies for the (partial) code
+%fragment under study. The PI group also reported a high
+%repetitiveness level for AST code structure in open-source
+%projects~\cite{icse15}.  Thus, {\tool} could learn semantic-level
+%information from the PDGs with complete program dependencies
+%retrieved from existing code repositories and infer such dependencies
+%for the partial code fragment. Execution can also be modeled from the
+%ones in the past.
 
 %\textcolor{red}{Add a line for execution-level}.
 
@@ -239,12 +283,12 @@ from the ones in the past.
 %text corpora. In addition, there is much room for innovations in AI/ML
 %for source code.
 
-Broadly, the proposed program analysis infrastructure, \tool, draws inspiration from the successes of the neural network-based approaches in the field of natural language processing (NLP). For example, the task of deriving the data types for the source code tokens is analogous to the part-of-speech (POS) tagging task in NLP. At the syntactic level, learning the syntactic structure, i.e., the ASTs for partial code can be inspired by the approaches to infer parse trees for natural language texts. At the semantic level, the partial program dependence analysis infrastructure is similar in spirit to neural network-based dependency parsing in NLP, which learns the dependencies signifying the semantic relationships between words in a sentence from text corpora. In addition, there is much room for innovations in AI/ML for source code.
+%Broadly, the proposed program analysis infrastructure, \tool, draws inspiration from the successes of the neural network-based approaches in the field of natural language processing (NLP). For example, the task of deriving the data types for the source code tokens is analogous to the part-of-speech (POS) tagging task in NLP. At the syntactic level, learning the syntactic structure, i.e., the ASTs for partial code can be inspired by the approaches to infer parse trees for natural language texts. At the semantic level, the partial program dependence analysis infrastructure is similar in spirit to neural network-based dependency parsing in NLP, which learns the dependencies signifying the semantic relationships between words in a sentence from text corpora. In addition, there is much room for innovations in AI/ML for source code.
 
 
-To accomplish these tasks, we propose the following thrusts of research in {\tool} (see Table~\ref{tab:milestones}):
+%To accomplish these tasks, we propose the following thrusts of research in {\tool} (see Table~\ref{tab:milestones}):
 
-\vspace{3pt}
+%\vspace{3pt}
 %\noindent \textbf{Thrust 1. Neural Structural Analysis Infrastructure
 %  \code{NeuralStruct}.} ({\em Section~\ref{}}) Source code has
 %well-defined structures and semantics. Thus, the basic infrastructure
@@ -262,52 +306,51 @@ To accomplish these tasks, we propose the following thrusts of research in {\too
 %performed with our learning-based approaches in a dual-learning
 %manner.
 
-\noindent \textbf{Thrust 1. Neural Structural Analysis Infrastructure.} ({\em Section~\ref{sec:thrust1}}) Source code has a well-defined structure and semantics. Thus, the basic infrastructure in {\tool} is the neural structural analysis component, which primarily has two tasks. First, it learns from the syntactic structures of the complete code in the training dataset collected from large-scale code repositories, to derive the abstract syntax tree (AST) that best represents the syntactic structure of the given partial code, i.e., with the highest likelihood/probability. The traditional lexical analyzer still works for partial code due to the independence nature of lexical tokens. The second task of this component is to tag the code tokens with the types of the syntactic units including the statement types (\code{if}, \code{for}, etc.), variables, fields, methods, classes, etc. Both of the tasks can be performed with our learning-based approaches in a dual-learning manner.
+%\noindent \textbf{Thrust 1. Neural Structural Analysis Infrastructure.} ({\em Section~\ref{sec:thrust1}}) Source code has a well-defined structure and semantics. Thus, the basic infrastructure in {\tool} is the neural structural analysis component, which primarily has two tasks. First, it learns from the syntactic structures of the complete code in the training dataset collected from large-scale code repositories, to derive the abstract syntax tree (AST) that best represents the syntactic structure of the given partial code, i.e., with the highest likelihood/probability. The traditional lexical analyzer still works for partial code due to the independence nature of lexical tokens. The second task of this component is to tag the code tokens with the types of the syntactic units including the statement types (\code{if}, \code{for}, etc.), variables, fields, methods, classes, etc. Both of the tasks can be performed with our learning-based approaches in a dual-learning manner.
   
-\vspace{3pt}
-\noindent \textbf{Thrust 2. Neural Semantic Analysis Infrastructure.}
-({\em Section~\ref{sec:thrust2}}) The basis components for several
-analysis techniques on the semantics of the program include the
-following:
+%\vspace{3pt}
+%\noindent \textbf{Thrust 2. Neural Semantic Analysis Infrastructure.}
+%({\em Section~\ref{sec:thrust2}}) The basis components for several
+%analysis techniques on the semantics of the program include the
+%following:
 
-1) the identification of the APIs of the external libraries in the
-external references in the partial code: this is needed because the
-partial code contains the undeclared reference and/or
-declaration/reference ambiguity without explicit declaration of the
-APIs in the external libraries.
+%1) the identification of the APIs of the external libraries in the
+%external references in the partial code: this is needed because the
+%partial code contains the undeclared reference and/or
+%declaration/reference ambiguity without explicit declaration of the
+%APIs in the external libraries.
 
-2) the inference of the type information for the entities in the
-partial code: due to the ambiguity in the declaration, the types of
-the variables and statements are not always obviously
-identified. Thus, the type inference is a basic service within
-{\tool}.
+%2) the inference of the type information for the entities in the
+%partial code: due to the ambiguity in the declaration, the types of
+%the variables and statements are not always obviously
+%identified. Thus, the type inference is a basic service within
+%{\tool}.
 
-3) the inference of the program dependencies among the statements in
-the partial code: several program analysis techniques are based on the
-program dependencies, which are not always obtainable due to the
-incompleteness of the given code fragment.
+%3) the inference of the program dependencies among the statements in
+%the partial code: several program analysis techniques are based on the
+%program dependencies, which are not always obtainable due to the
+%incompleteness of the given code fragment.
 
-\vspace{3pt}
-\noindent \textbf{Thrust 3. Neural Symbolic Execution Infrastructure.}
-({\em Section~\ref{sec:thrust3}})
-Symbolic execution is a means of analyzing a program to determine what
-inputs cause each part of a program to execute. Symbolic execution
-performs executing a program abstractly, so that one abstract
-execution covers multiple possible inputs, which are assumed to have
-symbolic values. We aim to explore the novel area in AI named
-neuro-symbolic learning, which seeks to combine traditional
-rules-based AI approaches with modern deep learning techniques.  We
-will leverage traditional program analysis rules to enhance the
-learning of the characteristics on the execution of the partial code
-fragment.
+%\vspace{3pt}
+%\noindent \textbf{Thrust 3. Neural Symbolic Execution Infrastructure.}
+%({\em Section~\ref{sec:thrust3}})
+%Symbolic execution is a means of analyzing a program to determine what
+%inputs cause each part of a program to execute. Symbolic execution
+%performs executing a program abstractly, so that one abstract
+%execution covers multiple possible inputs, which are assumed to have
+%symbolic values. We aim to explore the novel area in AI named
+%neuro-symbolic learning, which seeks to combine traditional
+%rules-based AI approaches with modern deep learning techniques.  We
+%will leverage traditional program analysis rules to enhance the
+%learning of the characteristics on the execution of the partial code
+%fragment.
 
-\vspace{3pt}
-\noindent \textbf{Thrust 4. Neural Partial Program Analysis
-  Applications.}  ({\em Section~\ref{sec:thrust4}}) Our last thrust of research
-is aimed to evaluate our basic partial program analysis infrastructure
-in a few applications. The following software engineering
-applications could be our examples: 1) software vulnerability detection for code snippets,
-2) fault localization, and 3) code completion.
+%\vspace{3pt}
+%\noindent \textbf{Thrust 4. Neural Partial Program Analysis
+%  Applications.}  ({\em Section~\ref{sec:thrust4}}) Our last thrust of research
+%is aimed to evaluate our basic partial program analysis infrastructure
+%in a few applications. The following software engineering
+%applications could be our examples: 1) software vulnerability detection for code snippets, 2) fault localization, and 3) code completion.
 
 %\vspace{3pt}
 %\noindent \textbf{Thrust ???. Neural Execution Analysis Infrastructure.}
@@ -320,24 +363,24 @@ applications could be our examples: 1) software vulnerability detection for code
 %model the execution and stack traces, and model the code coverages
 %for an execution.
 
+\input{sections/satc22-plan-table}
 
-\input{sections/ccf22-plan-table}
+Toward this theme, in our preliminary work, ...
 
-Toward this theme, in our preliminary work, we developed DeepPDA
-(Section~\ref{sec:deeppda}), a neural network-based partial program
-dependence analysis approach that learns to derive the program
-dependencies for any code fragments (i.e., both complete and
-incomplete). In our preliminary empirical evaluation, we intrinsically
-evaluated it on Java and C/C++ programs. We trained DeepPDA on
-complete code. For testing, we treated each method individually and
-chose a consecutive portion within the method to predict the program
-dependencies, and compared them against the actual
-dependencies. Overall, DeepPDA predicts CFGs/PDGs in Java with
-an F-score of 94.29\%, and in C++ with an F-score of 92.46\%. As
-another preliminary work (Section~\ref{sec:statype}), we also
-developed an approach to derive the data types of the variables in the
-code snippets. We treat the problem as statistical machine translation
-from source code with partially qualified names to source code with
-full names. Our preliminary evaluation on StackOverflow posts shows
-that our technique achieves high accuracy with 97.6\% precision and
-96.7\% recall in deriving data types in code snippets.
+%we developed DeepPDA (Section~\ref{sec:deeppda}), a neural
+%network-based partial program dependence analysis approach that learns
+%to derive the program dependencies for any code fragments (i.e., both
+%complete and incomplete). In our preliminary empirical evaluation, we
+%intrinsically evaluated it on Java and C/C++ programs. We trained
+%DeepPDA on complete code. For testing, we treated each method
+%individually and chose a consecutive portion within the method to
+%predict the program dependencies, and compared them against the actual
+%dependencies. Overall, DeepPDA predicts CFGs/PDGs in Java with an
+%F-score of 94.29\%, and in C++ with an F-score of 92.46\%. As another
+%preliminary work (Section~\ref{sec:statype}), we also developed an
+%approach to derive the data types of the variables in the code
+%snippets. We treat the problem as statistical machine translation from
+%source code with partially qualified names to source code with full
+%names. Our preliminary evaluation on StackOverflow posts shows that
+%our technique achieves high accuracy with 97.6\% precision and 96.7\%
+%recall in deriving data types in code snippets.

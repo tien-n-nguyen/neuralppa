@@ -1,44 +1,133 @@
 \subsection{Goals and Objectives}
 %The objective is ``\textbf{Automated Risk Detection and Mitigation}''
 
-In this proposal, we propose XAI-enabled Vulnerability Detection and
-Assessment Framework (XAI-VDA). Instead of resolving complex scenarios
-of security vulnerability detection as an binary output of yes and no,
-we aim to leverage Explainable AI to amplify the human intelligence in
+We propose XAI-enabled Vulnerability Detection and Assessment
+Framework (XAI-VDA). Instead of resolving complex scenarios of
+security vulnerability detection as an binary output of yes and no, we
+aim to leverage Explainable AI to amplify the human intelligence in
 detecting vulnerabilities and assessing their impacts in software
-systems.
+systems. We aim to establish {\em a scientific foundation, novel
+  methodologies, frameworks, models, and algorithmic solutions for
+  explanable AI-enabled vulnerability detection and assessment}.
 
-In our proposed `Human-in-the-Loop Explainable-AI-Enabled
-Vulnerability Detection, Investigation, and Mitigation' (HXAI-VDIM)
-system, instead of resolving complex scenario of security
-vulnerabilities as an output of an AI/ML model (e.g., a definitive
-outcome of yes or no, or a likelihood score for vulnerability degree),
-we integrate the security analyst or forensic investigator into the
-man-machine loop and leverage the explainable AI (XAI) to combine AI
-and Intelligence Assistant (IA) in amplifying human intelligence in
-both proactive and reactive processes. Our philosophy is that {\em "a
-  machine and a mind can beat a mind-imitating machine working by
-  itself"}~\cite{DBLP:conf/ifip/Brooks77}. Our ultimate goal is that
-the proposed HXAI-VDIM system will amplify the human intelligence in
-resolving and investigating complex security vulnerabilities. In other
-words, HXAI-VDIM integrates both human and machine in an interactive
-and iterative loop that utilizes human intelligence to guide the
-XAI-enabled system and generate refined outputs -- see Figures
-\ref{fig:overview} and \ref{fig:arch}.
+\begin{center}
+\begin{minipage}{36em}
+The key philosophy that drives our work is that {\em the explainable
+  AI can combine Artificial Intelligence (AI) and Intelligence Assistant (IA) in amplifying
+  human intelligence in the process of software vulnerability
+  detection and assessment. Our explainable AI processes and methods
+  will enable security analysts to comprehend and trust the results
+  and output created by AI models on the vulnerability detection and
+  assessment}.
+    \end{minipage}
+\end{center}
 
-Specifically, HXAI-VDIM's workflow is as follows. The Explainable Detection Model is trained via the dataset collected throughout the operations of the system (and in the context of our proposal, IoT system) as well as those from other sources. The trained model is then used to run on the current IoT system. The result of the XAI model will be visualized through a Security Vulnerability Visualization (SVV) model to produce for the human expert the report of observable evidences on the potential vulnerabilities in the IoT system under study.  
-Unlike traditional ML model, the Explainable Detection model used for vulnerability detection, investigation, and mitigation (VDIM) {\em produces not only the detection results but also the connections between the results and the input IoT system indicating the reasons why the model has made that decision}. Specifically, the observable evidences will point to the specific data collected from the potentially vulnerable components (hardware and/or software) in the IoT system that are crucial for the XAI model to come up with the result. For example, in the smart campus IoT system, at the first iteration, the XAI model can point to a long list of different potentially vulnerable components as the root causes. Unlike in the traditional approach where the human expert will sift through the long list with several false negatives, (s)he will be integrated into the VDIM process for the next iteration. The human expert will compare the observable evidences with the potential vulnerabilities identified in the previous iteration to provide the adjustments on those identified vulnerable components. Based on those adjustments, the input to the XAI model in the next iteration will be modified accordingly as well as the parameters of the XAI-enabled Detection Model. The entire process of HXAI-VDIM is repeated until all (detected) vulnerabilities are identified or the human expert is confident about the given system. For security investigation, the forensic expert or security analyst will consult with the observable evidences to produce the final report on the vulnerabilities.
+
+Our primary focus thrusts of research can be summarized as follows:
+
+(1) {\bf Proactive Software Vulnerability Detection with Explainable
+  AI}, that produces not only the detection results but also the
+connections between the results and the input IoT system indicating
+the reasons why the model has made that decision.
+ 
+(2) {\bf Explainable AI-enabled Software Vulnerability Assessment},
+that provides an estimation of the assessment on the potential impacts
+of the detected vulnerability.
+
+(3) {\bf Explainable AI-enabled Binary Vulnerability Detection}, that
+makes the detection result more trust-worthy and comprenhensible.
+
+\noindent Figure~\ref{fig:arch} illustrates the framework for {\tool},
+{\color{red}{\bf FIXME.}} {\em which will allow the construction of
+            efficient program analysis techniques for (partial) code,
+            also based on which SE applications can be
+            built.}
+
+%In our proposed `Human-in-the-Loop Explainable-AI-Enabled
+%Vulnerability Detection, Investigation, and Mitigation' (HXAI-VDIM)
+%system, instead of resolving complex scenario of security
+%vulnerabilities as an output of an AI/ML model (e.g., a definitive
+%outcome of yes or no, or a likelihood score for vulnerability degree),
+%we integrate the security analyst or forensic investigator into the
+%man-machine loop and leverage the explainable AI (XAI) to combine AI
+%and Intelligence Assistant (IA) in amplifying human intelligence in
+%both proactive and reactive processes. Our philosophy is that {\em "a
+%  machine and a mind can beat a mind-imitating machine working by
+%  itself"}~\cite{DBLP:conf/ifip/Brooks77}. Our ultimate goal is that
+%the proposed HXAI-VDIM system will amplify the human intelligence in
+%resolving and investigating complex security vulnerabilities. In other
+%words, HXAI-VDIM integrates both human and machine in an interactive
+%and iterative loop that utilizes human intelligence to guide the
+%XAI-enabled system and generate refined outputs -- see Figures
+%\ref{fig:overview} and \ref{fig:arch}.
+
+Specifically, our proposed framework is as follows. The Explainable
+Detection Model is trained via the dataset collected in the history of
+software systems such as the dataset from Common Vulnerability
+Exposure (CVE). The trained detection model will be used to scan any
+software system under investigation.
+%throughout the operations of the system (and in the context of our
+%proposal, IoT system) as well as those from other sources. The trained
+%model is then used to run on the current IoT system. The result of the
+%XAI model will be visualized through a Security Vulnerability
+%Visualization (SVV) model to produce for the human expert the report
+%of observable evidences on the potential vulnerabilities in the IoT
+%system under study.
+Unlike traditional ML model, the Explainable Detection model used for
+vulnerability detection {\em produces not only the detection results
+  but also the connections between the results and the input code
+  indicating the reasons why the model has made that decision}.
+Specifically, the observable evidences will point to the specific data
+collected from the potentially vulnerable source code or binary code
+that are crucial for the XAI model to come up with the result.
+%For example, the traditional model can point to a long list of different
+%potentially vulnerable lines of code as the root causes.
+Unlike in the traditional approach where the human expert will sift
+through the long list with several false negatives, (s)he will be
+pointed to the key evidential features in the input code that explain
+the reason why the model arrives at the detection result. These
+explanations help security analysts quickly decide whether to
+investigate the alleged vulnerability or discard it to avoid the false
+positive case. Moreover, with our {\tool} framework, we will build the
+automated toolset to provide the assessments on software
+vulnerabilities, which aim to quantify the exploitability, the impacts
+and the severity of the attacks, the level of damages in access
+control, etc. 
+%integrated into the VDIM process for the next iteration. The human
+%expert will compare the observable evidences with the potential
+%vulnerabilities identified in the previous iteration to provide the
+%adjustments on those identified vulnerable components. Based on those
+%adjustments, the input to the XAI model in the next iteration will be
+%modified accordingly as well as the parameters of the XAI-enabled
+%Detection Model. The entire process of HXAI-VDIM is repeated until all
+%(detected) vulnerabilities are identified or the human expert is
+%confident about the given system.
+Finally, the security analyst will consult with the explainable
+evidences to produce the final report on the detected vulnerabilities.
 
 
 %\begin{wrapfigure}{l}{0.8\textwidth}
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=4in]{hxai-vdim.jpg}
-	\caption{Human-in-the-Loop XAI-enabled Vulnerability Detection, Investigation, and Mitigation}
+	\includegraphics[width=5in]{figures/satc-illustration}
+	\caption{XAI-enabled Automated Software Vulnerability Detection and Assessment}
 	\label{fig:overview}
 \end{figure}
 %\end{wrapfigure}
-With the Human-in-the-Loop framework, the two key stakeholders (human expert -- forensic investigator and/or security analyst, and automated tool) {\em complement  each other} in producing an effective and efficient VDIM process. {\em The automated tool leverages human intelligence to quickly narrow down the features/factors crucial for the tool. At the same time, human intelligence is amplified with the use of automated tool via XAI and visualization}. To realize our framework, we will pursue the following three key work tasks.
+
+With our framework, the key stakeholder, human expert -- security
+analyst, will be much more effective and efficient in the
+vulnerability detection and assessment process. Human intelligence
+will be amplified with the use of automated detection/assessment tool
+via the explainable AI technology. Such rich explaination will help
+security analysts quickly narrow down the crucial factors to detect
+the vulnerabilities and to discard the false positive vulnerability
+cases.
+
+To accomplish our goal, we propose the following thrusts of research:
+
+%To realize our framework, we will pursue the following three key work
+%tasks.
 
 \noindent {\bf Work Task 1. HXAI-VDIM System Design and Implementation} (Section~\ref{section:T1}). In this work task, we will design and develop our HXAI-VDIM architecture to be concretized into a tool-suite of supports on (1) security vulnerability detection that pro-actively scans the potential risks and vulnerabilities; (2) security vulnerability investigation toolset that assists forensic analysts and experts in performing digital (forensic) investigations, tracing, and identifying the attack source of an incident occurrence; and (3) an integrated tool suite for the remedial and mitigation actions in the wake of such security incident.
 

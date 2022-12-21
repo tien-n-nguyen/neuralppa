@@ -365,7 +365,22 @@ investigations.
 
 \input{sections/satc22-plan-table}
 
-Toward this theme, in our preliminary work, ...
+Toward this theme, in our preliminary work, we develop
+IVDetect~\cite{fse21}, an interpretable vulnerability detector with
+the philosophy of using Artificial Intelligence (AI) to detect
+vulnerabilities, while using Intelligence Assistant (IA) to provide VD
+explanations. We leverage explainable AI to provide users with
+fine-grained explanations that include the sub-graph in the Program
+Dependency Graph (PDG) with the crucial statements that are relevant
+to the detected vulnerability. Our empirical evaluation on
+vulnerability databases shows that IVDetect outperforms the existing
+DL-based approaches by 43\%–84\% and 105\%–255\% in top-10 nDCG and
+MAP ranking scores. IVDetect correctly points out the vulnerable
+statements relevant to the vulnerability via its interpretation in
+67\% of the cases with a top-5 ranked list. Moreover, we also develop
+CAT, a Context-aware, Graph-based, Commit-level Vulnerability
+Assessment Model, that evaluates a vulnerability-introducing code and
+provides the CVSS assessment grades for the detected vulnerability. 
 
 %we developed DeepPDA (Section~\ref{sec:deeppda}), a neural
 %network-based partial program dependence analysis approach that learns

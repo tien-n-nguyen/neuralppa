@@ -1,0 +1,61 @@
+\subsection{Fragment-Level Vulnerability Detection}
+\label{sec:fragment}
+
+%Verdi {\em et al.}~\cite{verdi-tse22} discovered 99 commonly used
+%C/C++ code snippets in S/O answers, which they determined to~be
+%vulnerable via manual inspection.
+
+Verdi {\em et al.}~\cite{verdi-tse22} manually inspected and reported
+99 commonly used C/C++ code snippets in S/O answers as vulnerable.
+However, due to their incomplete nature, code snippets cannot
+automatically be analyzed for vulnerabilities. In this experiment, we
+design an "in-the-wild" evaluation by: (a) first, leveraging \tool to
+predict PDGs for the code snippets; (b) next, making use of the
+predicted PDGs and VulCNN~\cite{wu2022vulcnn} to detect the vulnerable
+code snippets in those S/O answers.
+
+%that we can correctly identify.
+
+%Such a design will help developers detect early the vulnerabilities in the code fragments on online forums.
+
+\subsubsection*{\bf Data Collection}
+(1) We have collected an /C++ dataset comprising of $\sim$50K methods,
+26.3\% of which are vulnerable. We split this dataset with a
+80\%-10\%-10\% ratio to train VulCNN. (2) Of the 99 vulnerable code
+fragments collected by Verdi {\em et al.}, we collect 66 for which, we
+leverage \tool to predict PDGs and generate program
+semantics-capturing images for VulCNN (VulCNN uses a third-party tool
+that does not work with 33~snippets).
+
+\subsubsection*{\bf Experiment Setup}
+First, for all C/C++ methods in the VD dataset, we extract PDGs via
+Joern program analysis tool~\cite{joern-2014}. We then train VulCNN,
+achieving an F-score of 65.66\% in VD for the test set. Next, we
+leverage \tool that was trained on a C/C++ dataset to predict PDGs for
+the code snippets. Finally, we input the 66 program
+semantics-capturing images corresponding to the predicted PDGs to
+%the fragments to
+the trained VulCNN model for vulnerability detection.
+
+%discover the number of correctly detected vulnerable code~fragments.
+
+\subsubsection*{\bf Preliminary Experimental Results}
+We observed that VulCNN correctly identifies \underline{14} out of the
+66 code snippets as vulnerable. This is very encouraging to see
+{\tool}'s usefulness in VD for real-world code snippets. Despite being
+trained on a VD dataset and C/C++ dataset collected without any
+connection to the manually inspected vulnerable code snippets in
+Stack Overflow, {\tool}+VulCNN detects 14 of them. The 52 mis-detected
+ones could be due to the inaccuracy of VulCNN.
+%\begin{tcolorbox}
+PDGs predicted by \tool helps an automated VD tool detect \underline{14} real-world vulnerable code fragments.
+%\end{tcolorbox}
+
+%We observed that VulCNN correctly identifies \underline{14} out of the
+%66 code snippets as vulnerable. This result is very encouraging to
+%show {\tool}'s usefulness in detecting vulnerabilities in the
+%real-world code snippets. Despite being trained on a VD dataset and
+%C/C++ dataset collected without any connection to the
+%manually~ins\-pected vulnerable code snippets in Stack Overflow,
+%{\tool}+VulCNN detects 14 of them. The 52 mis-detected ones could be
+%due to the inaccuracies of {\tool} and~VulCNN.

@@ -22,13 +22,12 @@ rules for each vulnerability type.
 %accurately distinguish between various vulnerable code and
 %non-vulnerable code, resulting in high false positives or high
 %false negatives~\cite{li2018vuldeepecker}.
-
-
 Another type of VD approaches is machine learning (ML)-based.
-Typically, these approaches require human-crafted or summarized
-metrics as features to characterize vulnerabilities and train machine
-learning models on the defined features to predict whether a given
-code is vulnerable or not.
+%Tien
+%Typically, these approaches require human-crafted or summarized
+%metrics as features to characterize vulnerabilities and train machine
+%learning models on the defined features to predict whether a given
+%code is vulnerable or not.
 %Traditional machine learning-based methods rely on human
 %experts for defining features to characterize vulnerabilities,and use traditional machine learning techniques [37], such as k-nearest neighbor and support vector machine, to classify vulnerable code and non-vulnerable code.
 %For example,
@@ -114,10 +113,9 @@ approaches have used ML for vulnerability
 detection~\cite{li2018vuldeepecker,zhou2019devign,li2018sysevr,russell2018automated,chakraborty2020deep}. One
 of the key problems extant in ML is the inability of human users to
 understand exactly how a model came to a determination
-\cite{DBLP:journals/comsur/LeiTZLZS20}. XAI seeks to address this
-`black box' problem, where ML often makes decisions through
-methods which cannot be explained in specifics.
-
+\cite{DBLP:journals/comsur/LeiTZLZS20}.
+%XAI seeks to address this `black box' problem, where ML often makes
+%decisions through methods which cannot be explained in specifics.
 Dorin {\em et al.}~\cite{doran17} outline four categories of XAI based
 on the interpretability present in an XAI model, namely: opaque
 systems, interpretable systems, comprehensible systems, and truly
@@ -125,15 +123,23 @@ explainable systems.
 
 \begin{itemize}
 
-\item \emph{Opaque systems} are the ones in which the mechanisms/algorithms/approaches mapping input data to output data are not visible to the user~\cite{doran17}. These systems are often closed-source, developed by software manufacturers to be provided to clients to meet specific needs, and proprietary in nature. Opacity in AI introduces additional challenges when informing decisions in the public sector, where there is greater requirement for transparent and justified decision making.
+\item \emph{Opaque systems} are the ones in which the mechanisms/algorithms mapping input data to output data are not visible to the user~\cite{doran17}.
+%These systems are often closed-source, developed by software
+%manufacturers to be provided to clients to meet specific needs, and
+  %proprietary in nature.
+  Opacity in AI introduces challenges when informing
+  decisions in the public sector, where there is greater requirement
+  for transparent and justified decision making.
 
 %If transparency in a system cannot be provided, then post-hoc explanations can be used to `justify the outputs in terms of rationalisations of the systems workings rather than trying to show the actual workings~\cite{Preece18}. Existing instances of AI’s use in digital forensics are generally opaque in nature and require validation by a user. Opaque AI assists in evidence discovery rather than interpretation. For example, a file may be flagged as being of interest but a digital forensic examiner must still examine the file’s contents/metadata to determine the validity of the AI’s classification. Further, no reasoning for the AI’s classification is provided.
 
-\item In \emph{interpretable system}, the user cannot only see, but also study and understand how inputs are mathematically mapped to outputs~\cite{doran17}. The authors of~\cite{BARREDOARRIETA202082} further differentiate between interpretability - `the ability to explain or to provide meaning in terms understandable to a human', and understandability, for which transparency and interpretability are necessary.
+\item In \emph{interpretable system}, the user cannot only see, but also study and understand how inputs are mathematically mapped to outputs~\cite{doran17}.
+%The authors of~\cite{BARREDOARRIETA202082} further differentiate between interpretability - `the ability to explain or to provide meaning in terms understandable to a human', and understandability, for which transparency and interpretability are necessary.
 %They also acknowledge that the audience of an AI’s output as a variable affecting its explainability. This is a significant factor that must be considered for models implemented within DF field, where technical information must be communicated to individuals with different technical background knowledge. Not only does the DF field requires that AI be transparent, but its decision making and reasoning capability must also be accurate and comprehensible for courts and can be explained during a court proceedings.
 Interpretability can be provided through methods including, but not limited to, linear/logistic regression, generalised linear models, generalised additive models, decision trees, decision rules and the Rulefit algorithm~\cite{Molnar20}.
 
-\item A \emph{comprehensible system} emits symbols along with its output that allows a user to relate inputs and their corresponding output properties~\cite{doran17}. In these systems, different detected features of the input data act as keys to specific values that are added to the outputs to present pointers of features detected within the data to users. These systems additionally provide a form of comment to their output, in contrast to just the output as given by an opaque system. This output can take the form of confidence scores, which introduce trust or by providing contrastive information which provide insight~\cite{chari20}.
+\item A \emph{comprehensible system} emits symbols along with its output that allows a user to relate inputs and their corresponding output properties~\cite{doran17}.% In these systems, different detected features of the input data act as keys to specific values that are added to the outputs to present pointers of features detected within the data to users.
+These systems additionally provide a form of comment to their output, in contrast to just the output as given by an opaque system. This output can take the form of confidence scores, which introduce trust or contrastive information which provide insight~\cite{chari20}.
   %For a system to be explainable in a manner suitable in the DF field by being self-evidential, it must be both interpretable and comprehensible. Justification must be given for the system’s output, and those justifications must follow from the inputted data. When investigating applications of AI systems in digital forensics, the authors of~\cite{Const19} found that with suitable tools using new methods for visualising and explaining results of computed answerssuch as argumentation schemes, AI could be used `to explain the conclusions (and their proof) in a transparent, comprehensible and justified way'. It follows then that the digital forensics field requires a truly explainable AI system to address issues includingwait times, case load, and high data volume.
   
 \item A \emph{truly XAI} system formulates a line of reasoning that explains the decision-making process of a model using human-understandable features of the input data~\cite{doran17}. Truly explainable AI makes use of knowledge bases which contextualises analysed data within the system and thus provides a mechanism through which individual findings can be deconstructed, in various forms, to provide a justification for the model’s interpretation that logically follows from the provided input data.

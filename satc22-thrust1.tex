@@ -162,12 +162,12 @@ potentially vulnerable code.
 %Let us revisit {\em example scenario 1} in Section~\ref{section:An Example Use Case} again. Assume that after the first iteration, the model detects that nodes corresponding to servers A, B, and C, router D,  camera E, and  smart TV F are vulnerable. However, with the expertise and knowledge from the expert, router D, which cannot be accessed from the outside, can be quickly eliminated from the suspicious list. The model in the next iteration will not consider router D in the detection process and its parameters will be updated accordingly. The process will continue with the integration of human experts in the loop.
    
 
-\noindent \underline{\bf Formulation.}  Let us formulate how we build
-the explainable sets and features/attributes. The input includes the
-trained FA-GCN model, the input ($G_M$), and the detection scores for
-all the nodes. Figure~\ref{fig:xai} illustrates our
-algorithm to train the model.
-
+\noindent \underline{\bf Formulation.}
+%Let us formulate how we build the explainable sets and
+%features/attributes. The input includes the trained FA-GCN model, the
+%input ($G_M$), and the detection scores for all the
+%nodes. Figure~\ref{fig:xai} illustrates our algorithm to train the
+%model.
 To derive the explainable sets, the key goal is to find a sub-graph
 $\mathcal{G}_M$ in the input $G_M$ that minimizes the
 difference in the prediction scores between using the entire graph
@@ -253,13 +253,13 @@ sub-graph $\mathcal{G}_M$ is directly used as an explainable set. The resulting 
 
 \begin{wrapfigure}{l}{0.55\textwidth}
 	\centering
-	\includegraphics[width=3.4in]{pdg-2.png}
-	\caption{Interpretation Sub-Graph for Figure~\ref{fig:motiv_1}}
+	\includegraphics[width=3.6in]{pdg-2.png}
+	\caption{Explanation in terms of PDG subgraph}
 	\label{fig:pdg}
 \end{wrapfigure}
 
 Let us illustrate the usage of our framework on a concrete example of
-a real-world vulnerable code. Figure~\ref{fig:motiv_1} shows the
+a real-world vulnerable code. Figure~\ref{fig:pdg} shows the
 method \code{ec$\_$device$\_$ioctl$\_$xcmd} in Linux 4.6, which
 constructs the I/O control command for the CromeOS devices. This is a
 known vulnerabiluty (i.e., CVE-2016-6156). The commit log of the
@@ -283,64 +283,63 @@ corresponding fix stated that {\em ``At line 6 and line 13, the driver
 
 
 
-\begin{wrapfigure}{l}{0.65\textwidth}
-  \centering
-	\renewcommand{\lstlistingname}{Method}
-	\lstset{
-		numbers=left,
-		numberstyle= \tiny,
-		keywordstyle= \color{blue!70},
-		commentstyle= \color{red!50!green!50!blue!50},
-		frame=shadowbox,
-		rulesepcolor= \color{red!20!green!20!blue!20} ,
-		xleftmargin=3.1em,xrightmargin=2em, aboveskip=1em,
-		framexleftmargin=0.5em,
-		language=Java,
-		basicstyle=\tiny\ttfamily,%scriptsize\ttfamily,
-		moredelim=**[is][\color{red}]{@}{@},
-		escapeinside= {(*@}{@*)},
-}
-	\begin{lstlisting}
-static long ec_device_ioctl_xcmd(struct cros_ec_dev *ec, void __user *arg)
-{
-	long ret;
-	struct cros_ec_command u_cmd;
-	struct cros_ec_command *s_cmd;
-	if (copy_from_user(&u_cmd, arg, sizeof(u_cmd)))
-		return -EFAULT;
-	if ((u_cmd.outsize > EC_MAX_MSG_BYTES) || (u_cmd.insize > EC_MAX_MSG_BYTES))
-		return -EINVAL;
-	s_cmd = kmalloc(sizeof(*s_cmd) + max(u_cmd.outsize, u_cmd.insize), GFP_KERNEL);
-	if (!s_cmd)
-		return -ENOMEM;
-    if (copy_from_user(s_cmd, arg, sizeof(*s_cmd) + u_cmd.outsize)) {
-		ret = -EFAULT;
-		goto exit;
-	}
-+	if (u_cmd.outsize != s_cmd->outsize ||
-+		u_cmd.insize != s_cmd->insize) {
-+		ret = -EINVAL;
-+		goto exit;
-+	}
-	s_cmd->command += ec->cmd_offset;
-	@ret = cros_ec_cmd_xfer(ec->ec_dev, s_cmd);@
-	/* Only copy data to userland if data was received. */
-	if (ret < 0)
-		goto exit;
--	@if (copy_to_user(arg, s_cmd, sizeof(*s_cmd) + u_cmd.insize))@
-+	if (copy_to_user(arg, s_cmd, sizeof(*s_cmd) + s_cmd->insize))
-		ret = -EFAULT;
-exit:
-	kfree(s_cmd);
-	return ret;
-}
-	\end{lstlisting}
-	\vspace{-0.16in}
-	\caption{CVE-2016-6156 Vulnerability in Linux 4.6}
-        \vspace{-0.06in}
-	\label{fig:motiv_1}
-%	\vspace{-5pt}
-\end{wrapfigure}
+%\begin{wrapfigure}{l}{0.65\textwidth}
+%  \centering
+%	\renewcommand{\lstlistingname}{Method}
+%	\lstset{
+%		numbers=left,
+%		numberstyle= \tiny,
+%		keywordstyle= \color{blue!70},
+%		commentstyle= \color{red!50!green!50!blue!50},
+%		frame=shadowbox,
+%		rulesepcolor= \color{red!20!green!20!blue!20} ,
+%		xleftmargin=3.1em,xrightmargin=2em, aboveskip=1em,
+%		framexleftmargin=0.5em,
+%		language=Java,
+%		basicstyle=\tiny\ttfamily,%scriptsize\ttfamily,
+%		moredelim=**[is][\color{red}]{@}{@},
+%		escapeinside= {(*@}{@*)},
+%}
+%	\begin{lstlisting}
+%static long ec_device_ioctl_xcmd(struct cros_ec_dev *ec, void __user *arg)
+%{
+%	long ret;
+%	struct cros_ec_command u_cmd;
+%	struct cros_ec_command *s_cmd;
+%	if (copy_from_user(&u_cmd, arg, sizeof(u_cmd)))
+%		return -EFAULT;
+%	if ((u_cmd.outsize > EC_MAX_MSG_BYTES) || (u_cmd.insize > EC_MAX_MSG_BYTES))
+%		return -EINVAL;
+%	s_cmd = kmalloc(sizeof(*s_cmd) + max(u_cmd.outsize, u_cmd.insize), GFP_KERNEL);
+%	if (!s_cmd)
+%		return -ENOMEM;
+%    if (copy_from_user(s_cmd, arg, sizeof(*s_cmd) + u_cmd.outsize)) {
+%		ret = -EFAULT;
+%		goto exit;
+%	}
+%+	if (u_cmd.outsize != s_cmd->outsize ||
+%+		u_cmd.insize != s_cmd->insize) {
+%+		ret = -EINVAL;
+%+		goto exit;
+%+	}
+%	s_cmd->command += ec->cmd_offset;
+%	@ret = cros_ec_cmd_xfer(ec->ec_dev, s_cmd);@
+%	/* Only copy data to userland if data was received. */
+%	if (ret < 0)
+%		goto exit;
+%-	@if (copy_to_user(arg, s_cmd, sizeof(*s_cmd) + u_cmd.insize))@
+%+	if (copy_to_user(arg, s_cmd, sizeof(*s_cmd) + s_cmd->insize))
+%		ret = -EFAULT;
+%exit:
+%	kfree(s_cmd);
+%	return ret;
+%}
+%	\end{lstlisting}
+%	\vspace{-0.16in}
+%	\caption{CVE-2016-6156 Vulnerability in Linux 4.6}
+%        \vspace{-0.06in}
+%	\label{fig:motiv_1}
+%\end{wrapfigure}
 
 Thus, to fix this bug, a developer added the code at lines 17--21 to make sure that \code{u$\_$cmd.outsize} and \code{u$\_$cmd.insize} have not changed due to race condition between the two fetching calls. Moreover, memory access might be also beyond the array boundary, causing a buffer overflow within the method call \code{cros$\_$ec$\_$cmd$\_$xfer(...)}, when the command is transferred to the ChromeOS device at \underline{line 23}.
 

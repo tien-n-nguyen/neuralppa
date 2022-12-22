@@ -11,6 +11,38 @@
     \label{fig:detection-model}
 \end{figure}
 
+
+\noindent \underline{\bf Abstractions and Representations}. A vulnerability is usually
+exhibited as multiple statements are exploited, thus, it is natural to
+capture the vulnerable code as a sub-graph in the PDG with the data
+and control flows. To do so, we model the vulnerability
+detection via the Graph Convolutional Network (GCN)~\cite{GCN16} as
+follows. The PDG of a method $M$ is represented as a graph $G_N$ =
+$(V,E)$ in which $V$ is a set of nodes representing the statements,
+and $E$ is a set of edges representing the data/control dependencies.
+%
+A feature description $x_V$ is for every node $v$, which represents a
+property of a node, e.g., variable name, etc. Features are summarized
+in a $N \times D$ feature matrix $X_M$ ($N$: number of nodes and $D$
+is the number of input features).
+%
+Let $f$ be a label function on the statements and methods $f: V
+\rightarrow \{1,...,C\}$ that maps a node in $V$ and an entire method
+to one of the $C$ classes. We could have vulnerable
+($\mathcal{V}$) and non-vulnerable ($\mathcal{NV}$).
+
+
+For training on (non-)vulnerable code in the training set, GCN
+performs similar operations as CNN where it learns the features with a
+small filter/window sliding over PDG sub-structure. Differing from
+image data with CNN, the neighbors of a node in GCN are unordered and
+variable in size. To predict if a method $M$ is vulnerable, its PDG
+$G_M$ with the associated feature set $X_M$ = $\{x_j|v_j \in G_M\}$
+are built. GCN learns a conditional distribution $P(Y|G_M,X_M)$, where
+$Y$ is a random variable representing the labels $\{1,...,C\}$. That
+distribution indicates the probability of the graph $G_M$ belonging to
+each of the classes $\{1,...,C\}$, i.e., $M$ is vulnerable or not.
+
 Figure~\ref{fig:detection-model} shows our design of the Graph-based
 Convolution Network (GCN) model for {\em proactive vulnerability
   detection at the source code level}. We also plan to use
@@ -75,27 +107,31 @@ Vulnerabilities and Exposures in the National Vulnerability Database
 \subsection{Explainable AI for Vulnerability Detection}
 \label{sec:xai}
 
-\begin{figure}[!hbt]
-    \centering
-    \includegraphics[width=3.8in]{xai-example.png}
-    \caption{Graph-based Explainable Model for Vulnerability Detection}
-    \label{fig:xai}
-\end{figure}
+%\begin{figure}[!hbt]
+%    \centering
+%    \includegraphics[width=3.8in]{xai-example.png}
+%    \caption{Graph-based Explainable Model for Vulnerability Detection}
+%    \label{fig:xai}
+%\end{figure}
 
-%After each iteration of the detection, it is not necessarily that the detected vulnerable devices at this iteration are  the correct ones. Therefore, we integrate the human expert and analyst in the loop. We then
+\begin{wrapfigure}{l}{0.55\textwidth}
+	\centering
+	\includegraphics[width=3.6in]{xai-example.png}
+	\caption{Graph-based Explainable Model for Vulnerability Detection}
+	\label{fig:xai}
+\end{wrapfigure}
 
-The explainable AI model takes the detection result with the
-vulnerability scores for all the statements and the FA-GCN detection
-model itself to produce the {\bf Explainable Set}, {\em which is
-  defined as the set containing the parts of the input explaining the
-  reason for the model to decide the detected
+Let us explain our proposed Explainable AI model.  The explainable AI model takes the detection result with
+the vulnerability scores for all the statements and the FA-GCN
+detection model itself to produce the {\bf Explainable Set}, {\em
+  which is defined as the set containing the parts of the input
+  explaining the reason for the model to decide the detected
   vulnerability}. Specifically, it uses both the input graph $G_M$ of
 the PDG and the FA-GCN model as the input to obtain the Explainable
-Set.
-To that end, our goal is to take the FA-GCN and a specific input graph
-$G_M$ for PDG of the code under study, and produce the {\em crucial
-  sub-graph structures} and {\em crucial features} in $G_M$ that
-affect the decision of the FA-GCN detection model.
+Set.  To that end, our goal is to take the FA-GCN and a specific input
+graph $G_M$ for PDG of the code under study, and produce the {\em
+  crucial sub-graph structures} and {\em crucial features} in $G_M$
+that affect the decision of the FA-GCN detection model.
 
 We leverage our preliminary work on XAI~\cite{fse21-submission}: our
 idea is that {\em if removing or altering a node or a feature in the
@@ -207,6 +243,158 @@ Similar treatment is applied to $XM$.
 Details on training can be found in~\cite{GNNExplainer}. The resulting
 sub-graph $\mathcal{G}_M$ is directly used as an explainable set. The resulting sub-set of feature $\mathcal{X}_M$ is also an explainable set.
 
-The philosophy is to use Artificial Intelligence (AI) to detect the vulnerability, while using
-Intelligence Assistant (IA) by providing explanations for
-to support developers in further investigation.
+%The philosophy is to use Artificial Intelligence (AI) to detect the vulnerability, while using
+%Intelligence Assistant (IA) by providing explanations for
+%to support developers in further investigation.
+
+%====================================
+
+\subsubsection{Illustration Example for XAI}
+
+\begin{wrapfigure}{l}{0.55\textwidth}
+	\centering
+	\includegraphics[width=3.4in]{pdg-2.png}
+	\caption{Interpretation Sub-Graph for Figure~\ref{fig:motiv_1}}
+	\label{fig:pdg}
+\end{wrapfigure}
+
+Let us illustrate the usage of our framework on a concrete example of
+a real-world vulnerable code. Figure~\ref{fig:motiv_1} shows the
+method \code{ec$\_$device$\_$ioctl$\_$xcmd} in Linux 4.6, which
+constructs the I/O control command for the CromeOS devices. This is a
+known vulnerabiluty (i.e., CVE-2016-6156). The commit log of the
+corresponding fix stated that {\em ``At line 6 and line 13, the driver
+  fetches user space data by pointer \code{arg} via
+  \code{copy$\_$from$\_$user()}. The first fetched value (stored in
+  \code{u$\_$cmd}) (line 6) is used to get the \code{in$\_$size} and
+  \code{out$\_$size} elements and allocation a buffer
+  (\code{s$\_$cmd}) at line 10 so as to copy the whole message to
+  driver later~at~line 13, which means the copy size of the whole
+  message (\code{s$\_$cmd}) is based on the old value
+  (\code{u$\_$cmd.outsize}) from the first fetch. Besides, the whole
+  message copied at the second fetch also contains the elements of
+  \code{in$\_$size} and \code{out$\_$size}, which are the new
+  values. The new values from the second fetch might be changed by
+  another user thread under race~condition, which will result in a
+  double-fetch bug when the inconsistent values are used.''}
+
+%\begin{figure}[t]
+
+
+
+
+\begin{wrapfigure}{l}{0.65\textwidth}
+  \centering
+	\renewcommand{\lstlistingname}{Method}
+	\lstset{
+		numbers=left,
+		numberstyle= \tiny,
+		keywordstyle= \color{blue!70},
+		commentstyle= \color{red!50!green!50!blue!50},
+		frame=shadowbox,
+		rulesepcolor= \color{red!20!green!20!blue!20} ,
+		xleftmargin=3.1em,xrightmargin=2em, aboveskip=1em,
+		framexleftmargin=0.5em,
+		language=Java,
+		basicstyle=\tiny\ttfamily,%scriptsize\ttfamily,
+		moredelim=**[is][\color{red}]{@}{@},
+		escapeinside= {(*@}{@*)},
+}
+	\begin{lstlisting}
+static long ec_device_ioctl_xcmd(struct cros_ec_dev *ec, void __user *arg)
+{
+	long ret;
+	struct cros_ec_command u_cmd;
+	struct cros_ec_command *s_cmd;
+	if (copy_from_user(&u_cmd, arg, sizeof(u_cmd)))
+		return -EFAULT;
+	if ((u_cmd.outsize > EC_MAX_MSG_BYTES) || (u_cmd.insize > EC_MAX_MSG_BYTES))
+		return -EINVAL;
+	s_cmd = kmalloc(sizeof(*s_cmd) + max(u_cmd.outsize, u_cmd.insize), GFP_KERNEL);
+	if (!s_cmd)
+		return -ENOMEM;
+    if (copy_from_user(s_cmd, arg, sizeof(*s_cmd) + u_cmd.outsize)) {
+		ret = -EFAULT;
+		goto exit;
+	}
++	if (u_cmd.outsize != s_cmd->outsize ||
++		u_cmd.insize != s_cmd->insize) {
++		ret = -EINVAL;
++		goto exit;
++	}
+	s_cmd->command += ec->cmd_offset;
+	@ret = cros_ec_cmd_xfer(ec->ec_dev, s_cmd);@
+	/* Only copy data to userland if data was received. */
+	if (ret < 0)
+		goto exit;
+-	@if (copy_to_user(arg, s_cmd, sizeof(*s_cmd) + u_cmd.insize))@
++	if (copy_to_user(arg, s_cmd, sizeof(*s_cmd) + s_cmd->insize))
+		ret = -EFAULT;
+exit:
+	kfree(s_cmd);
+	return ret;
+}
+	\end{lstlisting}
+	\vspace{-0.16in}
+	\caption{CVE-2016-6156 Vulnerability in Linux 4.6}
+        \vspace{-0.06in}
+	\label{fig:motiv_1}
+%	\vspace{-5pt}
+\end{wrapfigure}
+
+Thus, to fix this bug, a developer added the code at lines 17--21 to make sure that \code{u$\_$cmd.outsize} and \code{u$\_$cmd.insize} have not changed due to race condition between the two fetching calls. Moreover, memory access might be also beyond the array boundary, causing a buffer overflow within the method call \code{cros$\_$ec$\_$cmd$\_$xfer(...)}, when the command is transferred to the ChromeOS device at \underline{line 23}.
+
+Another issue is with
+\code{copy$\_$to$\_$user}, \underline{line 27}. The method call \code{cros$\_$ec$\_$cmd}
+\code{$\_$xfer(...)} can set \code{s$\_$cmd-$>$insize} to a lower
+value. Thus, the new smaller value must be used to avoid copying too
+much data~to the user: \code{u$\_$cmd.insize} at line 27 is changed
+into \code{s$\_$cmd-$>$insize}.
+
+%This vulnerable code could potentially cause damages such as denial of
+%service, buffer overflow, and program crash. Recent advances in Deep
+%learning (DL) advances enable several
+%approaches~\cite{zhou2019devign,li2018vuldeepecker} to {\em implicitly
+%  learn} from the history the patterns of vulnerable code, and to
+%detect {\em more general vulnerabilities}.  However, they are limited to
+%provide a binary answer on yes or no w.r.t. vulnerability.
+%they are still limited in comparison with program analysis-based
+%approaches in their ability to provide details on the {\em
+%  fine-grained} level of the vulnerable statements, and on why the
+%model has decided on the vulnerability.  For example, PA-based
+%approaches, e.g., a race detection technique could potentially detect
+%the involvement of the two fetching statements at lines 6 and 13. The
+%method in Figure~\ref{fig:motiv_1} might be deemed as vulnerable by a
+%DL-based model. However, without any fine-grained details, a developer
+%would not know where and what to investigate next. This would make the
+%output of a DL model less constructive in VD. Moreover, a fault
+%localization technique~\cite{keller2017critical}, which locates buggy
+%statements, would need a large, effective test suite.
+
+%For detection, existing DL-based
+%approaches~\cite{zhou2019devign,li2018vuldeepecker} do not fully
+%exploit all the available information on the vulnerable code during
+%training. For example, during training, we know that lines 23 and 27
+%are vulnerable/buggy, and other {\em relevant statements via
+%  data/control dependencies provide contextual information for the
+%  vulnerable ones}. However, the existing
+%approaches~\cite{zhou2019devign,li2018vuldeepecker} do not consider
+%the vulnerable statements and do not use the contextual code to help a
+%model discriminate the vulnerable and non-vulnerable ones. The entire
+%method would be fed to a DL model.
+
+We propose an DL-based, {\em interpretable vulnerability detection}
+approach that goes beyond the decision of vulnerability by providing
+the {\em fine-grained} interpretation in term of the vulnerable
+statements. Specifically, as the method is deemed as vulnerable by
+{\tool}, it will provide a {\em list of important statements as part
+  of the program dependence graph (PDG) that are relevant to the
+  detected vulnerability}. For example, it provides the partial
+sub-graph of the PDG including the statements at the lines 13--15,
+22--23, and 25--27 in Figure~\ref{fig:pdg} for the vulnerable code at
+line 23 and line 27. We use the PDG sub-graph including important
+statements for fine-grained VD since they will give a developer the
+hints on the program dependencies relevant to the vulnerability for
+further investigation.
+
+

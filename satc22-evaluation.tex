@@ -1,6 +1,67 @@
 \section{Evaluation Plan}
 \label{eval}
 
+We will conduct empirical studies to evaluate {\tool} with the
+following questions: 1) How well does {\tool} perform in
+helping users detect undiscovered vulnerabilities? 2) How well does
+{\tool} perform in helping users perform forensic investigation when
+security breach occurs? 3) How well does {\tool} help in the
+mitigation process? We will conduct two kinds of evaluation: intrinsic
+(via internal evaluation metrics) and extrinsic (via controlled
+experiments with human studies). We will use datasets of known
+vulnerabilities, such as software vulnerability datasets (e.g., Fan
+{\em et al.}'s~\cite{fan2020msr}, Reveal~\cite{chakraborty2020deep}
+and FFMPeg+Qemu~\cite{zhou2019devign}).  Fan {\em et
+  al.}~\cite{fan2020msr} dataset covers CVEs from 2002 to 2019 with 21
+features for each vulnerability.  At the method level, the dataset
+contains +10K vulnerable methods and fixed code. The Reveal
+dataset~\cite{chakraborty2020deep} contains +18K methods with 9.16\%
+of the vulnerable ones. The FFMPeg+Qemu dataset has been used in
+Devign study~\cite{zhou2019devign} with +22K data, and 45.0\% of the
+entries are vulnerable.
+%We will use the following metrics to evaluate the vulnerability
+%detection results and the forensic investigation results in the
+%experiments for the research questions 1) and 2): precision (the
+%number of correctly detected vulnerabilities over the total number of
+%detected ones), recall (the number of correctly detected
+%vulnerabilities over the total vulnerabilities). Since
+Because the tools will
+provide the ranked list of potentially vulnerable code, we will also
+use the following ranking metrics: {\bf {\em Mean Average Precision}}
+$MAP$ $=\frac{\sum_{q=1}^{Q}AvgP(q)}{Q}$, with {\em Average Precision}
+$AvgP$ $=\sum_{k=1}^{n}P(k)rel(k)$,
+%
+where $n$ is the total number of results $k$ is the current rank in
+the list, $rel(k)$ is an indicator function equaling to 1 if the item
+at rank $k$ is actually vulnerable, and to zero otherwise. $Q$ is the
+total number of classification types. It is $1$ because we only have
+two types including vulnerable and non-vulnerable classes, however, we
+rank all the methods based on their scores (1 indicates vulnerable,
+and 0 otherwise).
+%
+{\bf {\em Normalized DCG}} at $k$: {\bf $nDCG_k$}
+$=\frac{DCG_k}{IDCG_k}$, with {\em Discounted Cumulative Gain} at rank
+$k$, $DCG_k$ $=\sum_{i=1}^{k}\frac{r_i}{log_2(i+1)}$; and {\em Ideal
+DCG} at $k$ $IDCG_k$
+$=\sum_{i=1}^{|R_k|}\frac{2^{r_i}-1}{log_2(i+1)}$; where $r_i$ is the
+score of the result at position $i$, and $R_k$ the rank of the actual
+vulnerable methods (ordered by their scores) in the resulting list up
+to the position $k$.
+%
+{\bf First Ranking} ($FR$) is the rank of the first correctly
+predicted vulnerable method. {\bf Average ranking} ($AR$) is the
+average rank of the correctly predicted vulnerable
+methods in the top-ranked list.
+%
+{\bf Accuracy under curve} (AUC) is defined as $AUC = P(d(m_1)>d(m_2))$ in
+which $P$ is the probability, $d$ is the detection model (can be
+regarded as a binary classifier), $m_1$ is a randomly chosen positive
+instance, and $m_2$ is a randomly chosen negative one.
+
+For all three research questions, we will further conduct the controlled experiments with human subjects to evaluate how well {\tool} helps users in vulnerability detection, investigation, and mitigation. Human subjects will be divided into two groups. One group will be equipped with XAI-VDA tool supports, and another group will not. We will measure the quality of the detection or investigation via~precision, recall, and ranking metrics, and the time to finish the task of vulnerability detection or investigation.
+
+%We will also create several hypothetical incidents and forensic investigations, with two groups (one with XAI-VDA and the other without). We will measure the final findings and the time efficiency in retrieving the forensic evidence. A key aspect of this evaluation is the ability to support the forensic investigators in accurate and efficient evidence collection that helps reveal the vulnerable devices and/or software vulnerabilities. 
+
 %Our {\em goals} of the evaluation plan include the studies to answer the questions:
 
 %1) {\bf Intrinsic evaluation.} 
@@ -11,124 +72,7 @@
 %in real development processes?
 
 
-\paragraph{\bf (1) Partial-Code Analysis Performance.} We aim
-to evaluate how well {\tool} can provide the structural analysis and
-semantic analysis for incomplete code fragments.  Assessing the
-performance of \tool is not straightforward, mainly due to the lack of
-ground-truth for partial code fragments. Thus, we could evaluate it on
-programs in Java and C/C++ as follows.  First, we will train {\tool} on
-complete code. For testing, we will treat each method individually and
-choose a consecutive portion within the method to predict the actual
-elements and dependencies, and compare them against the actual ones.
-For example, in Thrust 1, if we evaluate the performance of structural
-analysis infrastructure, we could compare the recovered/predicted code
-structure in terms of ASTs against the actual ASTs of the original
-code. For Thrust 2 in dependency analysis, we could treat each method
-individually and choose a consecutive portion within the method to
-predict the program dependencies, and compare them against the actual
-dependencies. We will adopt the standard evaluation metrics, i.e.,
-\textit{Accuracy}, \textit{Precision}, \textit{Recall}, and
-\textit{F-Score}. $Accuracy = \frac{TN+TP}{TN+FP+TP+FN}$, $Recall =
-\frac{TP}{TP+FN}$, $Precision = \frac{TP}{TP+FP}$, and $F{-}Score =
-\frac{2*Recall*Precision}{Recall+Precision}$ where TP = True
-Positives; FP = False Positives; FN = False Negatives; TN = True
-Negatives.
-
-\paragraph{\bf (2) Complete-Code Analysis Performance.}
-We aim to compare the performance of {\tool} (AI/ML + PA) against the
-traditional PA techniques in building structures and dependencies from
-source code. We could collect a set of tools, e.g., to build the
-program dependence graphs to obtain the benchmark. Then, we will
-compare the results from {\tool} and other tools w.r.t. the
-benchmark. We will also measure the time efficiency in building the
-infrastructures such as ASTs or PDGs from all the tools under
-comparison. We will use the same evaluation metrics as in the
-experiments for incomplete code.
-
-\paragraph{\bf (3) Usefulness Evaluation on Downstream Tasks.}
-
-{\em We evaluate how well {\tool} helps in the downstream software
-  engineering tasks for partial code}. For example, in bug and
-vulnerability detection for code snippets, to evaluate the usefulness
-of the PDGs predicted by \tool (say, PDG\textsuperscript{*}), we
-will design experiments around the task of vulnerability detection at two
-levels of granularity: complete code at the method-level, and partial
-code at the snippet-level. For the method-level VD task, we leverage
-any ML-based vulnerability detection tool, e.g.,
-VulCNN~\cite{wu2022vulcnn}, an image-inspired DL-based VD model which
-utilizes PDGs to predict whether a given method has vulnerabilities or
-not. Here, we aim to estimate how well PDG\textsuperscript{*}s
-predicted for the methods in the dataset approximate the performance
-of the actual PDGs retrieved from a program-analysis tool. We could
-use the same methodology for evaluating the usefulness of {\tool} in
-other types of software engineering tasks.
-
-
-
-%{\em in bug detection (BD), fault localization (FL), Regression
-%  Testing in Continuous Integration (RT-CI) and automated program
-%  repair (APR) approaches are in comparison with the state-of-the-art
-%  approaches?}  First, we use the large-scale cross-language datasets
-%with bug fixes.  To detect bugs, we will train our BD and FL
-%approaches on buggy code with known buggy locations and non-buggy
-%code. For APR, we train APR approaches on buggy code with its fixed
-%versions to automatically learn fix patterns. Second, for evaluation,
-%we follow prior research for BD, FL, and APR. \underline{In DB}, we
-%will measure the precision, recall, F-measure, and the number of true
-%bugs detected in Top-N (e.g., N=50). \underline{In FL}, we use the
-%following: \textit{Recall at Top-N}, the number of faults with at
-%least one faulty element located within the first N positions.
-%\textit{Mean Average Rank (MAR)}: For precise localization of all
-%faulty elements of each fault, we compute the average ranking of all
-%the faulty elements for each fault.  \textit{Mean First Rank (MFR)}:
-%For each project, we compute the mean of the first faulty element's
-%rank for each fault.  \underline{In RT-CI}, we calculate APFD (Average
-%Percentage of Faults Detected), Normalized APFD
-%(NAPFD)~\cite{qu2007combinatorial} and Normalized Rank Percentile
-%Average (NRPA)~\cite{bertolino2020learning}. Rank Percentile Average
-%(RPA) was proposed to adapt the Average Fault Percentile to the
-%prioritization problem for computing how much a predicted ranking is
-%close to the actual ranking.  \underline{In APR}, we calculate the
-%number of bugs automatically fixed and the ratio of correctly fixed
-%bugs to the number of plausible patches when comparing with
-%traditional APR approaches. Compared with DL ARP, we use: \textit{Top
-%  K is the number of times that a correct patch is in the ranked list
-%  of top K candidates, e.g., K=1,3,5}.
-
-%\paragraph{{\bf (2) Comparative Study on Code Representation Learning (CLR) for BD, FL, RT-CI and APR.}}
-%{\em Research question: How effective are our CRL for BD, FL, Testing and APR, and how well are they in comparison with the state-of-the-art approaches?} 
-%We will perform controlled experiments to evaluate the effectiveness of our CRL in BD, FL, RT and APR, especially ablation studies on different factors in CRL. In addition, we will continue to compare our CRL with other existing CRL on other software engineering and program analysis topics. We use the same evaluation metrics as the ones in (1) for BD, FL, and APR.
-
-%To evaluate our evaluation framework for CRL, we propose the following
-%procedure. First, we will choose a well-known DL-based model for each
-%application, BD, FL, RT-CI, and APR. For each of those DL-based
-%models, we varied the CRL model using our design framework in Thrust
-%1. We measure the quality of each CRL model and measure the
-%performance of the DL-based model for each application. We will use
-%statistical test to evaluate whether the high accuracy of CRL model
-%leads to high performance of the same downstream model used in the
-%application under study.
-
-%\subsection{Evaluation on usefulness of the approaches in helping developers in learning API usages}
-
-%We will perform controlled experiments to evaluate our methods and tools with developers in the loop using the actual system. We will
-%gather developers and provide them various programming tasks, and
-%compare the efficiency of their work with our methods/tools to the
-%baseline approaches, e.g., with the Web-based code search or other
-%code synthesis approaches.
-
-%We will measure the efficiency of the work using different methods
-%based on the following evaluation metrics. First, we measure
-%efficiency. This could be measured by the time for developers to
-%perform the tasks or the number tasks completed by developers in a
-%period of time. Second, we measure coding effort: how much effort that
-%developers must do to complete the API usages given the API code from
-%the methods. Third, we will measure semantic correctness, either by
-%the number of passing test cases or by human judgements. Finally, we
-%will perform surveys on the quality of the synthesized API usage code
-%to get the feedback for future improvement in the next step.
-
-\paragraph{\bf (4) Evaluation on proposed tools and methods in helping developers in real-world development.}
+\paragraph{\bf Evaluation on proposed tools and methods in helping developers in real-world development.}
 
 We will perform a set of user studies on the usefulness of our
 proposed tools in the wild by releasing our

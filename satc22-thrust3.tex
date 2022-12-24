@@ -118,13 +118,12 @@ layer as follows:
 \begin{equation}\label{new-eq3}
 	\tilde{A} = A + I
 \end{equation}
-Where $H$ is the output for hidden layers; $A$ is the
+$A$ is the
 adjacency~matrix and $I$ is the identity matrix; $\tilde{D}$ is the diagonal node degree matrix; $W$
 is the weight matrix; $X$ is the input and $X \in R^{numx(d+K)}$;
 $num$ is the number of nodes;~$d$ is the dimension of node features;
 $K$ is the number of types of node labels in the input ($K$=3 for $x$,
-$y$, and ($x,y$)); and $-diag(\hat{A})\sum_{j=1}^{K}e_je^T_j$ is used
-to eliminate the self-loops for the components of the feature vectors
+$y$, and ($x,y$)); and $-diag(\hat{A})\sum_{j=1}^{K}e_je^T_j$ eliminates the self-loops for the components of the feature vectors
 for the labels.
 
 
@@ -146,8 +145,7 @@ the context.
 To integrate the context into the embeddings, we compute the final
 vector $v{'}_{n_{c}}$ for the changed node $n_c$ by performing the
 cross-product between $v_{ctx}$ and the vector $v_{n_c}$ for $n_c$
-computed by the Label-GCN model as described in
-Section~\ref{label-gcn-compute}:$$v{'}_{n_c} = v_{ctx} \times
+computed by Label-GCN:$$v{'}_{n_c} = v_{ctx} \times
 v_{n_c}$$
 To compute the vector for the entire commit, we collect all
 the vectors $v{'}_{n_c}$s of the changed nodes $n_c$ in {\mvpdgxy}

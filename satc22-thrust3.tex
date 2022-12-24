@@ -1,6 +1,14 @@
 \section{Thrust 3: Binary Vulnerability Detection with Explainable AI}
 \label{sec:thrust3}
 
+\begin{wrapfigure}{l}{0.5\textwidth}
+    \centering
+    \includegraphics[width=3.2in]{binary.png}
+    \vspace{-10pt}
+    \caption{Control Flow Graph for a Binary Code~\cite{gimini17}}
+    \label{fig:binary}
+\end{wrapfigure}
+
 Given a binary function, we first extract raw features in the form of
 an attributed control flow graph (ACFG). In an ACFG, each vertex is a
 basic block labeled with a set of attributes. Figure~\ref{fig:binary}
@@ -8,18 +16,13 @@ illustrates an ACFG for a function in OpenSSL containing the
 Heartbleed vulnerability~\cite{gimini17}.
 
 
-\begin{figure}[!hbt]
-    \centering
-    \includegraphics[width=3.4in]{binary.png}
-    \caption{Control Flow Graph for a Binary Code~\cite{gimini17}}
-    \label{fig:binary}
-\end{figure}
+
 
 \subsection{Graph-based Learning for Contextualized Embeddings for ACFG for Binary Code}
 \label{embedding:sec}
 
 The goal of our representation learning model is to
-build the {\em contextualized embeddings} for the code changes that
+build the {\em contextualized embeddings} for the code that
 integrate both {\em program dependencies and contexts}.
 From those embeddings, {\tool} will build the embedding for the entire
 commit and use it in the assessment classification for each~VAT.
@@ -33,8 +36,8 @@ commit and use it in the assessment classification for each~VAT.
 
 %with the code change context in the last step, in this step, the goal is to learn the representation vector for code changes in a commit and use the learned representation vector to do the classification for a specific vulnerability assessment type. The key point of the code change representation learning is {\em contextualized} which includes the influence of surrounding source code and the dependency relationships.
 
-\subsection{Building feature vectors $v^{f}_n$ for {\mvpdgxy} nodes}
-\label{feature:sec}
+%\subsection{Building feature vectors $v^{f}_n$ for {\mvpdgxy} nodes}
+%\label{feature:sec}
 
 After the previous step, we obtain {\mvpdgxy} and the context
 sub-graphs for the changed nodes in {\mvpdgxy}. We leverage
@@ -82,6 +85,9 @@ $n$.
 \subsection{Building the contextualized embedding $v_n$ for each node $n$}
 \label{label-gcn-compute}
 
+%\begin{figure}[!hbt]
+
+
 Next, we replace each node $n$ in {\mvpdgxy} with the node feature
 vector~$v^{f}_n$.
 %and feed the graph to the Label-GCN to generate the embedding $v_n$
@@ -99,17 +105,17 @@ labels of the neighboring nodes as part of the feature vectors.
 Label-GCN generates the representation vectors (embeddings) for the nodes in each
 layer as follows:
 
-\begin{equation}\label{eq1}
+\begin{equation}\label{new-eq1}
 	H_{(l)} = 
 	\begin{cases}
 		\sigma [(\hat{A}X-diag(\hat{A})\sum_{j=1}^{K}e_je^T_j)W^0] &  l = 1\\
 		\sigma (\hat{A}H^{(l-1)}W^{(l-1)}) &  l \geq 1\\
 	\end{cases}
 \end{equation}
-\begin{equation}\label{eq2}
+\begin{equation}\label{new-eq2}
 	\hat{A} = \tilde{D}^{-\frac{1}{2}}\tilde{A}\tilde{D}^{-\frac{1}{2}}
 \end{equation}
-\begin{equation}\label{eq3}
+\begin{equation}\label{new-eq3}
 	\tilde{A} = A + I
 \end{equation}
 Where $H$ is the output for hidden layers; $A$ is the

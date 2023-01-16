@@ -32,15 +32,15 @@ to one of the $C$ classes. We could have vulnerable
 ($\mathcal{V}$) and non-vulnerable ($\mathcal{NV}$).
 
 
-For training on (non-)vulnerable code in the training set, GCN
+To train on (non-)vulnerable code, GCN
 performs similar operations as CNN where it learns the features with a
-small filter/window sliding over PDG sub-structure. Differing from
+small window sliding over PDG sub-structure. Differing from
 image data with CNN, the neighbors of a node in GCN are unordered and
 variable in size. To predict if a method $M$ is vulnerable, its PDG
 $G_M$ with the associated feature set $X_M$ = $\{x_j|v_j \in G_M\}$
 are built. GCN learns a conditional distribution $P(Y|G_M,X_M)$, where
 $Y$ is a random variable representing the labels $\{1,...,C\}$. That
-distribution indicates the probability of the graph $G_M$ belonging to
+distribution indicates the probability of $G_M$ belonging to
 each of the classes $\{1,...,C\}$, i.e., $M$ is vulnerable or not.
 
 Figure~\ref{fig:detection-model} shows our design of the Graph-based

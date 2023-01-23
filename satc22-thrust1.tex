@@ -206,9 +206,21 @@ edge-mask $EM$ and feature mask $XM$.
 
 
 
+
 %====================================
 
 \subsection{Illustrated Example for XAI}
+
+
+
+Let us illustrate the usage of our framework on a real-world vulnerable code. Figure~\ref{fig:pdg} shows the
+method \code{ec$\_$device$\_$ioctl$\_$xcmd} in Linux 4.6, which
+constructs the I/O control command for the CromeOS devices. This is a
+known vulnerabiluty (i.e., CVE-2016-6156). The commit log of the
+corresponding fix stated that {\em ``At line 6 and line 13, the driver
+  fetches user space data by pointer \code{arg} via
+  \code{copy$\_$from$\_$user()}''}.
+
 
 \begin{wrapfigure}{l}{0.55\textwidth}
 	\centering
@@ -217,89 +229,18 @@ edge-mask $EM$ and feature mask $XM$.
 	\label{fig:pdg}
 \end{wrapfigure}
 
-Let us illustrate the usage of our framework on a concrete example of
-a real-world vulnerable code. Figure~\ref{fig:pdg} shows the
-method \code{ec$\_$device$\_$ioctl$\_$xcmd} in Linux 4.6, which
-constructs the I/O control command for the CromeOS devices. This is a
-known vulnerabiluty (i.e., CVE-2016-6156). The commit log of the
-corresponding fix stated that {\em ``At line 6 and line 13, the driver
-  fetches user space data by pointer \code{arg} via
-  \code{copy$\_$from$\_$user()}. The first fetched value (stored in
-  \code{u$\_$cmd}) (line 6) is used to get the \code{in$\_$size} and
-  \code{out$\_$size} elements and allocation a buffer
-  (\code{s$\_$cmd}) at line 10 so as to copy the whole message to
-  driver later~at~line 13, which means the copy size of the whole
-  message (\code{s$\_$cmd}) is based on the old value
-  (\code{u$\_$cmd.outsize}) from the first fetch. Besides, the whole
-  message copied at the second fetch also contains the elements of
-  \code{in$\_$size} and \code{out$\_$size}, which are the new
-  values. The new values from the second fetch might be changed by
-  another user thread under race~condition, which will result in a
-  double-fetch bug when the inconsistent values are used.''}
-
-%\begin{figure}[t]
-
-
-
-
-%\begin{wrapfigure}{l}{0.65\textwidth}
-%  \centering
-%	\renewcommand{\lstlistingname}{Method}
-%	\lstset{
-%		numbers=left,
-%		numberstyle= \tiny,
-%		keywordstyle= \color{blue!70},
-%		commentstyle= \color{red!50!green!50!blue!50},
-%		frame=shadowbox,
-%		rulesepcolor= \color{red!20!green!20!blue!20} ,
-%		xleftmargin=3.1em,xrightmargin=2em, aboveskip=1em,
-%		framexleftmargin=0.5em,
-%		language=Java,
-%		basicstyle=\tiny\ttfamily,%scriptsize\ttfamily,
-%		moredelim=**[is][\color{red}]{@}{@},
-%		escapeinside= {(*@}{@*)},
-%}
-%	\begin{lstlisting}
-%static long ec_device_ioctl_xcmd(struct cros_ec_dev *ec, void __user *arg)
-%{
-%	long ret;
-%	struct cros_ec_command u_cmd;
-%	struct cros_ec_command *s_cmd;
-%	if (copy_from_user(&u_cmd, arg, sizeof(u_cmd)))
-%		return -EFAULT;
-%	if ((u_cmd.outsize > EC_MAX_MSG_BYTES) || (u_cmd.insize > EC_MAX_MSG_BYTES))
-%		return -EINVAL;
-%	s_cmd = kmalloc(sizeof(*s_cmd) + max(u_cmd.outsize, u_cmd.insize), GFP_KERNEL);
-%	if (!s_cmd)
-%		return -ENOMEM;
-%    if (copy_from_user(s_cmd, arg, sizeof(*s_cmd) + u_cmd.outsize)) {
-%		ret = -EFAULT;
-%		goto exit;
-%	}
-%+	if (u_cmd.outsize != s_cmd->outsize ||
-%+		u_cmd.insize != s_cmd->insize) {
-%+		ret = -EINVAL;
-%+		goto exit;
-%+	}
-%	s_cmd->command += ec->cmd_offset;
-%	@ret = cros_ec_cmd_xfer(ec->ec_dev, s_cmd);@
-%	/* Only copy data to userland if data was received. */
-%	if (ret < 0)
-%		goto exit;
-%-	@if (copy_to_user(arg, s_cmd, sizeof(*s_cmd) + u_cmd.insize))@
-%+	if (copy_to_user(arg, s_cmd, sizeof(*s_cmd) + s_cmd->insize))
-%		ret = -EFAULT;
-%exit:
-%	kfree(s_cmd);
-%	return ret;
-%}
-%	\end{lstlisting}
-%	\vspace{-0.16in}
-%	\caption{CVE-2016-6156 Vulnerability in Linux 4.6}
-%        \vspace{-0.06in}
-%	\label{fig:motiv_1}
-%\end{wrapfigure}
-
+The first fetched value (stored in \code{u$\_$cmd}) (line 6) is used
+to get the \code{in$\_$size} and \code{out$\_$size} elements and
+allocation a buffer (\code{s$\_$cmd}) at line 10 so as to copy the
+whole message to driver later~at~line 13, which means the copy size of
+the whole message (\code{s$\_$cmd}) is based on the old value
+(\code{u$\_$cmd.outsize}) from the first fetch. Besides, the whole
+message copied at the second fetch also contains the elements of
+\code{in$\_$size} and \code{out$\_$size}, which are the new
+values. The new values from the second fetch might be changed by
+another user thread under race~condition, which will result in a
+double-fetch bug when the inconsistent values are used.
+%
 Thus, to fix this bug, a developer added the code at lines 17--21 to make sure that \code{u$\_$cmd.outsize} and \code{u$\_$cmd.insize} have not changed due to race condition between the two fetching calls. Moreover, memory access might be also beyond the array boundary, causing a buffer overflow within the method call \code{cros$\_$ec$\_$cmd$\_$xfer(...)}, when the command is transferred to the ChromeOS device at \underline{line 23}.
 
 Another issue is with
@@ -343,7 +284,7 @@ into \code{s$\_$cmd-$>$insize}.
 
 We propose an DL-based, {\em interpretable vulnerability detection}
 approach that goes beyond the decision of vulnerability by providing
-the {\em fine-grained} interpretation in term of the vulnerable
+the interpretation in term of the vulnerable
 statements. Specifically, as the method is deemed as vulnerable by
 {\tool}, it will provide a {\em list of important statements as part
   of the program dependence graph (PDG) that are relevant to the
@@ -351,8 +292,8 @@ statements. Specifically, as the method is deemed as vulnerable by
 sub-graph of the PDG including the statements at the lines 13--15,
 22--23, and 25--27 in Figure~\ref{fig:pdg} for the vulnerable code at
 line 23 and line 27. We use the PDG sub-graph including important
-statements for fine-grained VD since they will give a developer the
-hints on the program dependencies relevant to the vulnerability for
-further investigation.
+statements to give developers the hints on the dependencies relevant
+to the vulnerability for further investigation.
 
 
+\input{text-gen}

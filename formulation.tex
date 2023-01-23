@@ -31,11 +31,12 @@ $\mathcal{G}$. The objective in Equation~\ref{eq2} becomes:
   \label{eq4}
   \min_{\mathcal{G}} H(Y| G=\mathbb{E}_{\mathcal{G}}[\mathcal{G}_M], F = \mathbb{E}_{\mathcal{X}}[\mathcal{X}_M])
 \end{equation}
-From Equation~\ref{eq3}, we obtain Equation~\ref{eq4} with Jensen's
-inequality.  The conditional entropy in Equation~\ref{eq4} can be
-optimized by replacing $\mathbb{E}_{\mathcal{G}}[\mathcal{G}_M]$ to be
-optimized by masking with $EM$ on the input graph $G_M$.
-Now, we can reduce the problem to learning the mask $EM$.
-Similar treatment is applied to $XM$.
-Details on training can be found in~\cite{GNNExplainer}. The resulting
-sub-graph $\mathcal{G}_M$ is directly used as an explainable set. The resulting sub-set of feature $\mathcal{X}_M$ is also an explainable set.
+
+%From Equation~\ref{eq3}, we obtain Equation~\ref{eq4} with Jensen's
+%inequality.  The conditional entropy in Equation~\ref{eq4} can be
+%optimized by replacing $\mathbb{E}_{\mathcal{G}}[\mathcal{G}_M]$ to be
+%optimized by masking with $EM$ on the input graph $G_M$.
+%Now, we can reduce the problem to learning the mask $EM$.
+%Similar treatment is applied to $XM$.
+%Details on training can be found in~\cite{GNNExplainer}. The resulting
+%sub-graph $\mathcal{G}_M$ is directly used as an explainable set. The resulting% sub-set of feature $\mathcal{X}_M$ is also an explainable set.

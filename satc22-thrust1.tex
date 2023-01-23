@@ -6,6 +6,7 @@
 \begin{figure}[!hbt]
     \centering
     \includegraphics[width=6.5in]{graph-based-CNN.png}
+    \vspace{-22pt}
     \caption{Feature-Attention, Graph-based Convolution Network for
       Vulnerability Detection Model}
     \label{fig:detection-model}
@@ -133,8 +134,7 @@ graph $G_M$ for PDG of the code under study, and produce the {\em
   crucial sub-graph structures} and {\em crucial features} in $G_M$
 that affect the decision of the FA-GCN detection model.
 
-We leverage our preliminary work on XAI~\cite{fse21-submission}: our
-idea is that {\em if removing or altering a node or a feature in the
+We leverage our preliminary work on XAI~\cite{fse21-submission}: {\em if removing or altering a node or a feature in the
   input PDG graph of the code does affect much the prediction scores,
   the node or the feature is considered as essential and thus must be
   included in the explainable set}. We use
@@ -147,11 +147,10 @@ thus, $\mathcal{G}_M$ is considered as {\bf crucial PDG sub-graph}
 consisting of {\bf crucial features} in those statements and
 connections {\bf relevant to the detected vulnerability}.
 
-\noindent {\em Potential Impacts of Explanations}.  The
-statements with crucial features in both Explainable Sets will be
-visualized and presented to the security expert. Based on his/her
-expertise, (s)he can quickly omit the benign code from the list of
-potentially vulnerable code.
+\noindent {\em Potential Impacts of Explanations}.  The statements in
+both Explainable Sets will be presented to security experts. Based on
+expertise, they can quickly omit the benign code from the list of
+potential vulnerability.
 
 %Correctly detected vulnerable device(s) will be isolated and prevented
 %from further interaction in the network (i.e., no sending or receiving
@@ -204,7 +203,7 @@ edge-mask $EM$ and feature mask $XM$.
 \input{formulation}
 
 
-
+\input{text-gen}
 
 
 %====================================
@@ -296,4 +295,4 @@ statements to give developers the hints on the dependencies relevant
 to the vulnerability for further investigation.
 
 
-\input{text-gen}
+%\input{text-gen}

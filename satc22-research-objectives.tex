@@ -6,8 +6,9 @@ security vulnerability detection as a binary output of yes and no, we
 aim to leverage Explainable AI to amplify the human intelligence in
 detecting vulnerabilities and assessing their impacts in software
 systems. We aim to establish {\em a scientific foundation, novel
-  methodologies, techniques, models, and algorithmic solutions for
-  explanable AI-enabled vulnerability detection and assessment}.
+  methodologies, techniques, models, and algorithms for
+  explainable AI-enabled software vulnerability detection and
+  assessment}.
 
 \begin{center}
 \begin{minipage}{36em}
@@ -22,31 +23,32 @@ The key philosophy that drives our work is that {\em the explainable
 \end{center}
 
 We draw our inspiration and motivation from the recent successes in
-Explainable AI. For example, in healthcare, a software called Sepsis
-Watch~\cite{sepsis-watch}, which would send an alert when a patient
-was at risk of developing sepsis. The researchers discovered that
-doctors were skeptical of its algorithm and reluctant to act on the
-warnings because they did not understand it. XAI technology has been
-developed that explains how each variable in an MRI image contributes
-to the technology identifying suspicious areas as probable for cancer
-while other suspicious areas are not. The diagnosis of human illness
-is similar in spirit to the scanning of vulnerabilities in software.
-We expect that XAI will improve the trusts and confidence in the
-automated tools as well as the detection and assessment process.
-Moreover, finance is another heavily regulated industry where
-decisions need to be explained. It is vital that AI-powered solutions
-are auditable. AI can help assign credit scores, assess insurance
-claims, and optimize investment portfolios, among other applications.
-With explainable AI, one can avoid biases by justifying the decision.
-The system would be able to justify its final decision and give
-clients a detailed explanation if their loan application was declined.
+Explainable AI. For example, there is a software in healthcare called
+Sepsis Watch~\cite{sepsis-watch}, which would send an alert when a
+patient was at risk of developing sepsis. The researchers discovered
+that doctors were skeptical of its algorithm and reluctant to act on
+the warnings because they did not understand it. XAI technology has
+been developed that explains how each variable in an MRI image
+contributes to the technology identifying suspicious areas as probable
+for cancer while other suspicious areas are not. The diagnosis of
+human illness is similar in spirit to the scanning of vulnerabilities
+in software.  We expect that XAI will improve the trusts and
+confidence in the automated tools as well as the detection and
+assessment process.  As another example, finance is a heavily
+regulated industry where decisions need to be explained. It is vital
+that AI-powered solutions are auditable. AI can help assign credit
+scores, assess insurance claims, and optimize investment portfolios,
+among other applications.  With explainable AI, one can avoid biases
+by justifying the decision.  The system would be able to justify its
+final decision and give clients a detailed explanation if their loan
+application was declined.
 
 Our primary focus thrusts of research can be summarized as follows:
 
 (1) {\bf Proactive Software Vulnerability Detection with Explainable
   AI}, that produces not only the detection results but also the
-connections between the results and the input IoT system indicating
-the reasons why the model has made that decision.
+connections between the results and the input software system
+indicating the reasons why the model has made that decision.
  
 (2) {\bf Explainable AI-enabled Software Vulnerability Assessment},
 that provides an estimation of the assessment on the potential impacts
@@ -123,7 +125,9 @@ evidences to produce the final report on the detected vulnerabilities.
 %\begin{wrapfigure}{l}{0.8\textwidth}
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=5in]{figures/satc-illustration}
+	\includegraphics[width=5in]{xai-vda}
+        %{figures/satc-illustration}
+        \vspace{-12pt}
 	\caption{XAI-enabled Automated Software Vulnerability Detection and Assessment}
 	\label{fig:overview}
 \end{figure}
@@ -133,10 +137,10 @@ With our framework, the key stakeholder, human expert -- security
 analyst, will be much more effective and efficient in the
 vulnerability detection and assessment process. Human intelligence
 will be amplified with the use of automated detection/assessment tool
-via the explainable AI technology. Such rich explaination will help
-security analysts quickly narrow down the crucial factors to detect
-the vulnerabilities and to discard the false positive vulnerability
-cases.
+via the explainable AI technology. Such rich explanation both in terms
+of {\em textual explanation and evidences in vulnerable code} will help security
+analysts quickly narrow down the crucial factors to detect the
+vulnerabilities and discard the false positive vulnerability cases.
 
 To accomplish our goal, we propose the following thrusts of research:
 
@@ -167,8 +171,8 @@ software vulnerabilities, which aim to quantify the exploitability,
 the impacts and the severity of the attacks, the level of damages in
 access control, etc. For example, the Common Vulnerability Scoring
 System (CVSS) captures the principal characteristics of a
-vulnerability and produces a numerical score and ratings reflecting
-the different aspects of a software vulnerability. The numerical score
+vulnerability and produces a numeric score and ratings reflecting
+the different aspects of a software vulnerability. The numeric score
 can then be translated into a qualitative representation (such as low,
 medium, high, and critical) to help organizations properly assess and
 prioritize their vulnerability management processes. In this thrust,

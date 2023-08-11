@@ -1,0 +1,152 @@
+\section{Related Work}
+\label{sec:rw}
+
+{\bf Vulnerability Detection.} Various techniques have been developed
+to detect vulnerabilities.
+%Security experts or researchers can utilize the fuzzing techniques~\cite{bohme2017coverage,wang2010taintscope,wen2020memlock,wang2017skyfire},
+%symbolic execution~\cite{stephens2016driller,cha2015program,babic2011statically} or even manual auditing to hunt the vulnerabilities. However, the above approaches still require a large amount of time and resources to hunt the vulnerable code, even worse, most of the effort is wasted in analyzing the non-vulnerable code. Therefore, directly analyzing source code to identify the potential vulnerable code to help the vulnerability hunt is attracting a lot of attention.
+%fuzzing (e.g., [9, 11, 39, 52, 63, 64, 67, 69, 70]), symbolic execution (e.g., [6, 10, 24, 60]) or manual auditing.
+The rule-based approaches were developed to leverage known vulnerability patterns to discover possible vulnerable code, such as FlawFinder~\cite{FlawFinder}, RATS~\cite{RATS}, ITS4~\cite{viega2000its4}, Checkmarx~\cite{Checkmarx}, Fortify~\cite{HPFortify} and Coverity~\cite{Coverity}.
+Typically, the patterns are manually defined by human experts. The state-of-the-art vulnerability detection tools using static analysis provide the
+rules for each vulnerability type.
+%For example,
+%This category includes the lightweight methods that
+%generate patterns from source code (e.g.,
+%the well-known open source tools include FlawFinder~\cite{FlawFinder}, RATS~\cite{RATS}, ITS4~\cite{viega2000its4}, and the commercial tools include Checkmarx~\cite{Checkmarx}, Fortify~\cite{HPFortify} and Coverity~\cite{Coverity}.
+%However, the rule-based approaches suffer the problem of high-false positives or high-false negatives and also more focus on one or few types of vulnerabilities.
+%and the more comprehensive methods that
+%generate patterns based on intermediate code (e.g., commercial
+%tools Fortify~\cite{HPFortify} and Coverity~\cite{Coverity}).
+%These tools can report
+%the locations and the types of vulnerabilities, but cannot
+%accurately distinguish between various vulnerable code and
+%non-vulnerable code, resulting in high false positives or high
+%false negatives~\cite{li2018vuldeepecker}.
+Another type of VD approaches is machine learning (ML)-based.
+%Tien
+%Typically, these approaches require human-crafted or summarized
+%metrics as features to characterize vulnerabilities and train machine
+%learning models on the defined features to predict whether a given
+%code is vulnerable or not.
+%Traditional machine learning-based methods rely on human
+%experts for defining features to characterize vulnerabilities,and use traditional machine learning techniques [37], such as k-nearest neighbor and support vector machine, to classify vulnerable code and non-vulnerable code.
+%For example,
+%Ghaffarian and Shahriari~\cite{ghaffarian2017software} [38] reviewed the approaches of vulnerability analysis and discovery using machine-learning techniques, most of which are traditional machine learning-based methods.
+Various ML-based approaches have been built on top of distinct metrics, such as terms and their occurrence frequencies~\cite{scandariato2014predicting}, imports and function calls~\cite{neuhaus2007predicting}, complexity, code churn, and developer activity~\cite{shin2010evaluating}, dependency relation ~\cite{neuhaus2009beauty}, API symbols and subtrees~\cite{yamaguchi2012generalized, yamaguchi2011vulnerability}.
+
+%Therefore, these approaches rely on human experts to manually define features, and cannot pin down the precise locations of vulnerabilities because programs are represented in some coarse-grained granularities.
+
+%Attributes are the features that are defined to characterize pieces of code, including terms and their occurrence frequencies~\cite{scandariato2014predicting}, imports and function calls~\cite{neuhaus2007predicting}, complexity, code churn, and developer activity~\cite{shin2010evaluating}, dependency relation ~\cite{neuhaus2009beauty}, API symbols and subtrees~\cite{yamaguchi2012generalized, yamaguchi2011vulnerability}, system calls~\cite{grieco2016toward}, and the combination of some features above~\cite{chernis2018machine}. Therefore, these approaches rely on human experts to manually define features, and cannot pin down the precise locations of vulnerabilities because programs are represented in some coarse-grained granularities.
+%Traditional machine learning-based methods can
+%be characterized by the granularity and attributes. Granularity describes the ``atomic'' unit of code that is treated as a whole. Many granularities have been investigated, including program~\cite{grieco2016toward}, package~\cite{neuhaus2009beauty}, component~\cite{scandariato2014predicting, neuhaus2007predicting},
+%file ~\cite{moshtari2016evaluating, shin2010evaluating}, and function~\cite{yamaguchi2012generalized,yamaguchi2011vulnerability, chernis2018machine}.
+%Attributes are the features that are defined to characterize pieces of code, including terms and their occurrence frequencies~\cite{scandariato2014predicting}, imports and function calls~\cite{neuhaus2007predicting}, complexity, code churn, and developer activity~\cite{shin2010evaluating}, dependency relation ~\cite{neuhaus2009beauty}, API symbols and subtrees~\cite{yamaguchi2012generalized, yamaguchi2011vulnerability}, system calls~\cite{grieco2016toward}, and the combination of some features above~\cite{chernis2018machine}. Therefore, these approaches rely on human experts to manually define features, and cannot pin down the precise locations of vulnerabilities because programs are represented in some coarse-grained granularities.
+
+Deep learning has been applied to detect
+vulnerabilities.  For example, some approaches train a DL model on
+different code representations to detect vulnerabilities, such as the
+lexical representations of functions in a synthetic
+codebase~\cite{harer2018learning}, code snippets related to
+API calls to detect two types of
+vulnerabilities~\cite{li2018vuldeepecker}, syntax-based,
+semantics-based, and vector representations~\cite{li2018sysevr},
+graph-based representations~\cite{zhou2019devign}.
+%Harer et al.~\cite{harer2018learning} trained an RNN to detect vulnerabilities in .
+%Lin et al.~\cite{lin2017poster} presented an approach to automatic learning high-level representations of functions based on their abstract syntax trees for vulnerability discovery.
+%Russell et al. \cite{russell2018automated} proposed a large-scale function-level vulnerability detection system to learn deep feature representation of source code after lexical analysis. %It combined the neural feature representations of function source code with random forest as a classifier.
+%Harer et al.~\cite{harer2018automated} used machine learning methods to perform the data-driven vulnerability detection, and compared the effectiveness of using the source code and the compiled code.
+%Devign~\cite{zhou2019devign} learns a set of code semantic representations, 6 types of graphs, using graph neural networks to conduct graph-level classification.
+%The granularity of above approaches is function-level involving large numbers of statements which are not related to vulnerabilities.
+%VulDeePecker~\cite{li2018vuldeepecker} uses a recurrent neural network (RNN) trained on code snippets related to library/API function calls to detect two types of vulnerabilities.
+%SySeVR ~\cite{li2018sysevr} is a deep learning-based framework which uses syntax-based, semantics-based, and vector representations to detect various types of vulnerabilities at the slice level.
+%Therefore, they are coarse-grained and cannot pin down the precise locations of vulnerabilities.
+%The recently proposed VulDeePecker~\cite{li2018vuldeepecker} is the first to use deep learning to detect vulnerabilities at the slice level (finer than function level), effectively excluding the statements which are not related to vulnerabilities.
+%is a general graph neural network based model for graph-level classification through learning on a rich set of code semantic representations.
+Some ML-based approaches could detect vulnerabilities from the binary
+code including Genius~\cite{genius16}, Gimini~\cite{gimini17}, and
+IoTSeeker~\cite{iotseeker21}. They are based on the graph
+representations for the PDGs in the binary code. None of them is
+designed to provide interpretations for a model in term of vulnerable
+statements.
+
+%Our {\tool} is different from all of the above approaches.
+
+%The main goal of {\tool} is to add more intelligence assistance (IA)
+%using a small graph of code statements, key variables, and CWE
+%description to explain why a detection model reaches a prediction.
+
+%Nevertheless, there is no systematic comparative study to show the quantitative
+%impact of different factors on the effectiveness of vulnerability
+%detection. The present study follows VulDeePecker and more specifically
+%studies the impact of control dependency in the code
+%gadget, the imbalanced data processing, and the neural networks
+%on the deep learning-based vulnerability detection. As
+%discussed above, the extension is based on a completely new
+%implementation using an extended open source tool Joern,
+%because a straightforward extension cannot accommodate
+%new semantic information for VulDeePecker which is based
+%on the commercial tool Checkmarx.
+
+
+%\section{Related Work - NSA}
+%\subsection{XAI}
+
+{\bf Explainable AI}. A machine learning model typically runs
+two distinct operations for learning and
+classification~\cite{B16,DBLP:conf/icml/MengBK20,DBLP:conf/icml/MukherjeeYBS20,DBLP:conf/icml/NockM20}. Learners
+are generally `trained' by being provided input data already
+classified with an appropriate output. Then, based on the learned
+data, the algorithm can produce classifications for new
+inputs. Machine learning comes in different types, including
+supervised and unsupervised learning, reinforcement learning and
+neural networks
+\cite{DBLP:journals/csur/MayerJ20,DBLP:journals/csur/VerbraekenWKKVR20,DBLP:journals/csur/ChenZZ0S020,DBLP:journals/csur/QianSWJLGPJYZRW20,DBLP:journals/csur/GuoCLH020,DBLP:journals/csur/LeCB20,DBLP:journals/comsur/OlowononiRL21}. Supervised
+learning is where the learning occurs when the system is fed
+pre-categorized or labelled training data. Unsupervised learning is
+learning that occurs without labelled input data, allowing the
+algorithm to find its own patterns within the data. These two types of
+ML can also be used in conjunction with each other. Reinforcement
+learning is another type of ML in which during the training process
+feedback is provided to the system
+\cite{DBLP:conf/icml/AgarwalS020,DBLP:conf/icml/0003KWGL20,DBLP:journals/comsur/LeiTZLZS20,DBLP:journals/csur/MendoncaZB19}. Several
+approaches have used ML for vulnerability
+detection~\cite{li2018vuldeepecker,zhou2019devign,li2018sysevr,russell2018automated,chakraborty2020deep}. One
+of the key problems extant in ML is the inability of human users to
+understand exactly how a model came to a determination
+\cite{DBLP:journals/comsur/LeiTZLZS20}.
+%XAI seeks to address this `black box' problem, where ML often makes
+%decisions through methods which cannot be explained in specifics.
+Dorin {\em et al.}~\cite{doran17} outline four categories of XAI based
+on the interpretability present in an XAI model, namely: opaque
+systems, interpretable systems, comprehensible systems, and truly
+explainable systems.
+
+\begin{itemize}
+
+\item \emph{Opaque systems} are the ones in which the mechanisms/algorithms mapping input data to output data are not visible to the user~\cite{doran17}.
+%These systems are often closed-source, developed by software
+%manufacturers to be provided to clients to meet specific needs, and
+  %proprietary in nature.
+  Opacity in AI introduces challenges when informing
+  decisions in the public sector, where there is greater requirement
+  for transparent and justified decision making.
+
+%If transparency in a system cannot be provided, then post-hoc explanations can be used to `justify the outputs in terms of rationalisations of the systems workings rather than trying to show the actual workings~\cite{Preece18}. Existing instances of AI’s use in digital forensics are generally opaque in nature and require validation by a user. Opaque AI assists in evidence discovery rather than interpretation. For example, a file may be flagged as being of interest but a digital forensic examiner must still examine the file’s contents/metadata to determine the validity of the AI’s classification. Further, no reasoning for the AI’s classification is provided.
+
+\item In \emph{interpretable system}, the user cannot only see, but also study and understand how inputs are mathematically mapped to outputs~\cite{doran17}.
+%The authors of~\cite{BARREDOARRIETA202082} further differentiate between interpretability - `the ability to explain or to provide meaning in terms understandable to a human', and understandability, for which transparency and interpretability are necessary.
+%They also acknowledge that the audience of an AI’s output as a variable affecting its explainability. This is a significant factor that must be considered for models implemented within DF field, where technical information must be communicated to individuals with different technical background knowledge. Not only does the DF field requires that AI be transparent, but its decision making and reasoning capability must also be accurate and comprehensible for courts and can be explained during a court proceedings.
+Interpretability can be provided through methods including, but not limited to, linear/logistic regression, generalised linear models, generalised additive models, decision trees, decision rules and the Rulefit algorithm~\cite{Molnar20}.
+
+\item A \emph{comprehensible system} emits symbols along with its output that allows a user to relate inputs and their corresponding output properties~\cite{doran17}.% In these systems, different detected features of the input data act as keys to specific values that are added to the outputs to present pointers of features detected within the data to users.
+These systems additionally provide a form of comment to their output, in contrast to just the output as given by an opaque system. This output can take the form of confidence scores, which introduce trust or contrastive information which provide insight~\cite{chari20}.
+  %For a system to be explainable in a manner suitable in the DF field by being self-evidential, it must be both interpretable and comprehensible. Justification must be given for the system’s output, and those justifications must follow from the inputted data. When investigating applications of AI systems in digital forensics, the authors of~\cite{Const19} found that with suitable tools using new methods for visualising and explaining results of computed answerssuch as argumentation schemes, AI could be used `to explain the conclusions (and their proof) in a transparent, comprehensible and justified way'. It follows then that the digital forensics field requires a truly explainable AI system to address issues includingwait times, case load, and high data volume.
+  
+\item A \emph{truly XAI} system formulates a line of reasoning that explains the decision-making process of a model using human-understandable features of the input data~\cite{doran17}. Truly explainable AI makes use of knowledge bases which contextualises analysed data within the system and thus provides a mechanism through which individual findings can be deconstructed, in various forms, to provide a justification for the model’s interpretation that logically follows from the provided input data.
+
+%The authors of~\cite{Wang19} emphasise that such models must be user-centric, highlighting that prior studies have failed to justify specific implementations of their lines of reasoning, while providing background on links between human reasoning and XAI systems. Further to this, systems must prioritise the needs of end users (e.g. different user groups within a specific industry, or different stakeholders within the legal system) to be trusted. Developers of these systems should work with individuals who will employ these systems or else risk creating systems that provide responses too obtuse or jargonistic to be interpretable~\cite{Miller17}. Finally, if the model's output can be validated through the use of logically consistent and self-generated justifications, the need for the transparency of the decision-making model to the user is reduced, but not eliminated, which could potentially allow software providers to protect proprietary technologies.
+\end{itemize}
+
+%In extended detection and response \cite{FirstbrookLawsonGartner2021}, it is necessary that decisions made by and with the assistance of AI-based tools can be justified and explained to a human. For example, the report prepared by the US President's Council of Advisors and Technology (PCAST) \cite{NationalDistrictAttorneysAssociationPCAST} revealed that forensic disciplines in the U.S. lacked ‘quality culture’  \cite[p.33]{NationalDistrictAttorneysAssociationPCAST} and that nearly all crime laboratories were closely tied up with the prosecution of cases. The report also highlighted that the US Supreme Court held that ‘the admissibility of scientific expert testimony depended on its scientific reliability’ \cite[p.41]{NationalDistrictAttorneysAssociationPCAST}, and  forensic processes need to stand up to scientific scrutiny by being repeatable, reproducible, and accurate. Ideally, any methodology should be objective with ‘precise definitions’ of ‘feature identification, comparison and matching’ \cite[p.48]{NationalDistrictAttorneysAssociationPCAST}. Since this is not possible, and ‘the black box in the examiner’s head cannot be examined directly for its foundational basis in science’, the authors stressed the need for empirical study of examiners’ performance in ‘black-box studies’ to determine a likelihood of error based on the generalised performance of the forensic analyst cohort  \cite[p.49]{NationalDistrictAttorneysAssociationPCAST}. A truly explainable AI with a rationalizable ‘black-box’ could provide greater confidence in subjective forensic methodologies, by being both transparent in process and providing justified and logical reasoning.
+
+%The above discussion reinforces the importance of designing systems that maximize the practical use of XAI to further enhance triage and analysis of digital forensic evidence, and to improve the efficacy of human expert integration, for example  digital forensic analysis by facilitating the extraction of forensically sound pieces of evidence (also known as artifact) to assist vulnerability detection and mitigation in our proposed HXAI-VDIM (see Figures \ref{fig:overview} and \ref{fig:arch}).

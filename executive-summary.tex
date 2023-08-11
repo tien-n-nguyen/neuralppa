@@ -1,0 +1,159 @@
+\documentclass[11pt]{article}
+
+\usepackage{graphicx,times,color}
+\usepackage{wrapfig}
+\usepackage{amsmath,epsfig}
+\usepackage{setspace,array}
+\usepackage{cite}
+
+\usepackage{sectsty}
+\sectionfont{\large}
+\subsectionfont{\normalsize}
+\subsubsectionfont{\normalsize}
+
+\usepackage[compact]{titlesec}
+
+\renewcommand{\theequation}{\thesection.\arabic{equation}}
+\renewcommand{\baselinestretch}{1.0}
+
+\newtheorem{Definition}{Definition}
+\newtheorem{Claim}{Claim}
+\newtheorem{Lemma}{Lemma}
+\newtheorem{Theorem}{Theorem}
+\newtheorem{Property}{Property}
+
+\newcommand{\revise} {\bf}
+
+\newcommand{\code}[1]{{\small\texttt{#1}}}
+\newcommand{\op}{\tau}
+\newcommand{\refac}{\rho}
+\newcommand{\edit}{\sigma}
+\newcommand{\T}{\theta}
+\newcommand{\comp}{;}
+\newcommand{\pre}{\prec_P}
+\newcommand{\meth}{KSISA}
+
+\newcommand{\MyParagraph}[1]{\textbf{#1}{ }}
+
+\usepackage{vmargin}
+\setpapersize{USletter}
+\setmarginsrb{1.0in}{1in}{1.0in}{1in}%
+           {0pt}{0mm}{0pt}{10mm}
+\newcommand{\remove}[1]{}
+
+%\usepackage{tweaklist}
+%\renewcommand{\enumhook}{\setlength{\topsep}{0pt}%
+%  \setlength{\itemsep}{0pt}}
+%\renewcommand{\itemhook}{\setlength{\topsep}{0pt}%
+%  \setlength{\itemsep}{0pt}}
+%\renewcommand{\descripthook}{\setlength{\topsep}{0pt}%
+%  \setlength{\itemsep}{0pt}}
+
+\begin{document}
+
+% Collaborative Research: SHF: Small: 
+
+%Tien
+%\begin{center}
+%  {\bf EXECUTIVE SUMMARY\\ Human-in-the-Loop XAI-enabled Vulnerability Detection, Investigation, and Mitigation}
+%\end{center}
+
+\begin{center}
+  {\bf SUMMARY\\ SaTC: CORE: Small: Learn to Detect, Explain, and Assess Software Vulnerabilities}
+\end{center}
+
+%{\large \bf SaTC: Small: Learn to Detect, Explain, and Assess Software
+%  Vulnerabilities}
+
+%\noindent \underline{\bf Overview.}
+\vspace{-12pt}
+\section{Overview}
+
+The need for cyber resilience is increasingly important in our
+society, where computing systems, devices and data have been, and will
+continue to be, the target of cyber attackers, particularly advanced
+persistent threat and nation-state / sponsored actors. There are,
+however, a number of challenges we need to address in the design of a
+system to facilitate automated vulnerability detection and
+mitigation. In this proposal, we focus on the two key factors in
+those challenges, namely: automated Artificial Intelligence
+(AI)/Machine Learning (ML) tools and Explainable AI. The explainable
+AI can combine Artificial Intelligence (AI) and Intelligence Assistant
+(IA) in amplifying human intelligence in the process of software
+vulnerability detection and assessment. Our explainable AI processes
+and methods will enable security analysts to comprehend and trust the
+results and output created by the AI models on the vulnerability
+detection and assessment.
+
+%There exists some defined threshold for AI/ML responses versus those that require human intervention. In \emph{ordinary scenarios}, the cost and complexity of the solutions are both low. Either human analysts or automated tools can handle them with minimal effort. However, the {\em automation wall} exists for \emph{complex scenarios} in which the cost for resolving complex scenarios escalates beyond that wall.
+
+We propose XAI-enabled Vulnerability Detection and Assessment
+Framework (XAI-VDA). Instead of resolving complex scenarios of
+security vulnerability detection as a binary output of yes and no, we
+aim to leverage Explainable AI to amplify the human intelligence in
+detecting vulnerabilities and assessing their impacts in software
+systems. We aim to establish a scientific foundation, novel
+methodologies, techniques, models, and algorithmic solutions for
+explanable AI-enabled vulnerability detection and assessment.
+
+%We propose to investigate and develop {\em 'Human-in-the-Loop Explainable-AI-Enabled Vulnerability Detection, Investigation, and Mitigation’} (HXAI-VDIM) system. Instead of resolving complex scenario of security vulnerabilities as an output of an AI/ML model, we integrate the security analyst or forensic investigator into the man-machine loop and leverage explainable AI (XAI) to combine both AI and Intelligence Assistant (IA) to amplify human intelligence in both proactive and reactive processes. Our philosophy is that "a machine and a mind can beat a mind-imitating machine working by itself" [Fred Brooks]. Our goal is that HXAI-VDIM integrates human and machine in an interactive and iterative loop with security visualization that utilizes human intelligence to guide the XAI-enabled system and generate refined solutions.
+
+
+%Internet of Things (IoT) devices are potential evidence acquisition sources, for example to facilitate attribution (tracing and identifying the attack source), and help answer the six key questions – {\em what, why, how, who, when, and where} – of an incident occurrence in our interconnected cyber-physical society. Existing systems are, however, not generally forensically-ready (i.e., not designed to facilitate efficient acquisition of digital evidences). \underline{First}, in practice, an IoT system is designed to support the functionality that it is intended for, rather than supporting a digital forensic investigation. Therefore, the digital artifacts collected after the fact are often insufficient (e.g., deleted or overwritten) or may be contaminated and  inadmissible in court. \underline{Second}, the appropriateness of existing data capture methods, tools, multiple evidence sources, and {\em jurisdictional, legal, regulation, and privacy issues} further compound the challenges in digital investigations. When designing forensic strategies, it is important to also consider international and local legal and regulatory requirements, as well as the data protection and evidence act, and privacy policies. \underline{Third}, shutting down an IoT system to conduct forensic investigations is not always a viable option, and hence proactive forensic data collection would help reduce the complexity of a forensic investigation and minimize investigation time and costs. If design choices are made in the design space for the components in which forensic features are not considered, post-hoc addition of forensics and law, regulation, privacy-related features is likely to face design constraints and complicate the development of the final~system. 
+
+\section {Intellectual Merits}
+
+We set forth to investigate and develop theoretical and scientific
+foundations, algorithms, models, frameworks, and tool suites in
+Explainable-AI-Enabled Vulnerability Detection and Assessment
+(XAI-VDA). We will pursue three key thrusts of research. First, we
+will investigate and develop our proposed XAI-VDA architecture with
+the following key integrated aspects: 1) Explainable AI models, 2)
+Security Vulnerablity Detection, 3) Security Vulnerability
+Assessment. Second, we will fully integrate the three above components
+to develop the proactive solutions in Automated Vulnerability
+Detection for software systems. Third, we will integrate the above
+components to build the XAI-VDA solution relevant to binary
+vulnerability detection. The first module is the software
+vulnerability scanner.  That is, after the vulnerable code is
+identified and isolated, we start scanning for software
+vulnerabilities.  After software scanning,
+the security analysts will use our XAI model/tool to perform the
+investigation. In brief, the full integration of the three aspects
+(i.e., Explainable AI model, Vulnerability Detection, and
+Vulnerability Assessment) produce a novel solution for Vulnerability
+Detection and Assessment for software systems.
+
+\section{Broader Impacts}
+
+Our results will be {\em transformative and directly benefit our
+  society}, by advancing the state-of-the-art science and practices in
+{\bf security vulnerability} (Explainable AI detection models and
+assessments), and {\bf software engineering} (integration of XAI,
+vulnerability detection and assessment; thus, enhancing system
+developer productivity, software security, and lowering vulnerability
+detection costs, digital investigation efforts and costs.  Innovations
+in the XAI-enabled VDA will advance the state-of-the-art science and
+practice in security. Over the course of this research, graduate and
+undergraduate students, especially minority and underrepresented
+students, will be recruited to work closely with the interdisciplinary
+research team, and gain firsthand experience on system and
+forensic-by-design design and implementation. The findings (e.g.,
+design principles) and the XAI technologies will also be integrated
+into learning modules that can be used for both undergraduate- and
+graduate-level courses.
+
+\section{Keywords}
+Software; Data Science, ML and AI;
+
+%Automated Vulnerability Detection, Vulnerability Assessment,
+%Explainable AI.
+
+%Machine Learning
+
+%It will contribute novel teaching modules to our curriculum.
+
+
+%\noindent {\bf Keywords:} Forensic-by-design, digital blackbox, software design, law, regulation, privacy, accountability.
+
+\end{document} 

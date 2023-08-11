@@ -1,0 +1,202 @@
+\documentclass[11pt]{article}
+
+
+%\input{meta/packages}
+\input{macros}
+
+\usepackage{graphicx,times}
+\usepackage{wrapfig}
+\usepackage{amsmath,epsfig}
+\usepackage{setspace,array}
+\usepackage{cite}
+\usepackage{listings}
+\usepackage{booktabs}
+%\usepackage{bibentry}
+\lstset{basicstyle=\scriptsize\sffamily,language={},frame=single,breaklines=true,columns=fullflexible,mathescape=true,escapechar=@}
+
+\usepackage{tikz}
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+		\node[shape=circle,draw,inner sep=0.45pt] (char) {#1};}}
+
+
+\usepackage{xspace}
+%\usepackage{enumitem}
+
+\usepackage{sectsty}
+\sectionfont{\large}
+\subsectionfont{\normalsize}
+\subsubsectionfont{\normalsize}
+
+\usepackage[compact]{titlesec}
+\usepackage[skins]{tcolorbox}
+
+%\usepackage{subfigure}
+
+\renewcommand{\theequation}{\thesection.\arabic{equation}}
+\renewcommand{\baselinestretch}{1.0}
+
+\newcommand*\rotdia{\multicolumn{1}{R{45}{1em}}}% no optional argument here, please!
+\newcommand*\rot{\rotatebox{90}}
+\usepackage{multicol,multirow}
+
+\newtheorem{Definition}{Definition}
+\newtheorem{Claim}{Claim}
+\newtheorem{Lemma}{Lemma}
+\newtheorem{Theorem}{Theorem}
+\newtheorem{Property}{Property}
+\newtheorem{Problem}{Problem}
+
+
+\newcommand\aName[1]{{\small\textsc{#1}}\xspace}
+
+% cross referencing
+\newcommand{\figref}[1]{Figure~\ref{#1}}
+\newcommand{\secref}[1]{Section~\ref{#1}}
+\newcommand{\tabref}[1]{Table~\ref{#1}}
+\newcommand{\defref}[1]{Definition~\ref{#1}}
+
+%\newcommand\aName[1]{{\small\textnormal{\textsc{#1}}}\xspace}
+
+%\newcommand\MUBench[0]{\aName{MuBench}}
+\newcommand\MUDetect[0]{\aName{MuDetect}}
+
+
+
+\newcommand\MUBench[0]{\aName{MuBench}}
+\newcommand\MUPipe[0]{\aName{MuPipe}}
+\newcommand\MUC[0]{\aName{MuC}}
+\newcommand\AUG[0]{\aName{AUG}}
+
+\newcommand{\etal}{{\em et al.}}
+
+\newcommand\GROUM[0]{\aName{GROUM}}
+\newcommand\eGROUM[0]{\aName{AUG}}
+\newcommand\miner[0]{\aName{AUGMiner}}
+
+\newcommand\Colibri[0]{\aName{Colibri/ML}}
+\newcommand\DroidAssist[0]{\aName{DroidAssist}}
+\newcommand\GraPacc[0]{\aName{GraPacc}}
+\newcommand\GROUMiner[0]{\aName{GROUMiner}}
+\newcommand\Jadet[0]{\aName{Jadet}}
+\newcommand\PRMiner[0]{\aName{PR-Miner}}
+\newcommand\CARMiner[0]{\aName{CAR-Miner}}
+\newcommand\Alattin[0]{\aName{Alattin}}
+\newcommand\Tikanga[0]{\aName{Tikanga}}
+\newcommand\DMMC[0]{\aName{DMMC}}
+\newcommand\RGJ[0]{\aName{RGJ07}}
+\newcommand\Chronicler[0]{\aName{Chronicler}}
+\newcommand\Acharya[0]{\aName{AX09}}
+
+\newcommand{\checkNum}[1]{#1}
+
+\newcommand{\revise} {\bf}
+
+\newcommand{\code}[1]{{\scriptsize\texttt{#1}}}
+\newcommand{\op}{\tau}
+\newcommand{\refac}{\rho}
+\newcommand{\edit}{\sigma}
+\newcommand{\T}{\theta}
+\newcommand{\comp}{;}
+\newcommand{\pre}{\prec_P}
+\newcommand{\meth}{KSISA}
+
+\newcommand{\MyParagraph}[1]{\textbf{#1}{ }}
+\newcommand{\fixme} [1] {\textcolor{red}{{\it FIXME}: #1}}
+
+\usepackage{vmargin}
+\setpapersize{USletter}
+\setmarginsrb{1.0in}{1in}{1.0in}{1in}%
+           {0pt}{0mm}{0pt}{10mm}
+\newcommand{\remove}[1]{}
+
+
+
+\usepackage{tweaklist}
+\renewcommand{\enumhook}{\setlength{\topsep}{0pt}%
+  \setlength{\itemsep}{0pt}}
+\renewcommand{\itemhook}{\setlength{\topsep}{0pt}%
+  \setlength{\itemsep}{0pt}}
+\renewcommand{\descripthook}{\setlength{\topsep}{0pt}%
+  \setlength{\itemsep}{0pt}}
+
+
+
+%\newcommand\Tone{Thrust 1 (T1). Ongoing Evaluation of Existing Code Representation Learning in Bug Detect-Fix Processes}
+
+%Enhancing Techniques in the Bug Fixing Process with Deep Learning}
+
+% all tool names used in this proposal
+
+%\newcommand\tool{NeuralPPA}
+
+\newcommand{\mvpdg}{$\delta$-PDG}
+\newcommand{\mvpdgxy}{$\delta$-PDG$^{x,y}$}
+
+\newcommand{\tool}{\textsc{XAI-VDA}\xspace}
+\newcommand{\deeppda}{\textsc{DeepPDA}\xspace}
+
+\newcommand\deepbugs{\textbf{DeepBugs}~\cite{Pradel-2018}}
+\newcommand\bugram{\textbf{Bugram}~\cite{Wang-2016}}
+\newcommand\narminer{\textbf{NAR-miner}~\cite{Bian-2018}}
+\newcommand\findbugs{\textbf{FindBugs}~\cite{ayewah-2007}}
+\newcommand\deepsim{\textbf{DeepSim}\cite{Zhao-2018}}
+\newcommand\codetovec{\textbf{code2vec}\cite{Alon-2018}}
+\newcommand\codevectors{\textbf{CodeVectors}\cite{Henkel-2018}}
+\newcommand\dlsim{\textbf{DL-Sim}~\cite{Tufano-2018}}
+\newcommand\treelstm{\textbf{Tree~LSTM}~\cite{Tai-2015}}
+
+\newcommand\cnn{CNN~\cite{kim2014convolutional}}
+
+
+
+% auto-fix
+\newcommand\CODIT{\textbf{CODIT}~\cite{chakrabortycodit}}
+\newcommand\Ratchet{\textbf{Ratchet}~\cite{hata2018learning}}
+\newcommand\Tufano{\textbf{Tufano}~\cite{tufano2019learning}}
+\newcommand\CoCo{\textbf{CoCoNut}~\cite{lutellier2020coconut}}
+
+% FL
+\newcommand\MLP{\textbf{MLP}~\cite{bourlard1988auto}}
+\begin{document}
+
+\begin{center}
+%{\large \bf Collaborative Research: SHF: Small: Innovations in Deep Learning to Enhance Program Analysis and Representations to Improve Bug Fixing Process}
+
+%{\large \bf Collaborative Research: SHF: Small: Connecting Deep Learning and Program Analysis to Improve Bug Detecting and Fixing Processes through Code Representation Learning}
+
+%Tien
+%{\large \bf SaTC: Small: Explainable AI-Enabled Software Vulnerability
+%  Detection and Assessment}
+
+{\large \bf SaTC: CORE: Small: Learn to Detect, Explain, and Assess Software
+  Vulnerabilities}
+
+\end{center}
+\vspace{-.1in}
+\hrule
+
+\input{satc22-intro}
+\input{satc22-related}
+%\input{satc22-approach}
+\input{satc22-thrust1}
+\input{satc22-thrust2}
+\input{satc22-thrust3}
+%\input{sections/ccf22-evaluation}
+%\input{sections/ccf22-education}
+%\input{sections/ccf22-prior}
+
+\input{satc22-evaluation}
+\input{satc22-education}
+\input{satc22-prior}
+
+\newpage
+\setcounter{page}{1}
+\pagenumbering{roman}
+
+\bibliographystyle{IEEEtran}
+%\nobibliography{oopsla19,icse20,FL,ref,autofixTools}
+\bibliography{cat-refs,oopsla19,icse20,FL,ref,autofixTools,testPri,embeddingEva,reference,icse21IntVD,icse18,nsa/FL,nsa/ref,nsa/Reference,nsa/icse21IntVD}
+
+%\bibliography{oopsla19, icseAutoFix20,bibliography,icse18,t2api17,ccf18,refs,securesync,tc10,tien,ccf09,ase10,ccf12,anomalies,completion,groums,usagemining,pattern,urls,other}
+
+\end{document}

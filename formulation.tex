@@ -1,0 +1,45 @@
+Let us formally explain how it works. It
+formulates the problem by maximizing the mutual information (MI)
+between the minimal graph $\mathcal{G}_M$ and the input~$G_M$:
+\begin{equation}\label{maineq}
+\max_{\mathcal{G}_M} MI(Y,\mathcal{G}_M, \mathcal{X}_M) = H(Y) - H(Y|G=\mathcal{G}_M, F=\mathcal{X}_M)
+\end{equation}
+$Y$ is the outcome decision by the FA-GCN model. Thus, the entropy term
+$H(Y)$ is constant for the trained FA-GCN model. Maximizing the $MI$
+value for all $\mathcal{G}_M$ and $\mathcal{X}_M$ is equivalent to minimizing conditional
+entropy $H(Y|G=\mathcal{G}_M, X|F=\mathcal{X}_M)$, which by definition of
+conditional entropy can be expressed~as
+\begin{equation}
+  \label{eq2}
+-\mathbb{E}_{Y|\mathcal{G}_M}
+  [log P_{FA-GCN} (Y|G=\mathcal{G}_M,F=\mathcal{X}_M)
+  \end{equation}
+The meaning of this conditional entropy formula is a measure of how
+much uncertainty remains about the outcome $Y$ when we know
+$G=\mathcal{G}_M$ and $F=\mathcal{X}_M$. We also limit the
+size of $\mathcal{G}_M$ by $K_M$, i.e., taking $K_M$ edges that give
+the highest mutual information with the prediction outcome $Y$.
+%
+Direct optimization of the formula~\ref{eq2} is not tractable, thus,
+we can treat $\mathcal{G}_M$ as a random graph variable
+$\mathcal{G}$. The objective in Equation~\ref{eq2} becomes:
+\begin{equation}
+  \label{eq3}
+  \min_{\mathcal{G}} \mathbb{E}_{\mathcal{G}_M \sim \mathcal{G}} H(Y|G=\mathcal{G}_M,F=\mathcal{X}_M)
+\end{equation}
+\begin{equation}
+  \label{eq4}
+  \min_{\mathcal{G}} H(Y| G=\mathbb{E}_{\mathcal{G}}[\mathcal{G}_M], F = \mathbb{E}_{\mathcal{X}}[\mathcal{X}_M])
+\end{equation}
+
+%From Equation~\ref{eq3}, we obtain Equation~\ref{eq4} with Jensen's
+%inequality.
+
+The conditional entropy in Equation~\ref{eq4} can be
+optimized by replacing $\mathbb{E}_{\mathcal{G}}[\mathcal{G}_M]$ to be
+optimized by masking with $EM$ on the input graph $G_M$.
+Now, we can reduce the problem to learning the mask $EM$.
+Similar treatment is applied to $XM$.
+
+%Details on training can be found in~\cite{GNNExplainer}. The resulting
+%sub-graph $\mathcal{G}_M$ is directly used as an explainable set. The resulting% sub-set of feature $\mathcal{X}_M$ is also an explainable set.

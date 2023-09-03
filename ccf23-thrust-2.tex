@@ -1,0 +1,153 @@
+\section{Thrust 2. Generative Large Language Models (LLMs) for Voice-Driven Programming}
+\label{sec:thrust2}
+
+\subsection{Enabling Voice-Driven Interaction and Voice-to-Text Conversion}
+
+We will explore the following ML models that
+can be used to support voice-to-text conversion:
+
+DeepSpeech: Developed by Mozilla, DeepSpeech is an open-source
+speech-to-text, neural network, using a combination of
+convolutional and recurrent neural networks to transcribe spoken
+language into text.
+
+Google's Speech Recognition API: Google provides a cloud-based Speech Recognition API that utilizes deep learning technology for accurate voice-to-text conversion. It's widely used in various applications.
+
+Microsoft's Azure Speech Service: This platform offers a comprehensive set of speech services, including Speech-to-Text, which uses deep learning models to convert spoken language into written text.
+
+IBM Watson Speech to Text: This service leverages deep learning and natural language processing to transcribe audio into text. It's often used for applications involving transcription and voice analytics.
+
+Kaldi: Kaldi is an open-source toolkit for speech recognition that uses deep neural networks and hidden Markov models (HMMs) to perform various speech processing tasks, including voice-to-text conversion.
+
+CMU Sphinx (PocketSphinx): The Sphinx toolkit includes PocketSphinx, a lightweight, open-source speech recognition system that can be used for voice-to-text conversion on resource-constrained devices.
+
+Facebook's wav2vec: Facebook's wav2vec is a deep learning model that can convert raw audio into text. It has shown promising results in automatic speech recognition tasks.
+
+Automatic Speech Recognition (ASR) Transformers: such as BERT-based models and GPT-3, have also been adapted for ASR tasks, making them suitable for voice-to-text conversion by considering the context.
+
+Our process will be tentatively as follows.
+
+{\em Data Collection and Preprocessing}: For data collection, it is essential to gather a diverse dataset of spoken language samples, encompassing coding-related commands and instructions, which should be recorded by a wide range of speakers, including visually-impaired users. During the preprocessing stage, it is crucial to remove background noise, standardize audio levels, and segment audio clips into consistent, time-aligned units to ensure high-quality input data.
+
+{\em Feature Extraction}: To capture the spectral and temporal characteristics of speech, it is necessary to extract relevant acoustic features from the preprocessed audio data. These features may include Mel-frequency cepstral coefficients (MFCCs) and spectrograms.
+
+{\em Model Architecture}: We will leverage a deep neural network framework, which may encompass Convolutional Neural Networks (CNNs), Recurrent Neural Networks (RNNs), or Transformer-based models. It is imperative to incorporate attention mechanisms within the architecture to effectively capture contextual information and dependencies within the spoken language, enhancing transcription accuracy.
+
+{\em Training}: The training process should be based on supervised learning,
+utilizing the dataset prepared in the initial data collection step.
+It is advisable to explore transfer learning if pretrained models on
+large speech datasets are available to leverage existing knowledge and
+improve the model's performance. Applying data augmentation techniques, such as speed perturbation, pitch shifting, and data noise injection, can help enhance the robustness of the model and its ability to handle various speech patterns.
+
+{\em Language Modeling}: For an understanding of context, grammar, and
+coding syntax in the transcribed text, it is essential to fine-tune
+pretrained language models such as BERT or GPT specifically for this
+task.
+
+{\em User Intent Recognition}: To interpret user intent accurately, a
+dedicated module should be developed. This module should analyze the
+transcribed text, identify programming keywords, and understand the
+context of coding instructions provided by the user.
+
+{\em Post-processing and Error Handling}: Implementing a post-processing
+component within the system is vital to correct transcription errors,
+particularly in code-related contexts, ensuring a high level of
+accuracy in the generated text. Additionally, a mechanism should be
+in place to manage and provide feedback when the model encounters
+uncertainty about the accuracy of transcriptions, allowing for
+real-time adjustments.
+
+{\em User Feedback Loop}: Establishing a user feedback loop is essential for
+continuous improvement. This loop enables users to actively
+participate in the refinement process, correcting errors, and
+enhancing the model's performance over time through feedback on
+transcription quality.
+
+
+\subsection{Text-to-Code Generation with Large Language Models (LLMs)}
+
+%GPT-3 (Generative Pretrained Transformer 3): Developed by OpenAI, GPT-3 is one of the largest and most well-known language models. While not specifically designed for code generation, it has been used for various programming tasks, including generating code snippets from natural language descriptions.
+
+%Codex (GitHub Copilot): GitHub Copilot is powered by Codex, a language model created by OpenAI in collaboration with GitHub. It's designed specifically to assist developers in generating code based on natural language comments and descriptions.
+
+We will explore the well-known LLMs as follows:
+
+OpenAI's GPT-4 (or newer iterations): OpenAI continues to develop its GPT series of models, and newer versions may offer improved capabilities for text-to-code tasks compared to GPT-3.
+
+BERT (Bidirectional Encoder Representations from Transformers): While BERT is primarily known for its language understanding capabilities, it can also be fine-tuned for code generation tasks. Researchers have explored using BERT-based models for generating code from text.
+
+RoBERTa: RoBERTa is a variant of BERT that has demonstrated strong performance in a wide range of natural language understanding tasks. It can also be adapted for code generation tasks.
+
+CodeT5 (Text-to-Text Transfer Transformer): is a model that frames various NLP tasks, including code generation tasks. It has shown promising results in generating code from natural language prompts.
+
+%CTRL (Conditional Transformer Language Model): CTRL is designed to handle conditional text generation tasks. While not specifically tailored for code generation, it can be fine-tuned for generating code in response to specific prompts.
+
+%Roberta For Code (R4C): This is a specialized model designed explicitly for code generation tasks. It is pretrained on a large corpus of code and natural language, making it well-suited for generating code from textual descriptions.
+
+CodeBERT: Developed by Microsoft Research, CodeBERT is pretrained on both code and natural language data, enabling it to understand and generate code from text effectively.
+
+%\subsection{Code Generation}
+
+The GPT (Generative Pretrained Transformer) architecture is based on the Transformer architecture, which is a deep learning model primarily designed for sequence-to-sequence tasks. The Transformer architecture comprises an encoder and a decoder, but GPT primarily focuses on the decoder part.
+
+%\subsubsection{Input Embedding}
+
+{\em Input Embedding.} The input to the model is a sequence of tokens, typically words or subword units like Byte-Pair Encodings (BPE). Each token is converted into a high-dimensional embedding vector. This embedding helps the model represent the semantics of the words in a continuous vector space.
+
+%\subsubsection{Positional Encoding}
+
+{\em Positional Encoding.} To account for the order of tokens in the sequence, positional encodings are added to the embeddings. These encodings provide information about the position of each token in the sequence.
+
+%\subsubsection{Transformer Decoder Layers}
+
+{\em Transformer Decoder Layers.} GPT consists of multiple Transformer
+decoder layers stacked on top of each other. Each layer contains two
+main components:
+
+%\subsubsection{Multi-Head Self-Attention}
+
+{\em Multi-head Self-Attention.} This mechanism allows the model to
+focus on different parts of the input sequence. It computes attention
+scores for each token in the sequence, considering all tokens in
+parallel. The attention scores determine how much each token should
+influence the representation of the current token. Mathematically, the
+self-attention mechanism can be represented as follows:
+$$\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V$$
+%\]
+\begin{align*}
+Q & : \text{Query vectors for each token.}; K & : \text{Key vectors for each token.}; V & : \text{Value vectors for each token.};\\d_k & : \text{Dimensionality of the key vectors.}
+\end{align*}
+{\em Feedforward Neural Network.} After self-attention, a feedforward neural network is applied to each token's representation independently. This network typically consists of a couple of linear layers followed by activation functions like ReLU.
+\[
+\text{FFN}(x) = \text{ReLU}(W_1x + b_1)W_2 + b_2
+\]
+\begin{align*}
+x & : \text{Input.}; W_1, b_1, W_2, b_2 : \text{Learnable parameters.}
+\end{align*}
+{\em Layer Normalization and Residual Connections.} are applied after each
+sub-layer (self-attention and feedforward). These mechanisms help
+stabilize training and enable the model to learn more effectively.
+
+%\subsection{Stacking Layers}
+
+{\em Stacking Layers.} Multiple Transformer decoder layers are stacked
+on top of each other. The output of one layer becomes the input to the
+next layer.
+
+{\em Output Layer.} The final output of the model is typically a
+linear layer followed by a softmax activation for classification tasks
+or a linear layer for regression tasks. The output predicts the next
+token in the sequence or generates a probability distribution over the
+entire vocabulary.
+
+The model is trained on a massive corpus of text data using a self-supervised learning objective, such as predicting the next word in a sentence (autoregressive training) or filling in masked words (masked language modeling). Once trained, GPT can be fine-tuned on specific downstream tasks like text generation, translation, question-answering, and more.
+
+It's important to note that GPT models can have variations in
+architecture and model size, with GPT-3 being one of the largest and
+most well-known versions. The specific mathematical details and
+hyperparameters can vary across different versions and implementations
+of GPT.
+
+%\end{document}
+
+%{\bf Ask: ChatGPT to generate the math for GPT and put few prompts and figures from Phuoc.}

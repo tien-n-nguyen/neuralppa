@@ -3,7 +3,7 @@
 
 {\bf Research on the programming experiences of VIPLs} is notably
 lacking, both in terms of quantity and quality. Mealin and Murphy-Hill
-conducted qualitative interviews [4] with eight experienced blind
+conducted qualitative interviews~\cite{mealin-vhlcc12} with eight experienced blind
 developers and discovered several noteworthy insights. Although some
 of these developers had utilized popular IDEs, e.g., Eclipse and
 Visual Studio, they primarily relied on text editors for their coding
@@ -30,7 +30,7 @@ the developers themselves, it fell short in uncovering the underlying
 causes of these problems, as the interviewees did not possess these
 answers.
 %Consequently, when conducting research with specialized user groups such as visually impaired individuals, it is imperative to meticulously design the research methodology to not only gather valuable insights but also address the "why" questions.
-Mealin and Murphy-Hill's study [4] also yielded valuable insights into
+Mealin and Murphy-Hill's study~\cite{mealin-vlhcc12} also yielded valuable insights into
 the primary challenges faced by blind software developers, including
 (1) difficulties in gaining an overview of the code, whether their own
 or someone else's; (2) challenges in searching for information within
@@ -39,14 +39,14 @@ discovering tools within the IDEs. These points serve as valuable
 inspiration for the development of tools and products aimed at
 enhancing the productivity of VIPLs.
 
-In a parallel study, Albusays and Ludi conducted a quantitative survey [2] involving 69 experienced blind programmers who self-reported their experiences working on programming projects. Their findings reinforced the challenges outlined by Mealin and Murphy-Hill [4]. These developers encountered considerable difficulties in navigating through complex code structures and layouts. Additionally, some respondents expressed discomfort and hesitancy when seeking assistance from or collaborating with sighted fellow developers. In addition to these new findings, Albusays and Ludi's research echoed the shared observation of the lack of accessibility in IDEs and their tools for visually impaired users.
+In a parallel study, Albusays and Ludi conducted a quantitative survey~\cite{khaled16} involving 69 experienced blind programmers who self-reported their experiences working on programming projects. Their findings reinforced the challenges outlined by Mealin and Murphy-Hill~\cite{mealin-vlhcc12}. These developers encountered considerable difficulties in navigating through complex code structures and layouts. Additionally, some respondents expressed discomfort and hesitancy when seeking assistance from or collaborating with sighted fellow developers. In addition to these new findings, Albusays and Ludi's research echoed the shared observation of the lack of accessibility in IDEs and their tools for visually impaired users.
 
 %Both studies, however, encountered a common limitation in their inability to uncover comprehensive explanations for this inaccessibility, a limitation stemming from their reliance on respondent-dependent research methodologies.
 
 %============================
 
 {\bf Accessible and assistive tools for visually impaired developers}.
-In 2011, Stefik et al. introduced Sodbeans [10], an auditory
+In 2011, Stefik et al. introduced Sodbeans~\cite{stefik11}, an auditory
 integrated development environment (IDE) that employs audio cues to
 convey information about code to developers. A notable feature of
 Sodbeans is its utilization of scoping cues, which signify
@@ -57,14 +57,29 @@ relationships between program constructs.
 %sighted programmers, with no adverse effects.
 However, Sodbeans primarily focuses on improving code comprehension,
 with its potential to address the primary issue identified by Mealin
-and Murphy-Hill [4] – gaining an overview of code – considered a
+and Murphy-Hill ~\cite{mealin-vlhcc12} – gaining an overview of code – considered a
 secondary goal necessitating further trials with non-sighted
 developers for verification. Sodbeans was later integrated into
 Oracle's Netbeans as an IDE extension.
 
-Before their work on Sodbeans IDE, Stefik et al. created the Wicked Audio Debugger (WAD) [9], an audio-based add-in debugger for Microsoft Visual Studio in 2007. WAD aimed to assist blind developers in code navigation and debugging, potentially saving time and effort in bug identification and resolution. However, feasibility testing involved ten sighted senior-level computer science students simulating "blind" behavior without visual code access or prior structural knowledge. Similar to the study [10] on Sodbeans, the positive impact on blind developers' productivity remained inconclusive.
+Before their work on Sodbeans IDE, Stefik {\em et al.} created the
+Wicked Audio Debugger (WAD)~\cite{wad07}, an audio-based add-in debugger for
+Microsoft Visual Studio in 2007. WAD aimed to assist blind developers
+in code navigation and debugging, potentially saving time and effort
+in bug identification and resolution. However, feasibility testing
+involved ten sighted senior-level computer science students simulating
+"blind" behavior without visual code access or prior structural
+knowledge. Similar to the study~\cite{stefik11} on Sodbeans, the
+positive impact on blind developers' productivity remained
+inconclusive.
 
-Similarly addressing this challenge, Baker et al. developed a plug-in called StructJumper [3] for Eclipse to aid visually impaired developers in comprehending and navigating code. The plug-in comprises two main features, TreeView and Text Editor, creating a hierarchical tree based on Java's nesting structure. Effectiveness tests conducted with seven experienced blind programmers showed a slight positive impact on task completion time.
+Similarly addressing this challenge, Baker {\em et al.} developed a
+plug-in called StructJumper~\cite{BakerML15} for Eclipse to aid
+visually impaired developers in comprehending and navigating code. The
+plug-in comprises two main features, TreeView and Text Editor,
+creating a hierarchical tree based on Java's nesting
+structure. Effectiveness tests conducted with seven experienced blind
+programmers showed a slight positive impact on task completion time.
 %As of May 2023, no updated versions of StructJumper are publicly available on the internet.
 However, being an Eclipse plug-in limits its accessibility for many blind programmers, as they must switch between different IDEs with exclusive assistive tools and plug-ins.
 

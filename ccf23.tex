@@ -20,7 +20,7 @@
 
 
 \usepackage{xspace}
-\usepackage{enumitem}
+%\usepackage{enumitem}
 
 \usepackage{sectsty}
 \sectionfont{\large}
@@ -133,30 +133,7 @@
 %\newcommand\tool{NeuralPPA}
 
 \newcommand{\tool}{\textsc{LLM--V2C}\xspace}
-\newcommand{\deeppda}{\textsc{DeepPDA}\xspace}
 
-\newcommand\deepbugs{\textbf{DeepBugs}~\cite{Pradel-2018}}
-\newcommand\bugram{\textbf{Bugram}~\cite{Wang-2016}}
-\newcommand\narminer{\textbf{NAR-miner}~\cite{Bian-2018}}
-\newcommand\findbugs{\textbf{FindBugs}~\cite{ayewah-2007}}
-\newcommand\deepsim{\textbf{DeepSim}\cite{Zhao-2018}}
-\newcommand\codetovec{\textbf{code2vec}\cite{Alon-2018}}
-\newcommand\codevectors{\textbf{CodeVectors}\cite{Henkel-2018}}
-\newcommand\dlsim{\textbf{DL-Sim}~\cite{Tufano-2018}}
-\newcommand\treelstm{\textbf{Tree~LSTM}~\cite{Tai-2015}}
-
-\newcommand\cnn{CNN~\cite{kim2014convolutional}}
-
-
-
-% auto-fix
-\newcommand\CODIT{\textbf{CODIT}~\cite{chakrabortycodit}}
-\newcommand\Ratchet{\textbf{Ratchet}~\cite{hata2018learning}}
-\newcommand\Tufano{\textbf{Tufano}~\cite{tufano2019learning}}
-\newcommand\CoCo{\textbf{CoCoNut}~\cite{lutellier2020coconut}}
-
-% FL
-\newcommand\MLP{\textbf{MLP}~\cite{bourlard1988auto}}
 \begin{document}
 
 \begin{center}
@@ -174,8 +151,10 @@
 %\input{outline}
 
 \input{ccf23-intro}
-\input{sections/ccf22-related}
-\input{sections/ccf22-approach}
+\input{ccf23-related}
+%\input{sections/ccf22-related}
+\input{ccf23-thrust-1}
+%\input{sections/ccf22-approach}
 \input{sections/ccf22-evaluation}
 \input{sections/ccf22-education}
 \input{sections/ccf22-prior}

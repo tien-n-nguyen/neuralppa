@@ -1,6 +1,8 @@
 \section{Thrust 1. Empirical Study on Current Assistive Technology for VIPLs (on-going)}
 \label{sec:thrust1}
 
+\subsection{Research Methodology}
+
 In this section, let us describe an preliminary empirical study as
 part of an on-going effort of our proposed project. Six participants,
 aged 20 to 25, were purposefully selected from a list of recruited
@@ -70,3 +72,275 @@ condition with an indentation problem.  (4) Locate the definition of
 variable x in a given code.  (5) Explain the operations of a provided
 Python script.
 
+\section{Preliminary Results}
+
+We present preliminary findings regarding challenges faced by visually impaired participants:
+
+Issue 1: Participants encountered complexity in the interface, primarily designed for sighted users. In the first group, 3 out of 4 participants didn't know the keyboard shortcut "Control + Enter" for code execution. Consequently, they repeatedly pressed the tab key to locate the "Run" button, taking about a minute to do so. This lengthy process is due to the poor accessibility of visually rendered buttons, making it unfriendly for visually impaired users. Unlike sighted users, they can't instantly locate and click buttons, rendering a variety of buttons or labels across the interface with "Tab" key navigation ineffective.
+
+Issue 2: The absence of audio-based notifications posed a problem for participants. In the first assignment, even the participant who remembered the keyboard shortcut couldn't determine if the program executed as expected. They couldn't see the "rotating" animation, typically indicating "loading" in modern applications. Furthermore, all participants were uncertain if the application completed its execution and printed the result. This lack of audio cues for execution status hinders visually impaired users.
+
+Issue 3: This issue relates to navigation within the IDEs, similar to Issue 1. After guessing that their code finished execution (due to uncertainty, as noted in Issue 2), all 4 participants relied on the "Tab" key to reach the output. Only when the screen reader announced "Hello World!" did they confirm successful navigation, taking roughly 30 seconds each time. If they accidentally moved the screen reader's cursor, it took even longer. Using the "Tab" key for navigation proves ineffective for visually impaired users.
+
+Issue 4: Following a simple assignment, participants were asked to write a conditional statement. Two participants forgot to include the required colon after the "if" statement, as per Python syntax. The fourth issue involves real-time syntax checking, inaccessible to visually impaired developers. Sighted users rely on visual cues like red underlines, but these cues are unhelpful for the blind. This compounds the problem faced by visually impaired developers when using modern IDEs, which primarily use visual cues.
+
+Issue 5: After navigating to the error message, participants struggled to return to the code editing area. One participant remembered the error's location and used counting, while the other needed to repeatedly use the "Tab" key. Both took over 3 minutes to fix the error, whereas sighted students accomplished it in under 30 seconds. Visually impaired developers face significant challenges debugging syntax-related errors.
+
+Issue 6: Participants encountered difficulty debugging an indentation error in Python. Only one participant found a workaround, counting spaces using screen reader output. The others gave up after 10 minutes. The concept of indentation, vital in programming, is inaccessible to the blind. This aligns with participants' earlier concerns about understanding hierarchical relationships in code.
+
+Issue 7: In the final assignment, participants had to explain a 25-line Python script. Using screen readers, they read through each line but struggled to grasp the script's overall operation. Two couldn't understand the first two functions, and two found the third function, the longest, challenging, especially when referencing previous functions. The sheer amount of information consumed line by line hindered their understanding. This issue echoes participants' earlier concerns.
+
+%\subsection{Qualitative Analysis}
+
+Participant Responses:
+
+Participant Group 1: In the initial group, both participants had previously studied Mathematics in high school and attempted to learn programming at least once. However, neither chose to pursue further education in related fields. When asked about their decision to enroll in vocational school, both cited the crucial factor as the level of specialized support available for their unique learning requirements. Being part of a vulnerable group, they emphasized the importance of feeling supported.
+
+P1.1: "I opted for vocational training over other options because it was the only place offering the level of support needed for the blind."
+
+P1.2: "After spending a year and a half in college majoring in software engineering, I switched to my current path as a masseur due to challenges in keeping up with the coursework compared to my peers."
+
+Both participants expressed a willingness to learn programming again if there were accessible training tailored for the blind. When asked about pursuing a programming career, they hesitated based on past experiences but were open to it with improved accessible learning materials.
+
+P1.1: "My initial exposure to programming in high school was challenging due to inaccessible formats like screenshots and code demos. This deterred me from pursuing further education in related fields."
+
+P1.2: "During my first year in college, I struggled to comprehend programming lectures as they lacked accessibility for the blind."
+
+Both participants stressed the need for accessible teaching materials as a key obstacle to their programming journey, rather than the tools themselves. This implies that IDEs are not the primary hindrance for VIPLs; instead, a dedicated, accessible training course is needed to encourage their participation.
+
+Participant Group 2: In the second group, Google Colab was the most commonly used IDE for three out of four participants, with the remaining one using Visual Studio Code. All four participants expressed significant concerns about the accessibility of their daily IDEs. During interviews, when asked about programming challenges, all four mentioned IDE difficulties, though with varying degrees of emphasis. Two participants (P2.1 and P2.4) highlighted IDE challenges first, while the other two (P2.2 and P2.3) placed them second after concerns about the accessibility of teaching materials.
+
+Notably, the participants who didn't prioritize teaching material accessibility were currently enrolled in international institutions with specialized support for blind students, unlike the other two. This distinction in priorities underscores a shared perception among participants: their primary concern is teaching material accessibility. Once this concern is addressed, their focus shifts to IDE accessibility.
+
+P2.1: "I face daily challenges in using Google Colab; it's very difficult for the blind."
+
+P2.3: "Watching code demos projected on screens poses challenges, especially when the text is inaccessible. At night, working on assignments in Visual Studio Code is time-consuming."
+
+When asked specifically about IDE difficulties, all four participants expressed consistent concerns. They highlighted two main issues:
+
+First, they struggled to gain a comprehensive overview of the code, making it challenging to understand the code structure (e.g., identifying main functions and code blocks) and the hierarchical relationships between lines of code. This aligns with previous research and WAD solutions, acknowledging the limitations of arrow key navigation.
+
+P2.2: "Understanding other people's code or my own for debugging is a challenge. I have to painstakingly go through each line, stay intensely focused, and often use note-taking apps to create bookmarks for code components."
+
+P2.4: "My biggest hurdle is deciphering scripts from the internet for customization. I have to go line-by-line and spend a lot of time grasping the overall logic behind the code."
+
+To comprehend these insights fully, it's essential to understand how blind individuals interact with computers, primarily relying on a screen reader, Tab key, and Enter key. The screen reader identifies text-based components on the screen, with the Tab key controlling it. The Enter key simulates a left mouse click to select components. However, determining the layout and order of components varies across applications and websites.
+
+Each usability test began with a simple "Hello World!" Python program that required participants to print the string "Hello World!" to the screen. This initial assignment highlighted the first three usability issues encountered by participants (3.2.3, 3.2.4, 3.2.5).
+
+
+
+
+%3.2.1 Participant Group 1. In the first group, both participantswere past students who specialized in Mathematics in high school and who attempted to learn programming at least once. However, none of them decided to pursue further education in related fields. When asked about their reasons to choose their current path of training in vocational school, both of them agreed that the determiningfactor was the level of specialized training available to their special learning requirements. As the subjects belong to a vulnerable group, the feeling of being supported is of paramount importance to them.
+
+%P1.1: “I chose to go to the vocational training school instead of pursuing any other options because that is the only place providing the level of support for the blind that I need.”
+
+%P1.2: “Before participating in my local vocational training center’s course to become a masseur as I am doing today, I spent one and a half years in college with a major in software engineering. I decided to drop because I cannot catch up with the provided materials as effectively as my friends did.” Both participants also agreed that they do not hesitate to try learning programming again, as long as there is available training made exclusively for the blind to get to know that role. When they were asked about pursuing a career in programming, both started their response with hesitation due to their past experiences but agreed that they do not hesitate to learn it again if they are provided with more accessible learning materials than those provided to them before.
+
+%P1.1: “My first exposure to programming was in high school. At that time, I could not catch up with most of the lecture content because much of them was presented in not accessible formats such as screenshots or code demos on projectors. Such an experience informed me that pursuing programming would be extremely challenging hence I decided not to pursue further education in related fields.
+
+%P1.2: “During my first year in college, I could barely understand what the lecturers in a programming course introduced to the class because they did not provide the lecture in a format accessible to the blind.”
+%The keyword “accessible” was repeated by both participants when they try to express the obstacle that hindered them from learning programming. However, it should be noticed that it is the “teaching material” that they are hoping for a revamp to increase the accessibility, not the “tools”. For that reason, it could be implied that IDEs are not the biggest obstacle for the Vietnamese blind to start their journey with programming, but the teaching material. Therefore, building a more accessible IDE will not encourage more blind people in Vietnam to learn to program, but building an exclusively accessible training course for them will.
+
+%3.2.2 Participant Group 2. In the second group, Google Colab is the most frequently used IDE for 3 out of 4 participants while the remaining participant used Visual Studio Code. Overall, all 4 of them strongly expressed their concerns about the accessibility of their day-to-day IDEs. In the interview sessions, when asked about the challenges they are facing when programming, all 4 participants mentioned the difficulty in using IDE but with different orders of matter to them. 2 participants (i.e., P2.1 and P2.4) mentioned IDE in the first place while the other 2 (i.e., P2.2 and P2.3) mentioned it in the second place, after the level of accessibility of the teaching materials as mentioned by participants in the first group. It is worth noting that the two participants who did not mention the accessibility of teaching materials as their concerns are currently enrolling in international institutions which have specialized treatments for blind students, while the other two are not. The difference in priority, in fact, shows a consistent perception of the difficulty in programming among the participants: their largest concern is the accessibility of the teaching materials; if such a concern is resolved, their largest concern becomes the accessibility of the IDEs.
+
+%P2.1: “I think my most challenging moments in programming are what I have to cope with every day. The use of Google Colab is very hard for the blind.” P2.3: “The code demo was projected on  screen like a video, whose texts I cannot consume. These are the moments I have been finding the most challenging at day. At night, when I had to complete the assignments, I struggle with the programming tool – every step I made on Visual Studio Code is time-consuming.”. When asked particularly about the difficulties when using the IDEs, the responses of all 4 participants were consistent regardless of their go-to IDE. They agreed on the two following issues. First, because they do not have an overview of the code as sighted people do, it is challenging for them to quickly understand the code structure (i.e., what main functions and code blocks, such as loops and conditions, are included in the working file?), and the hierarchical relationships between lines of code (i.e., what is the parent of the working line of code?). The former insight aligns with the responses Albusays and Ludi collected in their research, saying that “Movement through code using arrow keys is not enough due to the layout and the structure of code” [2]. The latter insight was also targeted by the WAD solution [9]. However, many more difficulties were observed in the usability testing sessions and will be elaborated on in detail in the next section of the paper.
+
+%P2.2: “I often need to read a piece of code of others to apply to mine or of myself to debug. Every time I do so, I struggle. I had to go through each line of code and stay extremely focused to imagine its structure, and had to do so many times to memorize it. Sometimes I need to use a note-taking app to jot down the main components in the code – like creating a bookmark – and refer to it to understand how the code executes.”
+
+%P2.4: "I felt most discouraged when I had to understand a script I found on the internet to modify it to my own problems. I had to traverse line-by-line and took a long time to imagine the overall logic behind the code."
+%A background context about how blind people interact with computers will be helpful in understanding the collected insights from the usability testing sessions. 3 main tools assist their interactions: a screen reader, the Tab key, and the Enter key. The screen reader identifies all the text-based components on the screen. The users use the tab key to control the screen reader – it moves from left-to-right and from top-to-bottom of the screen and reads out loud the text label of each component. The users then use the Enter key to simulate the left click of the mouse to select a component. The determination of left and right, top and bottom differs from application to application and from website to website on a browser. Each of the usability testing sessions started with the simple “Hello Vietnam!” Python program, which asks the participant to print the string “Hello Vietnam!” to the screen. This first assignment showed the first 3 usability issues among participants 3.2.3 3.2.4 3.2.5.
+
+
+{\bf Conclusion.} Our activities, including interviews and usability tests, shed light on several key findings:
+
+\begin{enumerate}
+
+\item For visually impaired individuals not pursuing programming-related education, accessibility in training significantly influences their educational choices, and current programming training falls short of their accessibility needs.
+
+\item Visually impaired individuals pursuing programming-related education face low accessibility levels in their daily IDEs.
+
+\item Seven accessibility issues were identified, including two corroborated by past papers and five exclusive to usability tests, affecting the productivity of visually impaired programmers when using Google Colab and Visual Studio Code.
+
+\end{enumerate}
+
+%We report the following preliminary results in the issues faced by the
+%visually-impaired participants:
+
+%3.2.3 Issue 1. The first issue is related to the complexity of the
+%interface, designed for the ease of sighted users. 3 out of 4
+%participants in the first group did not know the keyboard shortcut
+%"Control + Enter" to execute the code, so they pressed the tab key
+%multiple times until they find the "Run" button and pressed "Enter" to
+%execute the code. It took them approximately one minute to navigate to
+%the "Run" button. The lengthy process for people who do not remember
+%the shortcut is due to the low accessibility of the visually rendered
+%buttons. Sighted people can instantly locate and click on a button but
+%that is not the case for visually impaired people. Therefore,
+%rendering a wide variety of buttons or labels across the interface and
+%using the "Tab" key to navigate to them is not friendly to visually
+%impaired people.
+
+%3.2.4 Issue 2. The second issue is related to the lack of audio-based
+%notification of a change on the interface, which sighted users take
+%for granted. In the first assignment described in Issue 1, the
+%participant who remembered the keyboard shortcut to execute the code
+%was unknown about whether the program is executed as he expected or
+%not. He could not see the "rotating" animation, a common sign of
+%"loading" in modern applications, hence not able to interpret the
+%status of execution as sighted people do.  Additionally, all four
+%participants were unknown about whether the application finished its
+%execution and printed out the result or not. Unlike sighted people who
+%can instantly see the changes in the console output (i.e., the place
+%where the output of a code is printed out), visually impaired people
+%are not provided any audio cues about the status of execution.
+
+%3.2.5 Issue 3. The third issue has certain similar characteristics to
+%Issue 1 and is related to navigation between components of the
+%IDEs. After "guessing" that their code finished the execution (they
+%guessed because they do not know the execution status with a high
+%level of certainty, as described in Issue 2), all 4 participants
+%started using the "Tab" key multiple times to navigate to the output
+%of the execution. Not until the screen reader speaks the sentence
+%"Hello Vietnam!" did they know that they successfully navigated to the
+%input. It took them approximately 30 seconds every time they wanted to
+%move from the code to the output. If they accidentally moved the
+%screen reader’s cursor to a different place, the duration becomes much
+%longer. One more time, the author observed that using the "Tab" key to
+%navigate between components on the interface is not effective for
+%visually impaired people.
+
+%3.2.6 Issue 4. After the simplest assignment of printing "Hello
+%Vietnam!" to the screen, the participants were asked to write one
+%conditional statement (i.e., the "if" statement) of their choice.
+%Participants 2.1 and 2.2 forgot to place the colon character ":" after
+%the "if" statement as required by Python. They continued to complete
+%the assignment without being aware of the issue until they executed
+%the code.  The fourth issue is related to the real-time syntax
+%checking function, often called the "linting" function in modern
+%IDEs. Sighted developers take the sign of a syntax error while typing
+%by the underlines that IDEs showed to them, often in the red color, at
+%the character position of the error.  Such a sign is totally
+%inaccessible to the blinded developers. P2.2: "That’s right. This
+%issue is similar to the grammar-checking feature on Google Docs. My
+%friends suggested I use it to improve my writing quality, but I cannot
+%take the visual cues, the red underlines, it provides. I almost always
+%have to spend a lot of time browsing through my code multiple times to
+%fix the syntax errors before successfully executing it. This task is
+%not easy at all."  The combination of Issue 2 and 4 informs a broader
+%issue that the blind is having with modern IDEs: most of them only use
+%visual cues (e.g., buttons in the form of icons, changes in the
+%interface, etc.) to interact with users. This approach works well for
+%sighted people but is totally inaccessible to the blind. Therefore,
+%the design of a more accessible version of the IDE needs to provide a
+%guideline that thoroughly addresses this broad issue.  Another
+%occasion when the same issue occurred to the blind was identified
+%while conducting assignment 4. In this assignment, the participants
+%were asked to locate the definition of a variable named "x" in a given
+%code. 3 out of 4 participants know about the keyboard shortcut
+%"Control + F" to open the "Find" window to help them navigate to the
+%desired location. One of the participants incorrectly pressed the
+%shortcut hence the "Find" window did not show up. But because the
+%display of the window came with no clues to the blind, that
+%participant did not know whether it is shown or not, hence continue to
+%type as if the window is shown, and ended up typing into the code
+%itself. If a change in the interface does not come with a clue to the
+%blind, it is difficult for them to confidently use the app as sighted
+%people do.
+
+%3.2.7 Issue 5. After navigating to the output message that said a
+%missing colon, participants 2.1 and 2.2 pressed the "tab" key multiple
+%times (as described in Issue 3) to go back to the code editing area to
+%fix the error. Participant 2.2 remembered the location of the error
+%from the message returned by Python and started counting the line of
+%code to navigate to that location, then counting the character
+%position to finally find the place that Python suggested. Participant
+%2.1 did not remember the same information, hence needed to, again,
+%pressed the "tab" key multiple times to navigate back to the output
+%area to let the screen reader repeat the error message, before going
+%back to fix the error the same way Participant 2.2 did. Despite the
+%fact that Participant 2.2 fixed the error in a shorter amount of time
+%than Participant 2.1, both of them did not fix the issue in lower than
+%3 minutes. The author gave the code with a similar error to 3 sighted
+%students who have also been learning programming for less than 2 years
+%as participants in group 2, and observed that they fixed the error in
+%less than 30 seconds. The process was accelerated since the sighted
+%students have an overview of the code and hence could quickly navigate
+%to the line of error as suggested by the IDE.  The visually impaired
+%developers, without similar capability, had to take significantly
+%longer time to debug syntax-related errors.
+
+%3.2.8 Issue 6. The third assignment requires the participants to debug
+%an indentation error, one of the unique types of error in Python. The
+%error is specifically due to the child statement "print(i)" being
+%placed at the same indentation level as its parent "if (i==5):". 1
+%among 4 participants found a workaround to use the screen reader to
+%read the number of tabs at each line of code. She used the left and
+%right arrow keys to browse through each character in a line of code
+%and made a mental count of how many space characters she heard from
+%the screen reader. She previously knew that 1 "tab" character is often
+%equivalent to 2 "space" characters so she could derive the number of
+%tabs at each line by counting the number of space characters. She
+%repeated the same process with all lines of code provided, and
+%completed the bug fixing after approximately 5 minutes.  P2.1:
+%"Although there are only 5 lines of code operating a simple logic, it
+%took me quite a while to figure out."
+
+%The other 3 participants gave up on this syntax error after 10
+%minutes. They tried multiple attempts to figure out the indentation
+%error but were not successful. The indentation - a visuallydependent
+%concept in programming - is not accessible to the blind. This
+%conclusion aligns with the earlier concerns of the participants during
+%the interviews that it is not easy for them to imagine the
+%hierarchical relationships between lines of code.
+
+%3.2.9 Issue 7. In the last assignment, the participants were asked to
+%explain the operations of a 25-line Python script attached in B. The
+%script contained 3 defined functions and a block of code to
+%orchestrate their operations. With the help of their screen readers,
+%all 4 participants started by browsing through each line of code, from
+%top to bottom.  P2.3: "I will start by trying to read the code, line
+%by line, and try to understand what is included in it."  After the
+%first browse of 25 lines, none of the participants could determine how
+%the given code runs. Two of them stated that they were not confident
+%about how the first two functions worked despite understanding every
+%line of code from the speech of the screen reader. The other two
+%stated that they could not understand the general operation of the
+%third function - the longest among the three - despite understanding
+%what each line of code means. In the third function, they found it
+%most challenging at the lines of code that refer back to the previous
+%functions, which they no longer retained much information about. The
+%very large amount of information they had to absorb when reading line
+%by line prevented them from understanding an overview of the
+%code. This issue aligns with the earlier concerns of the participants
+%in the interview sessions.  P2.1: "After the first traverse, I almost
+%remembered nothing but the last few lines of code."  P2.2: "When the
+%screen reader arrives at the third function, my mind focuses entirely
+%on every word the screen reader spoke to understand its meaning. After
+%completing the browse through the third function, my memory of the
+%first two functions was considerably less clear than it was at the
+%beginning."
+
+%\subsection{Conclusion}
+
+%In conclusion, the research activities, a combination of interviews
+%and usability tests, helped the author answer RQ1.
+
+%• In the first group of participants, representing the blind people
+%who are not pursuing an education in programming-related fields,
+%participants expressed that the accessibility of training is their
+%determining factor for the type of education they pursue. However, the
+%available training in programming in Vietnam is currently not
+%providing the level of accessibility that they need and hence not
+%encouraging them to pursue such an education.
+
+%• In the second group of participants, representing the blind people
+%who have been pursuing an education in programming-related fields,
+%participants strongly agreed on the low level of accessibility in
+%their day-to-day IDEs. Through the research activities, 7
+%accessibility issues affecting the productivity of blinded programmers
+%when using Google Colab and Visual Studio Code were identified. 2 of
+%them, issues 6 and 7, were reported in both the interviews and the
+%usability tests and were aligned with the insights reported in past
+%published papers [2] [9]. The other 5 were not found in past papers
+%and were revealed exclusively from the usability tests.

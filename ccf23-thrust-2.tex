@@ -113,17 +113,18 @@ parallel. The attention scores determine how much each token should
 influence the representation of the current token. Mathematically, the
 self-attention mechanism can be represented as follows:
 $$\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V$$
-%\]
-\begin{align*}
-Q & : \text{Query vectors for each token.}; K & : \text{Key vectors for each token.}; V & : \text{Value vectors for each token.};\\d_k & : \text{Dimensionality of the key vectors.}
-\end{align*}
+%\begin{align*}
+$Q$ : \text{Query vectors for each token.}; $K$ : \text{Key vectors for each token.}; $V$ : \text{Value vectors for each token.}; $d_k$: \text{Dimensionality of the key vectors.}
+%\end{align*}
+
 {\em Feedforward Neural Network.} After self-attention, a feedforward neural network is applied to each token's representation independently. This network typically consists of a couple of linear layers followed by activation functions like ReLU.
 \[
 \text{FFN}(x) = \text{ReLU}(W_1x + b_1)W_2 + b_2
 \]
-\begin{align*}
-x & : \text{Input.}; W_1, b_1, W_2, b_2 : \text{Learnable parameters.}
-\end{align*}
+%\begin{align*}
+$x$: \text{Input.}; $W_1$, $b_1$, $W_2$, $b_2$ : \text{Learnable parameters.}
+%\end{align*}
+
 {\em Layer Normalization and Residual Connections.} are applied after each
 sub-layer (self-attention and feedforward). These mechanisms help
 stabilize training and enable the model to learn more effectively.

@@ -83,9 +83,9 @@ commands, ensuring a cohesive workflow.
 \label{thrust3-two}
 \end{figure}
 
-\noindent {\bf Voice for A Programming Task.} Let us consider a scenario in which Sarah
-begins her coding session by launching our proposed environment using
-voice commands. The platform instantly activates, and she hears a
+\noindent {\bf Voice for A Programming Task.} Sarah begins her coding
+session by launching our proposed environment using voice
+commands. The platform instantly activates, and she hears a
 synthesized voice welcoming her.
 
 {\em Setting Up the First Task: Computing Factorials and Storing in a
@@ -99,8 +99,8 @@ generates the initial code structure. Sarah continues to articulate
 her requirements verbally, "For each number from 1 to 100, calculate
 its factorial and add it to the factorial$\_$list."
 
-{\em Real-time Code Generation - First Part}:
-The environment translates her voice command into code as shown in Figure~\ref{thrust3-two}.
+{\em Real-time Code Generation}:
+The environment translates her voice command into code (Figure~\ref{thrust3-two}).
 
 {\em Verification and Documentation - First Part}: The environment
 reads back the generated code to Sarah using synthesized speech. She
@@ -142,3 +142,129 @@ part as well.
 %code.
 
 %With the help of this innovative programming environment, Sarah successfully completes her task. She feels empowered, as this environment not only mitigated accessibility barriers but also provided her with a versatile and inclusive toolset for a productive coding journey.
+
+%==================================================
+
+
+\begin{figure}[t]
+\centering
+\begin{minipage}{.48\textwidth}
+%\begin{figure}[t]
+\centering
+\includegraphics[width=.98\textwidth]{p4h-5}
+%\caption{caption 1}
+%\label{fig:left}
+%\end{figure}
+\end{minipage}
+\begin{minipage}{.48\textwidth}
+%\begin{figure}[t]
+\centering
+\includegraphics[width=.98\textwidth]{p4h-6}
+%\caption{caption 2}
+%\label{fig:right}
+%\end{figure}
+\end{minipage}  
+%\vspace{-18pt}
+\caption{Interactive, Voice-driven Debugging and Test Case Generation}
+\label{thrust3-three}
+\end{figure}
+
+\noindent {\bf Interactive, Voice-driven Debugging and Test Case
+  Generation.} In this use case scenario, a visually-impaired
+programmer uses the programming environment to debug a buggy program
+that calculates factorial values. They interact with the environment
+using voice commands to pinpoint values at several statements and
+finally identify the buggy statement.
+
+{\em Initialization}: The visually-impaired programmer starts the
+programming environment by saying, "Hey, Environment, open my
+factorial program for debugging."  Voice Interaction: The environment
+responds with a synthesized voice, "Your factorial program is open for
+debugging. How can I assist you?"
+
+{\em Setting Breakpoints and Value Request}: The programmer begins by
+setting breakpoints at specific lines where they suspect issues. They
+say, "Set a breakpoint at line 4 and another at line 7." The
+programmer needs to inspect the values of variables at these
+breakpoints. They ask, "What's the value of 'n' at line 4?"
+
+{\em Environment Calls ChatGPT:} The programming environment
+communicates with ChatGPT to fetch the value of 'n' at line 4.
+ChatGPT generates the response: "The value of 'n' at line 4 is 5."
+
+\begin{wrapfigure}{r}{3.5in}
+\centering
+\includegraphics[width=3.4in]{p4h-7}
+\vspace{-6pt}
+\caption{Automated Documentation}
+\label{auto-doc}
+\end{wrapfigure}
+
+%\begin{wrapfigure}{r}{0.5\textwidth}
+%\vspace{-10pt}
+%  \centering
+%  \includegraphics[width=0.5\textwidth]{p4h-7}
+%\end{wrapfigure}
+
+Verification and Iteration: The programmer confirms the value of
+'n' and continues, "What's the value of 'result' at line 7?"  The
+environment again calls ChatGPT to obtain the value of 'result' at
+line 7.  It generates the response: "The value of 'result' at
+line 7 is~1."
+
+Pinpointing the Issue: The programmer realizes that the value of
+'result' should not be 1 at this point in the program. They suspect
+there's an issue with the logic.  They ask, "What's the value of 'n'
+at line 7?"  Environment Calls ChatGPT: The environment contacts
+ChatGPT to retrieve the value of 'n' at line 7. It generates the
+response: "The value of 'n' at line 7 is 4."
+
+{\em Identifying the Bug}: The programmer now understands that the
+value of 'result' is incorrect because 'n' should have been 4 at this
+point. They identify the buggy statement: "Looks like the issue is at
+line 7. The recursive call should use 'n' minus 1."
+
+{\em Fixing the Bug:} The programmer asks the environment to make the
+necessary correction, "Replace 'n - 1' with 'n' in the recursive call
+at line 7."  Code Modification: The environment updates the code as
+requested.
+
+{\em Testing Again:} The programmer decides to test the program: "Calculate the factorial of 5."  Code Execution: The
+environment executes the corrected code and announces the result, "The
+factorial of 5 is: 120."
+
+{\bf Auto-generated Documentation and Comments.} In a scenario where a
+VIPLs have just completed a coding project using the innovative
+programming environment, they utilize the power of voice interaction
+to request comprehensive documentation for their code. With a simple
+voice command, they instruct the environment to generate detailed
+documentation for their project. The environment seamlessly responds
+by automatically creating well-structured documentation, including
+explanations of functions, variables, and comments, all synthesized
+into an accessible format. This documentation not only serves as a
+valuable reference for the programmer but also enhances code
+accessibility and fosters collaboration with peers, ensuring that the
+visually-impaired programmer can fully document and share their work
+with colleagues.
+
+
+
+
+%\begin{wrapfigure}{l}{0.5\textwidth}
+%  \begin{center}
+%    \includegraphics[width=3.2in]{p4h-7}
+%  \end{center}
+%  \vspace{-20pt}
+%  \caption{Automated Documentation}
+%\end{wrapfigure}
+
+
+
+%Completion and Documentation:
+%Satisfied with the result, the programmer can now complete the debugging process and document the changes made for future reference using voice commands.
+
+%\begin{wrapfigure}{r}{0.625\textwidth}
+%\vspace{-10pt}
+%  \centering
+%  \includegraphics[width=3.2in]{p4h-7}
+%\end{wrapfigure}

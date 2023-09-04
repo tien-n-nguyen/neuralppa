@@ -63,7 +63,6 @@ participate in the refinement process, correcting errors, and
 enhancing the model's performance over time through feedback on
 transcription quality.
 
-
 \subsection{Text-to-Code Generation with Large Language Models (LLMs)}
 
 %GPT-3 (Generative Pretrained Transformer 3): Developed by OpenAI, GPT-3 is one of the largest and most well-known language models. While not specifically designed for code generation, it has been used for various programming tasks, including generating code snippets from natural language descriptions.
@@ -117,7 +116,7 @@ $$\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)
 $Q$ : \text{Query vectors for each token.}; $K$ : \text{Key vectors for each token.}; $V$ : \text{Value vectors for each token.}; $d_k$: \text{Dimensionality of the key vectors.}
 %\end{align*}
 
-{\em Feedforward Neural Network.} After self-attention, a feedforward neural network is applied to each token's representation independently. This network typically consists of a couple of linear layers followed by activation functions like ReLU.
+{\em Feedforward Neural Network. (FFNN)} After self-attention, a FFNN is applied to each token independently. This typically consists of a couple of linear layers followed by activation functions like ReLU.
 \[
 \text{FFN}(x) = \text{ReLU}(W_1x + b_1)W_2 + b_2
 \]

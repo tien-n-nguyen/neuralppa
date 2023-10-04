@@ -1,12 +1,26 @@
 \section{Thrust 3. Voice-Driven Features for an IDE to support VIPLs}
 \label{sec:thrust3}
 
+%\begin{figure}[t]
+%\centering
+%\begin{minipage}{.48\textwidth}
+%\centering
+%\includegraphics[width=.98\textwidth]{p4h-1}
+%\end{minipage}
+%\begin{minipage}{.48\textwidth}
+%\centering
+%\includegraphics[width=.98\textwidth]{p4h-2}
+%\end{minipage}  
+%\caption{Voice to Code Generation}
+%\label{thrust3-one}
+%\end{figure}
+
 \begin{figure}[t]
 \centering
 \begin{minipage}{.48\textwidth}
 %\begin{figure}[t]
 \centering
-\includegraphics[width=.98\textwidth]{p4h-1}
+\includegraphics[width=.98\textwidth]{p4h-3}
 %\caption{caption 1}
 %\label{fig:left}
 %\end{figure}
@@ -14,13 +28,13 @@
 \begin{minipage}{.48\textwidth}
 %\begin{figure}[t]
 \centering
-\includegraphics[width=.98\textwidth]{p4h-2}
+\includegraphics[width=.98\textwidth]{p4h-4}
 %\caption{caption 2}
 %\label{fig:right}
 %\end{figure}
 \end{minipage}  
 %\vspace{-18pt}
-\caption{Voice to Code Generation}
+\caption{In-line Voice to Code Generation}
 \label{thrust3-one}
 \end{figure}
 
@@ -60,28 +74,19 @@ commands, ensuring a cohesive workflow.
 
 %=========================================================
 
-\begin{figure}[t]
-\centering
-\begin{minipage}{.48\textwidth}
 %\begin{figure}[t]
-\centering
-\includegraphics[width=.98\textwidth]{p4h-3}
-%\caption{caption 1}
-%\label{fig:left}
+%\centering
+%\begin{minipage}{.48\textwidth}
+%\centering
+%\includegraphics[width=.98\textwidth]{p4h-3}
+%\end{minipage}
+%\begin{minipage}{.48\textwidth}
+%\centering
+%\includegraphics[width=.98\textwidth]{p4h-4}
+%\end{minipage}  
+%\caption{In-line Voice to Code Generation}
+%\label{thrust3-two}
 %\end{figure}
-\end{minipage}
-\begin{minipage}{.48\textwidth}
-%\begin{figure}[t]
-\centering
-\includegraphics[width=.98\textwidth]{p4h-4}
-%\caption{caption 2}
-%\label{fig:right}
-%\end{figure}
-\end{minipage}  
-%\vspace{-18pt}
-\caption{In-line Voice to Code Generation}
-\label{thrust3-two}
-\end{figure}
 
 \noindent {\bf Voice for A Programming Task.} Sarah begins her coding
 session by launching our proposed environment using voice
@@ -100,7 +105,7 @@ her requirements verbally, "For each number from 1 to 100, calculate
 its factorial and add it to the factorial$\_$list."
 
 {\em Real-time Code Generation}:
-The environment translates her voice command into code (Figure~\ref{thrust3-two}).
+The environment translates her voice command into code (Figure~\ref{thrust3-one}).
 
 {\em Verification and Documentation - First Part}: The environment
 reads back the generated code to Sarah using synthesized speech. She
@@ -192,60 +197,54 @@ breakpoints. They ask, "What's the value of 'n' at line 4?"
 communicates with ChatGPT to fetch the value of 'n' at line 4.
 ChatGPT generates the response: "The value of 'n' at line 4 is 5."
 
-\begin{wrapfigure}{r}{3.5in}
-\centering
-\includegraphics[width=3.4in]{p4h-7}
-\vspace{-6pt}
-\caption{Automated Documentation}
-\label{auto-doc}
-\end{wrapfigure}
-
-%\begin{wrapfigure}{r}{0.5\textwidth}
-%\vspace{-10pt}
-%  \centering
-%  \includegraphics[width=0.5\textwidth]{p4h-7}
+%\begin{wrapfigure}{r}{3.5in}
+%\centering
+%\includegraphics[width=3.4in]{p4h-7}
+%\vspace{-6pt}
+%\caption{Automated Documentation}
+%\label{auto-doc}
 %\end{wrapfigure}
 
-Verification and Iteration: The programmer confirms the value of
+{\em Verification and Iteration}: The programmer confirms the value of
 'n' and continues, "What's the value of 'result' at line 7?"  The
 environment again calls ChatGPT to obtain the value of 'result' at
-line 7.  It generates the response: "The value of 'result' at
-line 7 is~1."
+line 7.
+%It generates the response: "The value of 'result' at
+%line 7 is~1."
 
-Pinpointing the Issue: The programmer realizes that the value of
+{\em Pinpointing the Issue}: The programmer realizes that the value of
 'result' should not be 1 at this point in the program. They suspect
 there's an issue with the logic.  They ask, "What's the value of 'n'
 at line 7?"  Environment Calls ChatGPT: The environment contacts
 ChatGPT to retrieve the value of 'n' at line 7. It generates the
 response: "The value of 'n' at line 7 is 4."
 
-{\em Identifying the Bug}: The programmer now understands that the
-value of 'result' is incorrect because 'n' should have been 4 at this
-point. They identify the buggy statement: "Looks like the issue is at
-line 7. The recursive call should use 'n' minus 1."
-
-{\em Fixing the Bug:} The programmer asks the environment to make the
-necessary correction, "Replace 'n - 1' with 'n' in the recursive call
-at line 7."  Code Modification: The environment updates the code as
-requested.
+{\em Identifying and fixing the Bug}: The programmer now understands
+that the value of 'result' is incorrect because 'n' should have been 4
+at this point. They identify the buggy statement: "Looks like the
+issue is at line 7. The recursive call should use 'n' minus 1."  (S)he
+asks the environment to make the necessary correction, "Replace 'n -
+1' with 'n' in the recursive call at line 7." The environment updates
+the code.
 
 {\em Testing Again:} The programmer decides to test the program: "Calculate the factorial of 5."  Code Execution: The
 environment executes the corrected code and announces the result, "The
 factorial of 5 is: 120."
 
 {\bf Auto-generated Documentation and Comments.} In a scenario where a
-VIPLs have just completed a coding project using the innovative
-programming environment, they utilize the power of voice interaction
-to request comprehensive documentation for their code. With a simple
-voice command, they instruct the environment to generate detailed
-documentation for their project. The environment seamlessly responds
-by automatically creating well-structured documentation, including
-explanations of functions, variables, and comments, all synthesized
-into an accessible format. This documentation not only serves as a
-valuable reference for the programmer but also enhances code
-accessibility and fosters collaboration with peers, ensuring that the
-visually-impaired programmer can fully document and share their work
-with colleagues.
+VIPLs have just completed a coding project using our environment, they
+utilize the power of voice interaction to request comprehensive
+documentation for their code. With a simple voice command, they
+instruct the environment to generate detailed documentation for their
+project. The environment seamlessly responds by automatically creating
+well-structured documentation, including explanations of functions,
+variables, and comments.
+%, all synthesized into an accessible format.
+
+%This documentation not only serves as a valuable reference for the
+%programmer but also enhances code accessibility and fosters
+%collaboration with peers, ensuring that the visually-impaired
+%programmer can fully document and share their work with colleagues.
 
 
 

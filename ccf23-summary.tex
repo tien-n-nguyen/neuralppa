@@ -1,0 +1,210 @@
+\documentclass[11pt]{article}
+
+\usepackage{graphicx,times}
+\usepackage{wrapfig}
+\usepackage{amsmath,epsfig}
+\usepackage{setspace,array}
+\usepackage{cite}
+\usepackage{xspace}
+\usepackage{enumitem}
+
+\usepackage{sectsty}
+\sectionfont{\large}
+\subsectionfont{\normalsize}
+\subsubsectionfont{\normalsize}
+
+\usepackage[compact]{titlesec}
+
+\renewcommand{\theequation}{\thesection.\arabic{equation}}
+\renewcommand{\baselinestretch}{1.0}
+
+\newtheorem{Definition}{Definition}
+\newtheorem{Claim}{Claim}
+\newtheorem{Lemma}{Lemma}
+\newtheorem{Theorem}{Theorem}
+\newtheorem{Property}{Property}
+
+\newcommand{\revise} {\bf}
+
+\newcommand{\code}[1]{{\small\texttt{#1}}}
+\newcommand{\op}{\tau}
+\newcommand{\refac}{\rho}
+\newcommand{\edit}{\sigma}
+\newcommand{\T}{\theta}
+\newcommand{\comp}{;}
+\newcommand{\pre}{\prec_P}
+\newcommand{\meth}{KSISA}
+
+
+\newcommand{\MyParagraph}[1]{\textbf{#1}{ }}
+
+\usepackage{vmargin}
+\setpapersize{USletter}
+\setmarginsrb{1.0in}{1in}{1.0in}{1in}%
+           {0pt}{0mm}{0pt}{10mm}
+\newcommand{\remove}[1]{}
+
+\usepackage{tweaklist}
+\renewcommand{\enumhook}{\setlength{\topsep}{0pt}%
+  \setlength{\itemsep}{0pt}}
+\renewcommand{\itemhook}{\setlength{\topsep}{0pt}%
+  \setlength{\itemsep}{0pt}}
+\renewcommand{\descripthook}{\setlength{\topsep}{0pt}%
+  \setlength{\itemsep}{0pt}}
+
+\newcommand{\tool}{\textsc{LLM-V2C}\xspace}
+
+\begin{document}
+
+% Collaborative Research: SHF: Small: 
+
+
+
+\begin{center}
+  {\bf Project Summary: SHF: Small: SHF: Small: Empowering
+    Visually-Impaired Programmers and Learners with Voice-Driven
+    Coding Framework}
+\end{center}
+\vspace{-.1in}
+
+
+%\noindent {\bf Overview.}
+
+\section{Overview}
+
+Visually impaired individuals encounter numerous challenges in their
+daily lives. For those who are passionate about learning programming
+and aspiring to become software developers, the hurdles they must
+overcome are even more pronounced. The challenges for them can come
+from different angles, especially from tools and
+technologies. Visually impaired programmers often rely on screen
+readers to access digital content. However, not all integrated
+development environments (IDEs) are optimized for compatibility with
+screen readers, which can hinder their ability to navigate code, debug
+errors, or interact with the IDE efficiently. Code editors usually
+have complex user interfaces, and their accessibility for visually
+impaired individuals can be limited. Debugging code often involves
+visually inspecting variables, data structures, and program
+flow. Visually impaired programmers may face difficulties in debugging
+due to their reliance on screen readers. For learners, some
+concepts are inherently visual, such as GUI design and web
+development. For visually impaired individuals, understanding and
+implementing such concepts can be challenging.
+
+In this proposal, we advocate for a promotion of inclusivity of
+visually-impaired programmers and aspiring ones. We propose a paradigm
+shift in creating technologies in supporting the visually-impaired
+people in learning programming and the visually-impaired
+programmers. Instead of heavily relying screen reading, we leverage
+the advances in generative Artificial Intelligence to build assistive
+technologies in {\em Voice-to-Code}. This will be feasible with the
+machine learning advances in Voice-to-Text and Text-to-Code.
+
+%\noindent {\bf Intellectual Merit.}
+
+\noindent {\bf Keywords:} Visually-impaired Assistive Programming, Generative
+Machine Learning, Voice-to-Code.
+
+\section{Intellectual Merit}
+
+We seek to create a paradigm shift in assisting the visually-impaired
+programmers and learners with a Large Language Model
+(LLM)-based Voice-to-Code ({\bf LLM-V2C}) framework. We aim to establish {\em
+  a scientific foundation, novel methodologies, frameworks, models,
+  and algorithmic solutions for Voice-to-Code assistive technology}.
+%
+To address the issues with the current assistive technology for
+visually-impaired programmers and learners (VIPLs), we embark on the
+development of a groundbreaking framework that leverages voice
+interaction and advanced AI technologies. We aim to focus our effort
+in the following~thrusts: {\bf Enabling Voice-Driven Interaction}: Our
+primary objective is to empower visually-impaired programmers and
+students to interact seamlessly with an IDE through the power of voice
+to code AI via LLMs. {\bf Voice-to-Code Conversion}: In our framework,
+the spoken word becomes a bridge to the digital realm. We utilize
+state-of-the-art voice recognition technology to accurately convert
+spoken language into text. Upon converting voice inputs into textual
+form, we introduce the power of generative AI. A large language model
+(LLM) with generative capabilities takes the converted text and
+transforms it into actual code. {\bf Code Playback for Verification}:
+An integral aspect is ensuring that the generated code is faithful to
+the user's input.
+ 
+\section{Broader Impacts}
+
+
+(1)
+%{\tool} will be {\em transformative}.
+Our novel environment equips individuals with visual impairments with
+a versatile set of tools, enabling an interactive programming
+experience while reducing accessibility obstacles.
+%
+%It enables \textit{partial program slicing} and \emph{empowers}
+%dynamic analysis by identifying additional path conditions (neural
+%constraints) for the SAT/SMT solvers which helps in exploring the
+%right subset of the symbolic state space.
+%
+Our validation also involves students and professionals, promoting
+teaching and learning of software qualities.
+%that have wide impacts in industry
+%and academic communities.
+(2) Our results will {\em foster research activities} in related
+fields such as deep learning and software engineering. This project
+will also produce novelties in deep learning, e.g., novel neural
+networks for code. (3) The research will enhance the tools for
+teaching and research by providing tools and data sets for use by
+students and practitioners, and for enhancement by other
+researchers. Creating accessible learning resources, and raising
+awareness about the challenges faced by visually impaired people
+can help create a more diverse and inclusive community.
+%We will provide related learning modules.
+
+
+
+
+%Finding and fixing bugs are vital to produce reliable and high-quality
+%software. Failing to fix a bug could result in severe consequences.
+%In 1996, the Ariane 5 rocket, the European Space Agency's \$1 billion,
+%was destroyed less than a minute after launch, due to a bug in the
+%on-board guidance computer program. A study commissioned by the US
+%Department of Commerce' National Institute of Standards and Technology
+%(NIST) concluded that software bugs, or errors, are so prevalent and
+%so detrimental that they cost the US economy an estimated \$59 billion
+%annually, or about 0.6 percent of the gross domestic product.
+
+%\textbf{- We could learn to fix a bug from similar ones}.
+
+%There is no known, established straightforward methodology for bug
+%fixing. Thus, like other problem-solving tasks, developers generally
+%base on their own knowledge and experience with the systems, or learn
+%from the others to do this task. In other words, they could
+%effectively find and fix a bug by consulting the similar bugs and
+%fixes to the one they are dealing with. However, currently, such
+%learning is still ad-hoc, manually, and un-systematically. For
+%example, when facing a bug, people could go to a forum to post a
+%question and wait for the help from the others. They could also
+%compile the reference manuals, as well as reports, tutorials,
+%discussions to find a suitable fix.
+
+%If we have automatic tool support that captures knowledge about bugs
+%and fixes and leverages it in fixing the recurring/similar bugs, we
+%could reduce the cost for software development.
+
+%\textbf{- Current approaches supporting fixing recurring bugs are still limited}.
+
+%However, current tool support that captures knowledge of known fixes
+%and leverage it in fixing/patching in similar bugs are still
+%limited. Some automatic tools are limited in recognize and synchronize
+%the fixes, etc. For example, there is no any extensive research that
+%discover the cause, the nature, and the characteristics of recurring
+%bugs and fixes? That is, why are they recurring? How popular they are?
+%How they are alike? What features help us recognize their
+%recurrence/similarity? 1. How could we identify the API-related code
+%peers within and across software projects and assess their popularity?
+%. Does the limited support to their co-evolution affect the quality
+%of the software system and the effectiveness of the development
+%process? 3. How could we synchronize their changes, i.e. given the
+%fix/patch of a peer, recommend developers the fixes/patches for its
+%other peers?
+
+\end{document} 

@@ -78,19 +78,19 @@ Python script.
 
 We present preliminary findings regarding challenges faced by visually impaired participants:
 
-Issue 1: Participants encountered complexity in the interface, primarily designed for sighted users. In the first group, 3 out of 4 participants didn't know the keyboard shortcut "Control + Enter" for code execution. Consequently, they repeatedly pressed the tab key to locate the "Run" button, taking about a minute to do so. This lengthy process is due to the poor accessibility of visually rendered buttons, making it unfriendly for visually impaired users. Unlike sighted users, they can't instantly locate and click buttons, rendering a variety of buttons or labels across the interface with "Tab" key navigation ineffective.
+{\em Issue 1}: Participants encountered complexity in the interface, primarily designed for sighted users. In the first group, 3 out of 4 participants didn't know the keyboard shortcut "Control + Enter" for code execution. Consequently, they repeatedly pressed the tab key to locate the "Run" button, taking about a minute to do so. This lengthy process is due to the poor accessibility of visually rendered buttons, making it unfriendly for visually impaired users. Unlike sighted users, they can't instantly locate and click buttons, rendering a variety of buttons or labels across the interface with "Tab" key navigation ineffective.
 
-Issue 2: The absence of audio-based notifications posed a problem for participants. In the first assignment, even the participant who remembered the keyboard shortcut couldn't determine if the program executed as expected. They couldn't see the "rotating" animation, typically indicating "loading" in modern applications. Furthermore, all participants were uncertain if the application completed its execution and printed the result. This lack of audio cues for execution status hinders visually impaired users.
+{\em Issue 2}: The absence of audio-based notifications posed a problem for participants. In the first assignment, even the participant who remembered the keyboard shortcut couldn't determine if the program executed as expected. They couldn't see the "rotating" animation, typically indicating "loading" in modern applications. Furthermore, all participants were uncertain if the application completed its execution and printed the result. This lack of audio cues for execution status hinders visually impaired users.
 
-Issue 3: This issue relates to navigation within the IDEs, similar to Issue 1. After guessing that their code finished execution (due to uncertainty, as noted in Issue 2), all 4 participants relied on the "Tab" key to reach the output. Only when the screen reader announced "Hello World!" did they confirm successful navigation, taking roughly 30 seconds each time. If they accidentally moved the screen reader's cursor, it took even longer. Using the "Tab" key for navigation proves ineffective for visually impaired users.
+{\em Issue 3}: This issue relates to navigation within the IDEs, similar to Issue 1. After guessing that their code finished execution (due to uncertainty, as noted in Issue 2), all 4 participants relied on the "Tab" key to reach the output. Only when the screen reader announced "Hello World!" did they confirm successful navigation, taking roughly 30 seconds each time. If they accidentally moved the screen reader's cursor, it took even longer. Using the "Tab" key for navigation proves ineffective for visually impaired users.
 
-Issue 4: Following a simple assignment, participants were asked to write a conditional statement. Two participants forgot to include the required colon after the "if" statement, as per Python syntax. The fourth issue involves real-time syntax checking, inaccessible to visually impaired developers. Sighted users rely on visual cues like red underlines, but these cues are unhelpful for the blind. This compounds the problem faced by visually impaired developers when using modern IDEs, which primarily use visual cues.
+{\em Issue 4}: Following a simple assignment, participants were asked to write a conditional statement. Two participants forgot to include the required colon after the "if" statement, as per Python syntax. The fourth issue involves real-time syntax checking, inaccessible to visually impaired developers. Sighted users rely on visual cues like red underlines, but these cues are unhelpful for the blind. This compounds the problem faced by visually impaired developers when using modern IDEs, which primarily use visual cues.
 
-Issue 5: After navigating to the error message, participants struggled to return to the code editing area. One participant remembered the error's location and used counting, while the other needed to repeatedly use the "Tab" key. Both took over 3 minutes to fix the error, whereas sighted students accomplished it in under 30 seconds. Visually impaired developers face significant challenges debugging syntax-related errors.
+{\em Issue 5}: After navigating to the error message, participants struggled to return to the code editing area. One participant remembered the error's location and used counting, while the other needed to repeatedly use the "Tab" key. Both took over 3 minutes to fix the error, whereas sighted students accomplished it in under 30 seconds. Visually impaired developers face significant challenges debugging syntax-related errors.
 
-Issue 6: Participants encountered difficulty debugging an indentation error in Python. Only one participant found a workaround, counting spaces using screen reader output. The others gave up after 10 minutes. The concept of indentation, vital in programming, is inaccessible to the blind. This aligns with participants' earlier concerns about understanding hierarchical relationships in code.
+{\em Issue 6}: Participants encountered difficulty debugging an indentation error in Python. Only one participant found a workaround, counting spaces using screen reader output. The others gave up after 10 minutes. The concept of indentation, vital in programming, is inaccessible to the blind. This aligns with participants' earlier concerns about understanding hierarchical relationships in code.
 
-Issue 7: In the final assignment, participants had to explain a 25-line Python script. Using screen readers, they read through each line but struggled to grasp the script's overall operation. Two couldn't understand the first two functions, and two found the third function, the longest, challenging, especially when referencing previous functions. The sheer amount of information consumed line by line hindered their understanding. This issue echoes participants' earlier concerns.
+{\em Issue 7}: In the final assignment, participants had to explain a 25-line Python script. Using screen readers, they read through each line but struggled to grasp the script's overall operation. Two couldn't understand the first two functions, and two found the third function, the longest, challenging, especially when referencing previous functions. The sheer amount of information consumed line by line hindered their understanding. This issue echoes participants' earlier concerns.
 
 \subsection{Qualitative Analysis}
 
@@ -118,14 +118,14 @@ P2.1: "I face daily challenges in using Google Colab; it's very difficult for th
 
 P2.3: "Watching code demos projected on screens poses challenges, especially when the text is inaccessible. At night, working on assignments in Visual Studio Code is time-consuming."
 
-When asked specifically about IDE difficulties, all four participants expressed consistent concerns. They highlighted two main issues:
-
+When asked specifically about IDE difficulties, all four participants
+expressed consistent concerns. They highlighted two main issues:
 First, they struggled to gain a comprehensive overview of the code,
 making it challenging to understand the code structure (e.g.,
 identifying main functions and code blocks) and the hierarchical
 relationships between lines of code. Second, this aligns with previous
-research and WAD solutions~\cite{wad07}, acknowledging the limitations of arrow
-key navigation.
+research and WAD solutions~\cite{wad07}, acknowledging the limitations
+of arrow key navigation.
 
 P2.2: "Understanding other people's code or my own for debugging is a challenge. I have to go through each line, stay intensely focused, and often use note-taking apps to create bookmarks for code components."
 
@@ -170,6 +170,9 @@ Each usability test began with a simple "Hello World!" Python program that requi
 \item Seven accessibility issues were identified, including two corroborated by past papers and five exclusive to usability tests, affecting the productivity of visually impaired programmers when using Google Colab and Visual Studio Code.
 
 \end{enumerate}
+
+We plan to expand this study on the larger scale with the emphasis on
+learning enviroment.
 
 %We report the following preliminary results in the issues faced by the
 %visually-impaired participants:

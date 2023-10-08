@@ -3,7 +3,7 @@
 
 \subsection{Enabling Voice-Driven Interaction and Voice-to-Text Conversion}
 
-We will explore the following ML models that
+{\bf Models.} We will explore the following ML models that
 can be used to support voice-to-text conversion:
 
 DeepSpeech: Developed by Mozilla, DeepSpeech is an open-source
@@ -25,9 +25,15 @@ Facebook's wav2vec: Facebook's wav2vec is a deep learning model that can convert
 
 Automatic Speech Recognition (ASR) Transformers: such as BERT-based models and GPT-3, have also been adapted for ASR tasks, making them suitable for voice-to-text conversion by considering the context.
 
-Our process will be tentatively as follows.
+\noindent {\bf Process.} Our process will be tentatively as follows.
 
-{\em Data Collection and Preprocessing}: For data collection, it is essential to gather a diverse dataset of spoken language samples, encompassing coding-related commands and instructions, which should be recorded by a wide range of speakers, including visually-impaired users. During the preprocessing stage, it is crucial to remove background noise, standardize audio levels, and segment audio clips into consistent, time-aligned units to ensure high-quality input data.
+{\em Data Collection and Preprocessing}: It is essential to gather a
+diverse dataset of spoken language samples, encompassing
+coding-related commands and instructions, which should be recorded by
+a wide range of speakers, including VIPLs. During preprocessing, it is
+crucial to remove background noise, standardize audio levels, and
+segment audio clips into consistent, time-aligned units to ensure
+high-quality input data.
 
 {\em Feature Extraction}: To capture the spectral and temporal characteristics of speech, it is necessary to extract relevant acoustic features from the preprocessed audio data. These features may include Mel-frequency cepstral coefficients (MFCCs) and spectrograms.
 
@@ -71,23 +77,32 @@ transcription quality.
 
 We will explore the well-known LLMs as follows:
 
-OpenAI's GPT-4 (or newer iterations): OpenAI continues to develop its GPT series of models, and newer versions may offer improved capabilities for text-to-code tasks compared to GPT-3.
+OpenAI's GPT-4~\cite{GPT} (or newer iterations): OpenAI continues to develop its GPT series of models, and newer versions may offer improved capabilities for text-to-code tasks compared to GPT-3.
 
-BERT (Bidirectional Encoder Representations from Transformers): While BERT is primarily known for its language understanding capabilities, it can also be fine-tuned for code generation tasks. Researchers have explored using BERT-based models for generating code from text.
+BERT~\cite{devlin2019bert} (Bidirectional Encoder Representations from
+Transformers): While BERT is primarily known for its language
+understanding capabilities, it can also be fine-tuned for code
+generation tasks. Researchers have explored using BERT-based models
+for generating code from text.
 
-RoBERTa: RoBERTa is a variant of BERT that has demonstrated strong performance in a wide range of natural language understanding tasks. It can also be adapted for code generation tasks.
+RoBERTa~\cite{liu2019roberta}: RoBERTa is a variant of BERT that has demonstrated strong performance in a wide range of natural language understanding tasks. It can also be adapted for code generation tasks.
 
-CodeT5 (Text-to-Text Transfer Transformer): is a model that frames various NLP tasks, including code generation tasks. It has shown promising results in generating code from natural language prompts.
+CodeT5+~\cite{wang2023codet5} (Text-to-Text Transfer Transformer): is
+a model that frames various NLP tasks, including code generation
+tasks. It has shown promising results in generating code from natural
+language prompts.
 
 %CTRL (Conditional Transformer Language Model): CTRL is designed to handle conditional text generation tasks. While not specifically tailored for code generation, it can be fine-tuned for generating code in response to specific prompts.
 
 %Roberta For Code (R4C): This is a specialized model designed explicitly for code generation tasks. It is pretrained on a large corpus of code and natural language, making it well-suited for generating code from textual descriptions.
 
-CodeBERT: Developed by Microsoft Research, CodeBERT is pretrained on both code and natural language data, enabling it to understand and generate code from text effectively.
+CodeBERT~\cite{feng2020codebert}: Developed by Microsoft Research,
+CodeBERT is pretrained on both code and natural language data,
+enabling it to understand and generate code from text effectively.
 
 %\subsection{Code Generation}
 
-The GPT (Generative Pretrained Transformer) architecture is based on the Transformer architecture, which is a deep learning model primarily designed for sequence-to-sequence tasks. The Transformer architecture comprises an encoder and a decoder, but GPT primarily focuses on the decoder part.
+The GPT~\cite{GPT} (Generative Pretrained Transformer) architecture is based on the Transformer architecture, which is a deep learning model primarily designed for sequence-to-sequence tasks. The Transformer architecture comprises an encoder and a decoder, but GPT primarily focuses on the decoder part.
 
 %\subsubsection{Input Embedding}
 
@@ -143,7 +158,7 @@ entire vocabulary.
 The model is trained on a massive corpus of text data using a self-supervised learning objective, such as predicting the next word in a sentence (autoregressive training) or filling in masked words (masked language modeling). Once trained, GPT can be fine-tuned on specific downstream tasks like text generation, translation, question-answering, and more.
 
 It's important to note that GPT models can have variations in
-architecture and model size, with GPT-3 being one of the largest and
+architecture and model size, with GPT-4 being one of the largest and
 most well-known versions. The specific mathematical details and
 hyperparameters can vary across different versions and implementations
 of GPT.

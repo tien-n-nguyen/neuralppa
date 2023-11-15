@@ -9,18 +9,19 @@ Security researchers have proposed several automated approaches for vulnerabilit
 While deep learning (DL) and advanced machine learning (ML) with large
 language models (LLMs) have been achieving remarkable successes in the
 area of ML for code, the application of ML/DL and LLMs in
-vulnerability detection for incomplete code snippets. The program
-analysis (PA) tools employed to derive these program representations
-warrant the code to exist as complete program units, at the very
-least, at the method-level granularity. As a result, it is impossible
-to utilize such VD tools to find vulnerabilities in code snippets. A
-possible alternative would be to plug the code snippet into the
-method, resolve any ambiguities, and test it with a VD tool. However,
-such a strategy is limited. First, if a vulnerability is found, the
-efforts of integrating the code snippet into the existing method would
-be lost. Second, due to the black-box nature of DL models, we would
-not know the origin of the vulnerability, i.e., whether it arises due
-to the flawed code snippet or the existing part of the code.
+vulnerability detection for incomplete code snippets is still
+limited. The program analysis (PA) tools employed to derive these
+program representations warrant the code to exist as complete program
+units, at the very least, at the method-level granularity. As a
+result, it is impossible to utilize such VD tools to find
+vulnerabilities in code snippets. A possible alternative would be to
+plug the code snippet into the method, resolve any ambiguities, and
+test it with a VD tool. However, such a strategy is limited. First, if
+a vulnerability is found, the efforts of integrating the code snippet
+into the existing method would be lost. Second, due to the black-box
+nature of DL models, we would not know the origin of the
+vulnerability, i.e., whether it arises due to the flawed code snippet
+or the existing part of the code.
 
 Besides, analyzing code snippets is not straightforward as they are often incomplete, un-parseable, contain declaration/reference ambiguity, and may be interspersed between user comments. Currently, there only exist tools such as PPA~\cite{ppa08}, which can parse an incomplete code fragment to build its AST and extract the declared data types in a best-effort manner; and StatType \cite{icse18}, which can resolve the libraries and recover the fully-qualified names for API references. However, the basic infrastructure for partial program analysis, i.e., for analyzing incomplete code is not yet available. Such an infrastructure must include fundamental supports/services at the structural and semantic levels, enabling traditional program analysis techniques to be extended to incomplete code. We refer to this as \textit{partial program analysis infrastructure}.
 

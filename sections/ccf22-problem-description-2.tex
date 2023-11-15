@@ -5,16 +5,58 @@ Security researchers have proposed several automated approaches for vulnerabilit
 %However, extending such analyses to code snippets is not straightforward as they are often incomplete, unparseable, contain declaration/reference ambiguity, and may be interspersed between user comments. Currently, there exist tools such as PPA~\cite{ppa08}, which parse an incomplete code fragment to build the AST and extract data types in a best-effort manner, while StaType \cite{icse18} resolves the libraries and recovers only the fully-qualified names for references. However, the basic infrastructure for partial program analysis, i.e., for analyzing incomplete code is not yet available. 
 %Such an infrastructure must include fundamental supports/services at the structural, semantic, and execution levels, thus enabling the static and dynamic analysis techniques to be built upon. 
 %Let us refer to this as \textit{partial program analysis infrastructure}.
-However, the PA tools employed to derive these program representations warrant the code to exist as complete program units, at the very least, at the method-level granularity. As a result, it is impossible to utilize such VD tools to find vulnerabilities in code snippets. A possible alternative would be to plug the code snippet into the method, resolve any ambiguities, and test it with a VD tool. However, such a strategy is limited. First, if a vulnerability is found, the efforts of integrating the code snippet into the existing method would be lost. Second, due to the black-box nature of DL models, we would not know the origin of the vulnerability, i.e., whether it arises due to the flawed code snippet or the existing part of the code.
+
+While deep learning (DL) and advanced machine learning (ML) with large
+language models (LLMs) have been achieving remarkable successes in the
+area of ML for code, the application of ML/DL and LLMs in
+vulnerability detection for incomplete code snippets. The program
+analysis (PA) tools employed to derive these program representations
+warrant the code to exist as complete program units, at the very
+least, at the method-level granularity. As a result, it is impossible
+to utilize such VD tools to find vulnerabilities in code snippets. A
+possible alternative would be to plug the code snippet into the
+method, resolve any ambiguities, and test it with a VD tool. However,
+such a strategy is limited. First, if a vulnerability is found, the
+efforts of integrating the code snippet into the existing method would
+be lost. Second, due to the black-box nature of DL models, we would
+not know the origin of the vulnerability, i.e., whether it arises due
+to the flawed code snippet or the existing part of the code.
 
 Besides, analyzing code snippets is not straightforward as they are often incomplete, un-parseable, contain declaration/reference ambiguity, and may be interspersed between user comments. Currently, there only exist tools such as PPA~\cite{ppa08}, which can parse an incomplete code fragment to build its AST and extract the declared data types in a best-effort manner; and StatType \cite{icse18}, which can resolve the libraries and recover the fully-qualified names for API references. However, the basic infrastructure for partial program analysis, i.e., for analyzing incomplete code is not yet available. Such an infrastructure must include fundamental supports/services at the structural and semantic levels, enabling traditional program analysis techniques to be extended to incomplete code. We refer to this as \textit{partial program analysis infrastructure}.
 
 
-In addition to vulnerability detection, such an 
-%partial program analysis infrastructure 
-infrastructure
-is also beneficial to other software engineering (SE) tasks that can tolerate a low level of errors and imprecision in building program representations. For example, consider code completion~\cite{codefill-icse22,facebook-icse21}, in which a model provides suggestions to complete partial code. Existing state-of-the-art ML/DL-based code completion models are just based on the code sequences or utilize the syntactic structure in ASTs, but none leverages the program dependencies due to the nature of partial code. Next, consider the task of analyzing the code fragments in a bug report to connect it to the relevant source files for bug localization purposes~\cite{euler-fse19,icpc17}. Here too, a need for partial program analysis, specifically partial program dependence analysis, can be observed.
+Currently, performing program analysis for a specific code snippet
+necessitates the access to the entire program containing the
+snippet. The need for partial program analysis arises in situations
+where only partial code is accessible, such as in a vulnerable code
+snippet in an online forum, a commit log or code diff, or when partial
+code is sent to a server due to security-related concerns. Without
+partial program analysis, the tasks including {\em early vulnerability
+detection or assessment would be very limited and even impossible}.
 
-The other facets of program analysis tools that need attention are their soundness and completeness. For example, static analysis tools are designed to detect errors that are valid for all possible executions, which often come at the cost of multiple approximations. As a result, such tools tend to overestimate, resulting in false positives. Next, consider the task of symbolic execution, which is limited by the path explosion problem that hinders its applicability to large-scale software systems. The effectiveness of such a symbolic execution engine can be improved by 
-%enhancing the symbolic constraints of the variables, and by 
-guiding it to explore the right subset of symbolic states. 
+%In addition to vulnerability detection, such an infrastructure is also
+%beneficial to other software engineering (SE) tasks that can tolerate
+%a low level of errors and imprecision in building program
+%representations. For example, consider code
+%completion~\cite{codefill-icse22,facebook-icse21}, in which a model
+%provides suggestions to complete partial code. Existing
+%state-of-the-art ML/DL-based code completion models are just based on
+%the code sequences or utilize the syntactic structure in ASTs, but
+%none leverages the program dependencies due to the nature of partial
+%code. Next, consider the task of analyzing the code fragments in a bug
+%report to connect it to the relevant source files for bug localization
+%purposes~\cite{euler-fse19,icpc17}. Here too, a need for partial
+%program analysis, specifically partial program dependence analysis,
+%can be observed.
+
+%The other facets of program analysis tools used in vulnerability
+%detection that need attention are their soundness and
+%completeness. For example, static analysis tools are designed to
+%detect errors that are valid for all possible executions, which often
+%come at the cost of multiple approximations. As a result, such tools
+%tend to overestimate, resulting in false positives. Next, consider the
+%task of symbolic execution, which is limited by the path explosion
+%problem that hinders its applicability to large-scale software
+%systems. The effectiveness of such a symbolic execution engine can be
+%improved by guiding it to explore the right subset of symbolic states.
+

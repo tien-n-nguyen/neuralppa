@@ -3,35 +3,41 @@
 \begin{figure}[t]
     \centering
 %    \includegraphics[width=0.83\textwidth]{graphs/neuralppa}
-    \includegraphics[width=0.92\textwidth]{figures/infra-design-3.png}
+%    \includegraphics[width=0.92\textwidth]{figures/infra-design-3.png}
+    \includegraphics[width=0.92\textwidth]{figures/neuralPA-1.png}
 %    \vspace{-10pt}
     \caption{{\tool}: Machine Learning-based Program Analysis Infrastructure}
     \label{fig:arch}
 \end{figure}
 
 
-In this proposal, we seek to address these issues and advance the state-of-the-art in traditional program analysis by means of {\tool}, a {\em \underline{Neural} Network-Based \underline{P}rogram \underline{A}nalysis} infrastructure. We aim to establish {\em a scientific foundation, novel methodologies, frameworks, models, and algorithmic solutions for neural program analysis}. Our primary focus areas can be summarized as follows: 
+In this proposal, we seek to advance the state-of-the-art in traditional program analysis by means of {\tool}, a {\em \underline{Neural} Network-Based \underline{P}rogram \underline{A}nalysis} infrastructure, with the goal to support vulnerability detection for incomplete code snippets. We aim to establish {\em a scientific foundation, novel methodologies, frameworks, models, and algorithmic solutions for neural program analysis}.
 
-%(1) {\bf Enabling analysis of incomplete code fragments}, i.e., partial program analysis;
-(1) {\bf enabling analysis of incomplete code fragments}, i.e., partial program analysis;
+Our primary focus areas can be summarized as follows: 
 
-%(2) {\bf Empowering existing PA tools by making them more sound and complete}. 
-(2) {\bf empowering existing PA tools with advanced AI/ML
-%techniques
-} to make them more sound and complete.
+(1) {\bf enabling program analysis of incomplete code fragments}, i.e., partial program analysis;
 
-\noindent Figure~\ref{fig:arch} illustrates the 
-%general 
-framework for {\tool}, which will allow the construction of efficient program analysis techniques for (partial) code, also based on which downstream 
-%software engineering 
-SE applications can be built.
+%(2) {\bf empowering existing PA tools with advanced AI/ML} to make them more sound and complete.
+
+(2) {\bf enabling vulnerability detection and assessment on incomplete code fragments}.
+
+\noindent Figure~\ref{fig:arch} illustrates the framework for {\tool},
+which will allow the construction of efficient program analysis
+techniques for (partial) code, also based on which downstream vulnerability detection and assessment applications can be built.
+
+The key philosophy that drives our work is that the {\em structural,
+  semantic, and symbolic execution-level analyses of partial code can
+  be learned from the analysis of entire programs in the wealth of
+  information obtained from ultra-large-scale, open-source software
+  repositories}. This enables the approaches to perform vulnerability
+ detection and assessment early for code snippets.
 
 
-\begin{center}
-    \begin{minipage}{36em}
-The key philosophy that drives our work is that the {\em structural, semantic, and symbolic execution-level analyses of partial code can be learned from the analysis of entire programs in the wealth of information obtained from ultra-large-scale, open-source software repositories}.
-    \end{minipage}
-\end{center}
+%\begin{center}
+%    \begin{minipage}{36em}
+%The key philosophy that drives our work is that the {\em structural, semantic, and symbolic execution-level analyses of partial code can be learned from the analysis of entire programs in the wealth of information obtained from ultra-large-scale, open-source software repositories}.
+%    \end{minipage}
+%\end{center}
 
 
 
@@ -80,19 +86,24 @@ To accomplish these tasks, we propose the following thrusts of research in {\too
 %performed with our learning-based approaches in a dual-learning
 %manner.
 
-\noindent \textbf{Thrust 1. Neural Structural Analysis Infrastructure.} ({\em Section~\ref{sec:thrust1}}) Source code has a well-defined structure and semantics. Thus, the basic infrastructure in {\tool} is the neural structural analysis component, which primarily has two tasks. First, it learns from the syntactic structures of the complete code in the training dataset collected from large-scale code repositories, to derive the abstract syntax tree (AST) that best represents the syntactic structure of the given partial code, i.e., with the highest likelihood/probability. The traditional lexical analyzer still works for partial code due to the independence nature of lexical tokens. The second task of this component is to tag the code tokens with the types of the syntactic units including the statement types (\code{if}, \code{for}, etc.), variables, fields, methods, classes, etc. Both of the tasks can be performed with our learning-based approaches in a dual-learning manner.
+\noindent \textbf{Thrust 1. Neural Structural Analysis Infrastructure.} ({\em Section~\ref{sec:thrust1}})
+One of the key foundations of {\tool} lies in its neural structural analysis component, which is built upon the well-defined structure and semantics of source code. This component serves two primary functions. Firstly, it draws upon the syntactic structures of comprehensive code samples from large-scale repositories in the training dataset. From this data, it constructs an abstract syntax tree (AST) that best encapsulates the syntactic arrangement of the provided partial code, aiming for the highest likelihood or probability. In contrast, existing program-analysis-based partial parsing methods~\cite{ppa08} rely on heuristics derived from the syntactic rules of programming languages, lacking the capacity to rank or score potential candidates. The second task of this component involves labeling code tokens with the corresponding types of syntactic units, encompassing statement types (\code{if}, \code{for}, etc.), variables, fields, methods, classes, and more. Both tasks can be efficiently executed through our dual-learning-based approaches.
+
+%Source code has a well-defined structure and semantics. Thus, the basic infrastructure in {\tool} is the neural structural analysis component, which primarily has two tasks. First, it learns from the syntactic structures of the complete code in the training dataset collected from large-scale code repositories, to derive the abstract syntax tree (AST) that best represents the syntactic structure of the given partial code, i.e., with the highest likelihood/probability. The existing program-analysis-based partial parsing approaches~\cite{ppa08} rely on the heuristics on the syntactic rules of the programming languages. They do not give us any ranking or scores among the potential candidates. The second task of this component is to tag the code tokens with the types of the syntactic units including the statement types (\code{if}, \code{for}, etc.), variables, fields, methods, classes, etc. Both of the tasks can be performed with our learning-based approaches in a dual-learning manner.
   
 \vspace{3pt}
 \noindent \textbf{Thrust 2. Neural Semantic Analysis Infrastructure.}
 ({\em Section~\ref{sec:thrust2}}) The basis components for several
-analysis techniques on the semantics of the program include the
-following:
+analysis techniques on the semantics of the program could tentatively
+include the following (more components will be added as the project
+evolves):
 
 1) the identification of the APIs of the external libraries in the
 external references in the partial code: this is needed because the
 partial code contains the undeclared reference and/or
 declaration/reference ambiguity without explicit declaration of the
-APIs in the external libraries.
+APIs in the external libraries. The knowledge on the external
+libraries enables more precise analysis of the code snippets.
 
 2) the inference of the type information for the entities in the
 partial code: due to the ambiguity in the declaration, the types of
@@ -105,27 +116,41 @@ the partial code: several program analysis techniques are based on the
 program dependencies, which are not always obtainable due to the
 incompleteness of the given code fragment.
 
+4) Program slicing: program slices are important in both code
+understanding and program analysis for code snippets. That allows the
+analysis on the statements affecting or to be affected by a specified
+variable. All traditional program slicing techniques require the code
+to be complete.
+
 \vspace{3pt}
-\noindent \textbf{Thrust 3. Neural Symbolic Execution Infrastructure.}
-({\em Section~\ref{sec:thrust3}})
-Symbolic execution is a means of analyzing a program to determine what
-inputs cause each part of a program to execute. Symbolic execution
-performs executing a program abstractly, so that one abstract
-execution covers multiple possible inputs, which are assumed to have
-symbolic values. We aim to explore the novel area in AI named
-neuro-symbolic learning, which seeks to combine traditional
-rules-based AI approaches with modern deep learning techniques.  We
-will leverage traditional program analysis rules to enhance the
-learning of the characteristics on the execution of the partial code
-fragment.
+\noindent \textbf{Thrust 3. Predictive Execution.}  ({\em
+  Section~\ref{sec:thrust3}}) We advocate for an execution paradigm
+called predictive execution. In predictive execution, with a specific
+input, the execution is not carried out with the computer performing
+the instruction in the program. Instead, a trained machine learning
+model predicts the execution steps and as a result, the execution
+trace corresponding to the input is derived without actual execution.
+The predictive execution paradigm has the potential to improve
+efficiency and effectiveness in software testing, fault localization,
+and software vulnerability detection.
+
+%Symbolic execution is a means of analyzing a program to determine what
+%inputs cause each part of a program to execute. Symbolic execution
+%performs executing a program abstractly, so that one abstract
+%execution covers multiple possible inputs, which are assumed to have
+%symbolic values. We aim to explore the novel area in AI named
+%neuro-symbolic learning, which seeks to combine traditional
+%rules-based AI approaches with modern deep learning techniques.  We
+%will leverage traditional program analysis rules to enhance the
+%learning of the characteristics on the execution of the partial code
+%fragment.
 
 \vspace{3pt}
 \noindent \textbf{Thrust 4. Neural Partial Program Analysis
-  Applications.}  ({\em Section~\ref{sec:thrust4}}) Our last thrust of research
-is aimed to evaluate our basic partial program analysis infrastructure
-in a few applications. The following software engineering
-applications could be our examples: 1) software vulnerability detection for code snippets,
-2) fault localization, and 3) code completion.
+  Applications.}  ({\em Section~\ref{sec:thrust4}}) Our last thrust of
+research is aimed to evaluate our partial program analysis
+infrastructure in vulnerability detection for code snippets.
+%2) fault localization, and 3) code completion.
 
 %\vspace{3pt}
 %\noindent \textbf{Thrust ???. Neural Execution Analysis Infrastructure.}
@@ -139,7 +164,7 @@ applications could be our examples: 1) software vulnerability detection for code
 %for an execution.
 
 
-\input{sections/ccf22-plan-table}
+
 
 Toward this theme, in our preliminary work, we developed DeepPDA
 (Section~\ref{sec:deeppda}), a neural network-based partial program
@@ -159,3 +184,15 @@ from source code with partially qualified names to source code with
 full names. Our preliminary evaluation on StackOverflow posts shows
 that our technique achieves high accuracy with 97.6\% precision and
 96.7\% recall in deriving data types in code snippets.
+
+We also test the usefulness of the PDGs predicted by DeepPDA (i.e.,
+PDG*) on the downstream task of method-level vulnerability
+detection. We discover that the performance of the vulnerability
+detection tool utilizing PDG* is only 1.1\% less than that utilizing
+the PDGs generated by a program analysis tool.
+%Furthermore, we report 
+We also report the detection of 14 real-world vulnerable code snippets
+from StackOverflow by a learning-based vulnerability detection
+tool that employs the PDGs predicted by DeepPDA for these code snippets.
+
+\input{sections/ccf22-plan-table}

@@ -13,14 +13,14 @@
 
 \paragraph{\bf (1) Partial-Code Analysis Performance.} We aim
 to evaluate how well {\tool} can provide the structural analysis and
-semantic analysis for incomplete code fragments.  Assessing the
-performance of \tool is not straightforward, mainly due to the lack of
-ground-truth for partial code fragments. Thus, we could evaluate it on
-programs in Java and C/C++ as follows.  First, we will train {\tool} on
-complete code. For testing, we will treat each method individually and
-choose a consecutive portion within the method to predict the actual
-elements and dependencies, and compare them against the actual ones.
-For example, in Thrust 1, if we evaluate the performance of structural
+semantic analysis for incomplete code. Assessing the performance of
+\tool is not straightforward, mainly due to the lack of ground-truth
+for partial code fragments. Thus, we could evaluate it on programs in
+Java and C/C++ as follows.  First, we will train {\tool} on complete
+code. For testing, we will treat each method individually and choose a
+consecutive portion within the method to predict the actual elements
+and dependencies, and compare them against the actual ones.  For
+example, in Thrust 1, if we evaluate the performance of structural
 analysis infrastructure, we could compare the recovered/predicted code
 structure in terms of ASTs against the actual ASTs of the original
 code. For Thrust 2 in dependency analysis, we could treat each method
@@ -139,5 +139,5 @@ We will record feedback to improve our tools.
 UT-Dallas has a strong tie with companies like AT\&T, Facebook, and
 Bloomberg. PI Nguyen will work with his existing collaborators in
 Microsoft, IBM, ABB research to perform user studies on the groups of
-developers in certain tasks to evaluate the usefulness of our proposed
-tools.
+developers in certain tasks.
+%to evaluate the usefulness of our proposed tools.

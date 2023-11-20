@@ -1,43 +1,43 @@
-\subsection{On-going Work on Neural Program Dependence Analysis}
+\subsection{Preliminary Work on Neural Program Dependence Analysis}
 \label{sec:deeppda}
 
-In the neural network-based dependency parsing
-approaches~\cite{chen-manning-2014-fast} in NLP, by projecting the
-words into an embedding space, researchers successfully learn the
-semantic relationships that model the dependencies between them. Thus
-inspired, we believe we can follow suit to learn the control-flow and
-program dependencies between the statements in programs as
-well. Moreover, given that the quality of the statement embeddings
-determines the accurate prediction of the program dependence
-relations, enhancing them by incorporating context from both within
-and across the statements is crucial. Intra-statement
+In the neural network-based dependency
+parsing~\cite{chen-manning-2014-fast} in NLP, by projecting the words
+into an embedding space, researchers successfully learn the semantic
+relationships that model the dependencies between them. We can follow
+suit to learn the control-flow and program dependencies between the
+statements in programs as well. Moreover, given that the quality of
+the statement embeddings determines the accurate prediction of the
+program dependence relations, enhancing them by incorporating context
+from both within and across the statements is crucial. Intra-statement
 contextualization can help relay the local information within
 individual statements globally. For example, such information can help
 distinguishably identify the declaration and reference of the same
-variable across different program statements. In contrast,
+variable across  program statements. In contrast,
 inter-statement contextualization helps learn the dependencies between
 the statements in the context of the surrounding statements. Finally,
 we aim to model the CFG/PDG construction as a pairwise dependence
 decoding task, wherein the combination of all the predicted edges in
-the statement pairs can be formalized as directed graphs, i.e., a
-program's CFG/PDG.
+the statement pairs can be formalized as directed graphs, e.g., CFG/PDG.
 
-\begin{figure*}[ht]
+\begin{figure*}[t]
 \begin{center}
     \includegraphics[width=0.9\textwidth]{model-abstract.jpg}
     \caption{Preliminary Design for \tool Model Infrastructure for Dependency Analysis for Partial Code}
     \label{fig:model}
-    \vspace{-10pt}
+    \vspace{-26pt}
 \end{center}
 \end{figure*}
 
-In Figure~\ref{fig:model}, we present a preliminary design of the
-general architecture of \tool model. Given that attention is the
-driver behind the now ubiquitous Transformers’~\cite{Vaswani-2017}
-success in efficiently learning representations for different entities
-in different contexts, we plan to make it the foundation of the
-context learning components in our model as well. Each is intended to
-learn different aspects of contextualization.
+%In Figure~\ref{fig:model}, we present a preliminary design of the
+%general architecture of \tool model.
+
+%Given that attention is the driver behind the now ubiquitous
+%Transformers’~\cite{Vaswani-2017} success in efficiently learning
+%representations for different entities in different contexts, we plan
+%to make it the foundation of the context learning components in our
+%model as well. Each is intended to learn different aspects of
+%contextualization.
 
 %\begin{figure*}
 %    \centering
@@ -223,7 +223,7 @@ where $\mathcal{L}\textsubscript{CFG}$ is the loss for CFG edge-decoding, and $\
 
 \subsubsection{\bf Inference for Dependency Discovery}
 \label{sec:inference}
-Despite being trained on only complete code, one can leverage \tool to extract the control-flow and program dependence edges for both complete and partial code. The following, however, are the important points of consideration:
+Despite being trained on only complete code, one can leverage \tool to extract the control-flow and program dependence edges for both complete and partial code.% The following, however, are the important points of consideration:
 %\textit{Statement Types}: To extract the syntactic information encoded
 %in \textit{statement types}, one would need the program's AST. In
 %Java, for example, this can be retrieved even if the code is
@@ -234,22 +234,22 @@ Despite being trained on only complete code, one can leverage \tool to extract t
 %statement and their position embeddings. In
 %Section~\ref{sec:ablation}, we demonstrate the practicality of such an
 %alternative.
-\textit{Programs with ${\leq}N$ statements}: Making use of a trained
-\tool model on both complete and partial programs, the number of
-statements in which is less than the \textit{maximum statements}
-allowed in the model is straightforward. In such cases, \tool predicts
-the CFG/PDG edges from one statement to another by contextualizing
-over all the other statements in the program.
-\textit{Programs with ${>}N$ statements}: For (both complete and
-partial) programs having number of statements greater than that
-allowed in the trained \tool model, we have the following strategies
-in {\tool}: (a) train a model with a higher value of $N$, (b) chunk
-the program into $N$-statement code fragments, predict CFG/PDG edges
-for each of the code fragments independently, and finally, combine the
-CFG/PDG predictions for all the fragments. For example, if a trained
-model allows a maximum of 16 statements, to predict for a program with
-46 statements, one can break it down into code fragments with 16, 16,
-and 14 statements, respectively.
+%\textit{ If programs with ${\leq}N$ statements}: For both complete and
+%partial programs, the number of statements in which is less than the
+%\textit{maximum statements} allowed in the model is
+%straightforward. In such cases, \tool predicts the CFG/PDG edges from
+%one statement to another by contextualizing over all the other
+%statements in the program.
+If a program has ${>}N$ statements, for (both complete and partial)
+programs having number of statements greater than that allowed in the
+trained \tool model, we have the following strategies in {\tool}: (a)
+train a model with a higher value of $N$, (b) chunk the program into
+$N$-statement code fragments, predict CFG/PDG edges for each of the
+code fragments independently, and finally, combine the CFG/PDG
+predictions for all the fragments. For example, if a trained model
+allows a maximum of 16 statements, to predict for a program with 46
+statements, one can break it down into code fragments with 16, 16, and
+14 statements, respectively.
 
 %A potential downside to strategy (b), however, is that a statement in
 %a fragment will be contextualized only over the other statements in

@@ -1,5 +1,5 @@
-\subsection{ML-based Method-level Vulnerability Detection}
-\label{sec:vd}
+\subsection{Thrust 4. Application of {\tool} in Vulnerability Detection for Code Snippets}
+\label{sec:thrust4}
 
 
 %\section{Method-Level Vulnerability Detection}
@@ -30,12 +30,12 @@ task as follows:
     \centering
     0 < VD\{PDG\textsuperscript{*}\} \leq VD\{PDG\textsuperscript{\#}\}
 \end{equation}
-where $VD\{.\}$ indicates the performance of the automated VD model. Here, if $VD\{PDG\textsuperscript{*}\} \lesssim VD\{PDG\textsuperscript{\#}\}$, we can establish the efficacy of the PDGs predicted by \tool for downstream SE tasks such as vulnerability detection.
+where $VD\{.\}$ indicates the performance of the automated VD model. Here, if $VD\{PDG\textsuperscript{*}\} \lesssim VD\{PDG\textsuperscript{\#}\}$, we can establish the efficacy of the PDGs from \tool for vulnerability detection.
 
 
-\subsubsection*{\bf Data Collection}
-We facilitate this study by using the VD dataset collected by Li {\em
-  et al.}~\cite{yioopsla19}, which comprises of
+{\bf Data Collection}: We facilitate this study by using the VD
+dataset collected by Li {\em et al.}~\cite{yioopsla19}, which
+comprises of
 %+4.9 million 
 complete Java methods collected from eight large
 open-source Java projects. First, we filter by projects, dedicating
@@ -50,11 +50,10 @@ vulnerable and non-vulnerable method subsets in each of the splits, to
 obtain about 8K methods for training and about 1K each for testing and
 validation.
 
-\subsubsection*{\bf Experiment Setup}
-For all Java methods in the~VD dataset, we extract program
-dependencies (i.e., data and control-dependence edges) via Joern
-program analysis tool~\cite{joern-2014}. Next, we leverage \tool that
-was trained on a Java dataset
+{\bf Experiment Setup}: For all Java methods in the~VD dataset, we
+extract program dependencies (i.e., data and control-dependence edges)
+via Joern program analysis tool~\cite{joern-2014}. Next, we leverage
+\tool that was trained on a Java dataset
 %in Section~\ref{sec:effectiveness}
 %(Table~\ref{tab:intrinsic-java})
 to generate the PDGs (i.e., PDG\textsuperscript{*}) for all the
@@ -63,30 +62,29 @@ PDG\textsuperscript{\#} and PDG\textsuperscript{*} as the input of
 VulCNN for VD.
 %VulCNN leverages centrality analysis to transform the PDGs into program semantics-capturing images. Following suit, we generate two image datasets corresponding to PDG\textsuperscript{\#} and PDG\textsuperscript{*}, each of which are input to a convolutional neural network (CNN) for detecting the presence of vulnerabilities in complete code.
 
-\subsubsection*{\bf Evaluation Metrics}
-We adopt the same metrics in Wu et al.~\cite{wu2022vulcnn} to
-evaluate VulCNN, i.e., \textit{true positive rate} (TPR) (also
-referred to as \textit{Recall}), \textit{true negative rate} (TNR),
-and \textit{F-score}. Here, the positive label corresponds to the
-presence of a vulnerability in the method under study, while the
-negative label is given to a non-vulnerable method.
+{\bf Evaluation Metrics}: We adopt the same metrics in Wu et
+al.~\cite{wu2022vulcnn} to evaluate VulCNN, i.e., \textit{true
+  positive rate} (TPR) (also referred to as \textit{Recall}),
+\textit{true negative rate} (TNR), and \textit{F-score}. Here, the
+positive label corresponds to the presence of a vulnerability in the
+method under study, and vice versa.
 
 %Thus, \textit{true positives}, i.e., $TP$ can be defined as the number of vulnerable methods that have been identified correctly; \textit{false positives}, i.e., $FP$ is the number of non-vulnerable methods that have been identified as vulnerable; \textit{false negative}, i.e., $FN$ is the number of vulnerable methods that have been identified as non-vulnerable; and \textit{true negatives} are the number of non-vulnerable methods that have been identified correctly.
 
-\subsubsection*{\bf Preliminary Experimental Results}
-%In Table~\ref{tab:extr-method}, we report the performance of VulCNN
-%from both experiment settings,
-Table~\ref{tab:extr-method} shows the preliminary results from VulCNN
-in both settings, i.e., by using PDG\textsuperscript{\#} and
-PDG\textsuperscript{*} produced by {\tool}. We can observe that \tool predicts
-PDG\textsuperscript{*} with an overall F-score of 91.13\%. This
-further establishes the {\em generalizability of \tool}, more so,
-because the Java dataset that \tool was trained on, and the VD dataset
-comprising Java methods for which PDG\textsuperscript{*}s were derived
-come from two {\em entirely distinct code corpora}. Moreover, VulCNN
-achieves an F-score of 73.26\% using PDG\textsuperscript{*}, which is
-a close approximate of the F-score of VulCNN using
-PDG\textsuperscript{\#}, 74.01\%.
+%tien
+%\subsubsection*{\bf Preliminary Experimental Results}
+%Table~\ref{tab:extr-method} shows the preliminary results from VulCNN
+%in both settings, i.e., by using PDG\textsuperscript{\#} and
+%PDG\textsuperscript{*} produced by {\tool}. We can observe that \tool predicts
+%PDG\textsuperscript{*} with an overall F-score of 91.13\%. This
+%further establishes the {\em generalizability of \tool}, more so,
+%because the Java dataset that \tool was trained on, and the VD dataset
+%comprising Java methods for which PDG\textsuperscript{*}s were derived
+%come from two {\em entirely distinct code corpora}. Moreover, VulCNN
+%achieves an F-score of 73.26\% using PDG\textsuperscript{*}, which is
+%a close approximate of the F-score of VulCNN using
+%PDG\textsuperscript{\#}, 74.01\%.
+%tien
 
 %\begin{tcolorbox}
 %{The PDGs predicted by \tool approximates the accuracy of those
@@ -99,20 +97,16 @@ PDG\textsuperscript{\#}, 74.01\%.
 %\footnote{True positive rate is also referred to as \textit{Recall}.}
 %the downstream task of 
 
-\begin{table}[t]
-  \centering
-  \small
-%  \scriptsize
-%  \tabcolsep 3pt
-  \caption{Comparison of PDG\textsuperscript{\#} (generated by PA tool) and PDG* (predicted by \tool) for  method-level VD.}
-%  \vspace{-0.06in}
-%\toprule
-\begin{tabular}{c|c|c|c}
-\hline
-\textbf{Methodology}                       & \textbf{TPR}       & \textbf{TNR} & \textbf{F-Score} \\ \hline
-\textit{PDG\textsuperscript{\#} + VulCNN}  &  74.03             &  74.03       & 74.01                  \\
-\textit{PDG\textsuperscript{*} + VulCNN}   &  73.27             &  73.27       & 73.26\\
-\hline
-\end{tabular}
-\label{tab:extr-method}
-\end{table}
+%\begin{table}[t]
+%  \centering
+%  \small
+%  \caption{Comparison of PDG\textsuperscript{\#} (generated by PA tool) and PDG* (predicted by \tool) for  method-level VD.}
+%\begin{tabular}{c|c|c|c}
+%\hline
+%\textbf{Methodology}                       & \textbf{TPR}       & \textbf{TNR} %& \textbf{F-Score} \\ \hline
+%\textit{PDG\textsuperscript{\#} + VulCNN}  &  74.03             &  74.03       & 74.01                  \\
+%\textit{PDG\textsuperscript{*} + VulCNN}   &  73.27             &  73.27       & 73.26\\
+%\hline
+%\end{tabular}
+%\label{tab:extr-method}
+%\end{table}

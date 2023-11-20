@@ -1,75 +1,73 @@
-fse22main-p639-p
+Integrating the utilization of program analysis (PA) tools early in
+the development process of modern, large-scale software systems is
+crucial in determining the weaknesses/vulnerabilities in the
+code. Consider, for instance, a scenario in which a developer wants to
+use an online question and answering (Q\&A) forum, e.g., StackOverflow
+(S/O), to learn how to use software libraries or
+frameworks. Typically, the answer to a posed question comes as a
+fragment/chunk of code, which later makes it to the production
+application, stemming from the copy-and-paste software reuse
+practice. Unfortunately, if the copied code fragment is vulnerable,
+i.e., possesses defects that one can potentially exploit, it will
+result in the application being prone to attacks. Verdi {\em et
+al.}~\cite{verdi-tse22} reviewed more than 72K C++ code snippets that
+migrated from 1,325 S/O answers, reporting a total of 99 vulnerable
+code snippets of 31 different types that made their way to 2,589
+GitHub repositories.
+
+Security researchers have proposed several automated approaches for
+vulnerability detection (VD) in software systems using program
+analysis
+(PA)~\cite{FlawFinder,RATS,viega2000its4,Checkmarx,HPFortify,Coverity},
+as well as machine learning and deep learning (ML \&
+DL) \cite{fse21,chakraborty2020deep,zhou2019devign,li2018sysevr,li2018vuldeepecker}
+techniques. These approaches typically leverage program
+representations such as abstract syntax tree (AST), program dependence
+graph (PDG)~\cite{fse21,li2018vuldeepecker}, control-flow graph
+(CFG)~\cite{zhou2019devign}, data-flow graph
+(DFG)~\cite{zhou2019devign}, code property graph
+(CPG)~\cite{chakraborty2020deep}, etc., to model the vulnerable
+features.
+
+While deep learning (DL) and advanced machine learning (ML) with large
+language models (LLMs) have been achieving remarkable successes in the
+area of ML for code, the application of ML/DL and LLMs in
+vulnerability detection for incomplete code snippets is still
+limited. The program analysis (PA) tools employed to derive these
+program representations warrant the code to exist as complete program
+units, at the very least, at the method-level granularity. As a
+result, it is impossible to utilize such VD tools to find
+vulnerabilities in code snippets. A possible alternative would be to
+plug the code snippet into the method, resolve any ambiguities, and
+test it with a VD tool. However, such a strategy is limited. First, if
+a vulnerability is found, the efforts of integrating the code snippet
+into the existing method would be lost. Second, due to the black-box
+nature of DL models, we would not know the origin of the
+vulnerability, i.e., whether it arises due to the flawed code snippet
+or the existing part of the code.
+
+Besides, analyzing code snippets is not straightforward as they are
+often incomplete, un-parseable, contain declaration/reference
+ambiguity, and may be interspersed between user comments. Currently,
+there only exist tools such as PPA~\cite{ppa08}, which can parse an
+incomplete code fragment to build its AST and extract the declared
+data types in a best-effort manner; and StatType \cite{icse18}, which
+can resolve the libraries and recover the fully-qualified names for
+API references. However, the basic infrastructure for partial program
+analysis, i.e., for analyzing incomplete code is not yet
+available. Such an infrastructure must include fundamental
+supports/services at the structural and semantic levels, enabling
+traditional program analysis techniques to be extended to incomplete
+code. We refer to this as \textit{partial program analysis
+infrastructure}.
 
 
-\tool is designed to capture two basic insights about program
-structure: intra-statement context, and inter-statement context. This
-is facilitated via a hierarchical, self-attention network (SAN)-based
-model architecture. The motivation behind intra-statement context
-learning (IntraS-CL), which aims to learn the context within individual
-statements, is that Intra-SCL provides the knowledge for a model to
-learn better the roles and relations among the code tokens in a
-statement (e.g., definition or usage of a variable), thus, leading
-to the better discovery of dependencies between two statements. In contrast,
-inter-statement context learning (InterS-CL) helps a 
-model recognize the dependence of one statement on the other 
-taking into consideration the surrounding statements.
+Currently, performing program analysis for a specific code snippet
+necessitates the access to the entire program containing the
+snippet. The need for partial program analysis arises in situations
+where only partial code is accessible, such as in a vulnerable code
+snippet in an online forum, a commit log or code diff, or when partial
+code is sent to a server due to security-related concerns. Without
+partial program analysis, the tasks including {\em early vulnerability
+detection or assessment would be very limited and even impossible}.
 
-Assessing the performance of {\tool} is not straightforward, mainly due
-to the lack of ground-truth inter-statement program dependencies for
-partial code fragments. Thus, we intrinsically evaluated it on
-programs in Java and C/C++ as follows. First, we trained {\tool} on
-complete code. For testing, we treated each method individually and
-chose a consecutive portion within the method to predict the program
-dependencies, and compared them against the actual
-dependencies. Overall, \tool predicts CFG and PDG edges in Java with
-an F-score of 94.29\%, and in C++ with an F-score of 92.46\%. Upon
-further investigation, we discovered that for Java, \tool predicts
-{\em sequential} CFG edges, \textit{if-else} CFG edges, {\em
-data-dependence} edges, and {\em control-dependence} edges with an
-accuracy of 99.4\%, 95.52\%, 82.78\%, and 96.33\%
-respectively. Additionally, we performed an ablation study on various
-model components in \tool, which enabled us~to tie the fine-grained
-performance gains to each component.
-
-To evaluate the usefulness of the PDGs predicted by \tool (say,
-PDG\textsuperscript{*}), we designed experiments around the task of
-vulnerability detection at two levels of granularity: complete code at
-the method-level, and partial code at the snippet-level. For the
-method-level VD task, we leveraged VulCNN~\cite{wu2022vulcnn}, an
-image-inspired DL-based VD model which utilizes PDGs to predict
-whether a given method has vulnerabilities or not. Here, we aimed to
-estimate how well PDG\textsuperscript{*}s predicted for the methods in
-the dataset approximate the performance of the actual PDGs retrieved
-from a program-analysis tool. For this task, VulCNN achieved an
-F-score of 73.26\% with the PDGs predicted by \tool, as opposed to
-74.01\% in the case of the actual PDGs. For the task of partial code
-VD, we first trained VulCNN on a VD dataset comprising complete C++
-methods~\cite{fan2020msr}. Next, we leveraged \tool to predict PDGs
-for the vulnerable S/O code snippets in Verdi {\em et
-  al.}~\cite{verdi-tse22}. Utilizing the predicted PDGs from \tool,
-VulCNN was able to correctly identify 14 code snippets as vulnerable.
-
-
-\begin{enumerate}
-%[leftmargin=*]
-
-\item {\tool} is the first neural network tool to predict program
-  dependencies in complete as well as partial programs, which are
-  accurate as well as {\bf \underline{380$\times$}} faster to generate. This
-  opens up a research direction for improving program analysis (PA)
-  for partial programs by combining our ML/DL approach and top-down PA
-  approaches.
-
-\item An extensive evaluation showing {\tool}'s high accuracy in
-  deriving program dependencies and its usefulness in the application
-  of vulnerability detection for both complete and incomplete
-  snippets. Code and data are available~\cite{deeppda}.
-
-%\item A comparative evaluation showing the usefulness of the predicted PDGs against the actual PDGs in SE tasks that are tolerant to PDGs with a low level of errors.
-
-    \item An analysis showing the usefulness of intra-statement and
-      inter-statement context learning, capturing the
-      higher-order interaction features between statements in a code
-      snippet.
-%    \item
-\end{enumerate}

@@ -1,0 +1,214 @@
+\documentclass[11pt]{article}
+
+\usepackage{graphicx,times}
+\usepackage{wrapfig}
+\usepackage{amsmath,epsfig}
+\usepackage{setspace,array}
+\usepackage{cite}
+\usepackage{xspace}
+\usepackage{enumitem}
+
+\usepackage{sectsty}
+\sectionfont{\large}
+\subsectionfont{\normalsize}
+\subsubsectionfont{\normalsize}
+
+\usepackage[compact]{titlesec}
+
+\renewcommand{\theequation}{\thesection.\arabic{equation}}
+\renewcommand{\baselinestretch}{1.0}
+
+\newtheorem{Definition}{Definition}
+\newtheorem{Claim}{Claim}
+\newtheorem{Lemma}{Lemma}
+\newtheorem{Theorem}{Theorem}
+\newtheorem{Property}{Property}
+
+\newcommand{\revise} {\bf}
+
+\newcommand{\code}[1]{{\small\texttt{#1}}}
+\newcommand{\op}{\tau}
+\newcommand{\refac}{\rho}
+\newcommand{\edit}{\sigma}
+\newcommand{\T}{\theta}
+\newcommand{\comp}{;}
+\newcommand{\pre}{\prec_P}
+\newcommand{\meth}{KSISA}
+
+
+\newcommand{\MyParagraph}[1]{\textbf{#1}{ }}
+
+\usepackage{vmargin}
+\setpapersize{USletter}
+\setmarginsrb{1.0in}{1in}{1.0in}{1in}%
+           {0pt}{0mm}{0pt}{10mm}
+\newcommand{\remove}[1]{}
+
+\usepackage{tweaklist}
+\renewcommand{\enumhook}{\setlength{\topsep}{0pt}%
+  \setlength{\itemsep}{0pt}}
+\renewcommand{\itemhook}{\setlength{\topsep}{0pt}%
+  \setlength{\itemsep}{0pt}}
+\renewcommand{\descripthook}{\setlength{\topsep}{0pt}%
+  \setlength{\itemsep}{0pt}}
+
+\newcommand{\tool}{\textsc{NeuralPPA}\xspace}
+
+\begin{document}
+
+% Collaborative Research: SHF: Small: 
+
+
+
+\begin{center}
+  {\bf Project Summary: SaTC: Small: Neural Program Analysis Infrastructure to Support\\ Early Vulnerability Detection for Code Snippets}
+\end{center}
+\vspace{-.1in}
+
+
+%\noindent {\bf Overview.}
+
+\section{Overview}
+
+The integration of program analysis (PA) tools in the early stages of
+developing large-scale software systems is crucial for identifying
+vulnerabilities in code. Copy-and-paste practices from online question
+and answering forums, like StackOverflow, may introduce vulnerable
+code snippets into applications. Security researchers have proposed
+automated approaches, combining program analysis, machine learning,
+and deep learning, to detect vulnerabilities by leveraging program
+representations. While deep learning and large language models have
+shown success in machine learning for code, their application in
+vulnerability detection for incomplete code snippets is
+limited. Existing tools for analyzing incomplete code are
+insufficient, highlighting the need for a comprehensive
+\textit{partial program analysis infrastructure}. Without this
+infrastructure, early vulnerability detection or assessment for
+partial code becomes challenging, particularly in scenarios where only
+snippets are available, such as online forums or code diffs.
+
+To this effect, we seek to advance the state-of-the-art in traditional program analysis by means of {\tool}, a {\em \underline{Neural} Network-Based \underline{P}rogram \underline{A}nalysis} infrastructure, with the goal to support vulnerability detection for incomplete code snippets. We aim to establish {\em a scientific foundation, novel methodologies, frameworks, models, and algorithmic solutions for neural program analysis} with the following focus areas:
+%Our primary focus areas can be summarized as follows: 
+
+(1) {\bf enabling program analysis of incomplete code fragments}, i.e., partial program analysis;
+
+%(2) {\bf empowering existing PA tools with advanced AI/ML} to make them more sound and complete.
+
+(2) {\bf enabling vulnerability detection and assessment on incomplete code fragments}.
+
+The key philosophy is that {\em structural, semantic, and
+  execution-level analyses of partial code can be learned from the
+  analysis of entire programs in the wealth of information obtained
+  from open-source software repositories}. This enables the approaches
+to vulnerability early detection/assessment for code~snippets.
+
+
+\noindent {\bf Keywords:} Early Vulnerability Detection, Partial Program Analysis, Neural Networks.
+
+\section{Intellectual Merit}
+
+%In this work,
+%Our key philosophy is that {\em the analysis of partial code can be
+%  learned from the analysis of entire programs in the wealth of
+%  information from large-scale, open-source software
+%  repositories}.
+
+We propose the following thrusts of research. First, the basic
+infrastructure in {\tool} is the neural structural analysis. It learns
+from the syntactic structures of the complete code in the training
+dataset collected from large-scale code repositories, to derive the
+abstract syntax tree (AST) that best represents the syntactic
+structure.
+%Next, this component is to tag the code tokens with the types of the
+%syntactic units.
+Second, the basis components for several analysis techniques on the
+semantics of the program include 1) the identification of the APIs of
+the external libraries in the external references in the partial code,
+2) the inference of the type information for the entities in the
+partial code, and 3) the inference of the program dependencies among
+the statements in the partial code. Third, we will develop an
+execution paradigm called predictive execution. A trained machine
+learning model predicts the execution steps and as a result, the
+execution trace corresponding to the input is derived without actual
+execution. The predictive execution paradigm will help analyze the
+run-time behavior of code snippets without actual execution. Finally,
+we evaluate our partial program analysis infrastructure in
+vulnerability detection for code snippets.
+
+
+
+
+\section{Broader Impacts}
+
+
+(1) {\tool} will be {\em transformative and directly benefit to our
+  society}, leading to increasing software security and quality.
+%It enables efficient \textit{impact analysis} during the integration
+%of code snippets by identifying the potential consequences of the
+%change.
+%It enables \textit{partial program slicing} and \emph{empowers}
+%dynamic analysis by identifying additional path conditions (neural
+%constraints) for the SAT/SMT solvers which helps in exploring the
+%right subset of the symbolic state space.
+It enables the early detection of software vulnerabilities in code
+reuse.
+%
+Our validation involves students and professionals, promoting teaching
+and learning of software qualities that have wide impacts in industry
+and academic communities. (2) Our results will {\em foster research
+  activities} in related fields such as deep learning and software
+reliability. This project will also produce novelties in novel neural
+networks for code. (3) It will enhance the tools for
+teaching and research by providing tools and data sets for use by
+students and practitioners, and for enhancement by other
+researchers with related learning modules.
+
+
+
+
+%Finding and fixing bugs are vital to produce reliable and high-quality
+%software. Failing to fix a bug could result in severe consequences.
+%In 1996, the Ariane 5 rocket, the European Space Agency's \$1 billion,
+%was destroyed less than a minute after launch, due to a bug in the
+%on-board guidance computer program. A study commissioned by the US
+%Department of Commerce' National Institute of Standards and Technology
+%(NIST) concluded that software bugs, or errors, are so prevalent and
+%so detrimental that they cost the US economy an estimated \$59 billion
+%annually, or about 0.6 percent of the gross domestic product.
+
+%\textbf{- We could learn to fix a bug from similar ones}.
+
+%There is no known, established straightforward methodology for bug
+%fixing. Thus, like other problem-solving tasks, developers generally
+%base on their own knowledge and experience with the systems, or learn
+%from the others to do this task. In other words, they could
+%effectively find and fix a bug by consulting the similar bugs and
+%fixes to the one they are dealing with. However, currently, such
+%learning is still ad-hoc, manually, and un-systematically. For
+%example, when facing a bug, people could go to a forum to post a
+%question and wait for the help from the others. They could also
+%compile the reference manuals, as well as reports, tutorials,
+%discussions to find a suitable fix.
+
+%If we have automatic tool support that captures knowledge about bugs
+%and fixes and leverages it in fixing the recurring/similar bugs, we
+%could reduce the cost for software development.
+
+%\textbf{- Current approaches supporting fixing recurring bugs are still limited}.
+
+%However, current tool support that captures knowledge of known fixes
+%and leverage it in fixing/patching in similar bugs are still
+%limited. Some automatic tools are limited in recognize and synchronize
+%the fixes, etc. For example, there is no any extensive research that
+%discover the cause, the nature, and the characteristics of recurring
+%bugs and fixes? That is, why are they recurring? How popular they are?
+%How they are alike? What features help us recognize their
+%recurrence/similarity? 1. How could we identify the API-related code
+%peers within and across software projects and assess their popularity?
+%. Does the limited support to their co-evolution affect the quality
+%of the software system and the effectiveness of the development
+%process? 3. How could we synchronize their changes, i.e. given the
+%fix/patch of a peer, recommend developers the fixes/patches for its
+%other peers?
+
+\end{document} 

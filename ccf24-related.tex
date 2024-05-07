@@ -1,0 +1,210 @@
+\section{Related Work}
+%Our project is closely related to the following research literature: 
+\textbf{Representation Learning and ML for Code.}  The recent success in
+machine learning has lead to strong interests in applying machine
+learning, especially deep learning, to programming language (PL) and
+software engineering (SE) tasks, such as automated correction for
+syntax errors~\cite{Bhatia-2016}, fuzz testing~\cite{Patra-2016},
+program synthesis~\cite{Amodio-2017}, code
+clones~\cite{White-2016,Smith-2009,Li-2017}, program
+summarization~\cite{Allamanis-2016,Mou-2014}, code
+similarity~\cite{Zhao-2018,Alon-2018}, probabilistic model for
+code~\cite{Bielik-2016}, and path-based code representation,
+e.g., Code2Vec~\cite{Alon-2018} and Code2Seq~\cite{alon2018code2seq}. 
+
+In this proposal, we seek inspiration from Chen and Manning~\cite{chen-manning-2014-fast}, who first proposed a neural network-based approach to dependency parsing. The major benefits we envision to such a formulation include a significant speedup in dependency discovery and the extendibility of program dependence analysis to partial programs. 
+%In SE domain, 
+Specific to the SE domain, 
+the proposed research is loosely related to works that leverage probabilistic models to enhance the program dependence graph (PDG). Probabilistic PDG~\cite{baah-issta08-probabilistic} is an augmentation of the structural dependencies represented by a PDG with estimates of statistical dependencies between node states derived from test cases. Feng et al.~\cite{feng-paste10} propose Error-Flow Graph as a Bayesian Network, constructed from the dynamic dependence graphs of the runs. Bayesian Network-based Program Dependence Graph (BNPDG)~\cite{yu-jss17-bayesian} is capable of inferring the dependencies across non-adjacent nodes. MOAD (Modeling Observation-based Approximate Dependency)~\cite{lee-scam19-moad} reformulates program dependency as the likelihood that one program element is dependent on another, instead of a boolean relationship.  Lee~\cite{lee-icse20} proposes a scalable approximate program dependence analysis by estimating the likelihood of dependence. It uses lexical analysis~\cite{lee-jss20}, partial observations on executions, and the merging of static and observation-based approaches. Those approaches leverage the knowledge from the executions to enhance the PDG for complete code. In contrast, we aim to use neural networks to derive dependencies for both partial and complete code.
+
+
+%In the above PL and SE tasks, 
+%All approaches learn code
+%representations using different program properties. 
+%Although not proposed for detecting bugs, they
+%still very relevant to our proposal. %as one important step of our approach is to learn bug detection specialized code representation.
+
+%Different from the existing CRL approaches, in our initial
+%study~\cite{yioopsla19}, we conducted the CRL using the AST, DFG, PDG,
+%and different attention-based neural networks. Our results show that
+%our CRL is more suitable for detecting bugs than the existing baselines.
+
+
+\textbf{Bug and Vulnerability Detection.}
+%Many techniques have been developed for rule-based and learning-based bug detection. 
+Some existing rule-based bug detection approaches,
+such as
+\cite{Bian-2018,Jin-2012,Olivo-2015,Engler-2001,Cole-2006,Toman-2017},
+are unsupervised. However, new rules are needed to
+define to detect new types of bugs, e.g., FindBugs~\cite{Hovemeyer-2007} and NAR-miner~\cite{Bian-2018}.
+%
+%The most state-of-the-art \textit{rule-based} tool is NAR-miner~\cite{Bian-2018} that extracts
+%negative code rules to detect bugs. %, instead of positive code rules. 
+%Our initial results show the NAR-miner has a
+%high false positive rate, i.e., 52\%, which make them
+%impractical for daily use. 
+%that it only costs NAR-miner 1 minute to perform bug detection on
+%a project. However the mining-based approaches mainly suffer the
+%problem of high false positive (FP) rates, such as the NAR-miner has a
+%high FP rate, i.e., 52\% in the cross-project setting, which make them
+%impractical for daily use. 
+%When comparing our approach with the existing state-of-the art rule-based and mining approaches, the main differences are as follows. First, we consider the relations among paths from different methods for detecting cross-method bugs. However,
+%they normally work on individual methods and cannot work well on the
+%cross-method bugs. Second, our approach covers path information in an
+%AST in order to detect very detailed bugs in each method, while the
+%they often consider the important rules and may miss some information
+%outside of their rules.
+To overcome the pre-defined rules, the mining-based approaches, e.g.,~\cite{Bian-2018,Jin-2012,Olivo-2015,Engler-2001,Cole-2006,Toman-2017,Li-2005}, were proposed to mine implicitly programming rules from source code using data mining techniques. 
+%Typically, this type
+%of approaches extracts implicitly programming
+%rules from program source code using data mining approaches
+%(e.g., mining frequent itemsets or sub-graphs) and detects
+%violations of the extracted rules as potential bugs. 
+They still have a key limitation in a very high false positive rate
+due to the fact that they cannot distinguish the cases of incorrect
+code versus infrequent/rare code.  There exist DL-based
+approaches~\cite{Pradel-2018,Wang-2016b} and traditional ML
+techniques~\cite{Engler-2001,Li-2005,Wasylkowski-2017,
+  Wang-2016b,Wang-2016,Liang-2016}.
+%For example, 
+%the Bugram \cite{Wang-2016} uses n-gram models to rank the methods and then picks the top-ranked methods as buggy methods.
+%DeepBugs~\cite{Pradel-2018} uses deep learning techniques to propose
+%a name-based bug detector.  
+DL-based approaches are still limited to detect bugs in individual
+methods.
+%without investigating the dependencies among different yet
+%relevant methods.
+
+%$Due to that, they have high false positive rates, making them less
+%practical in the daily use of software developers.
+%In practice,
+%there exist several cases that bugs occur across more than one
+%method. That is, to decide whether a given method is buggy or not, a model
+%needs to consider other methods that have data and/or control
+%dependencies with the method under investigation. 
+%Due to that, the
+%existing DL-based approaches have high false positive
+%rates, making them less practical in the daily use. % of software
+%developers. 
+%For example, DeepBugs~\cite{Pradel-2018} is reported to have a high false positive rate of 32\%. That is, approximately one out of 3 reported bugs is not a true bug, thus, wasting much developers' efforts. 
+%Our study~\cite{yioopsla19i} also showed a false positive rate of 41\% for DeepBugs on our collected dataset.
+
+
+%In this paper, our approach is also using the deep learning techniques to train the models and
+%classify methods into buggy or non-buggy. Our approach is different
+%from the existing learning-based approaches in the following ways.
+%First, like the rule-based approaches, the existing learning-based
+%approaches do not consider the relations among paths across multiple
+%methods. In our code representation learning step, we model the
+%relations among paths from different methods using the dependencies of
+%entities in the PDG and DFG, in addition to the AST nodes of a path.
+%Second, our approach uses long paths of an AST to cover all of the AST
+%nodes for representing local context, while other existing approaches
+%often use part of method information to detect bugs, such as
+%name-based identifier representation and frequent $n$-grams. Our
+%results show that our approach can outperform all of the
+%studied baselines.
+
+
+%\textit{Machine learning-based bug	detection~\cite{Wasylkowski-2017,Wang-2016b,Wang-2016,Pradel-2018}.}
+%With the advances of machine learning (ML) and especially deep
+%learning models, several approaches have been proposed to learn from
+%previously known and reported bugs and fixes to detect bugs in the
+%new code. While the ML-based bug detection models~\cite{Nam-2015}
+%rely on feature selections, the deep learning-based
+%ones~\cite{Pradel-2018,Wang-2016b} take advantages of the capability
+%to learn the important features from the training data for bug
+%detection. 
+
+
+\textbf{Fault Localization and Regression Testing.}
+Spectrum-based Fault Localization (SBFL)~\cite{zhang2011localizing, abreu2007accuracy, jones2005empirical, abreu2006evaluation, naish2011model, wong2007effective, liblit2005scalable, lucia2014extended, keller2017critical} has been intensively studied in the literature, e.g., Ochiai \cite{abreu2006evaluation} and Jaccard \cite{abreu2007accuracy}. 
+%Tarantula \cite{jones2001visualization}, SBI \cite{liblit2005scalable}, Ochiai \cite{abreu2006evaluation} and Jaccard \cite{abreu2007accuracy}.  
+%they share the same basic insight, i.e., code elements mainly executed by failed tests are more suspicious. 
+Mutation-based Fault Localization (MBFL)~\cite{moon2014ask, zhang2013injecting,budd1981mutation, zhang2010test, musco2017large} aims to additionally consider impact information for fault localization, e.g., Metallaxis \cite{papadakis2012using, papadakis2015metallaxis} and MUSE \cite{moon2014ask}.
+%Since code elements covered by failed/passed tests may not have any impact on the corresponding test outcomes, e.g., Metallaxis \cite{papadakis2012using, papadakis2015metallaxis} and MUSE \cite{moon2014ask}.
+%typical MBFL techniques
+%use mutation testing \cite{budd1981mutation, zhang2010test, musco2017large} to simulate the impact of each
+%code element for more precise fault localization, e.g., Metallaxis \cite{papadakis2012using, papadakis2015metallaxis} and MUSE \cite{moon2014ask}.
+%The first general MBFL technique, Metallaxis [24, 26] is based on the
+%following intuition: if one mutant has impacts on failed tests (e.g.,
+%the tests outcomes change after mutation), its corresponding code
+%element may have caused the test failures
+%
+%The more recent MUSE [23] technique has similar insights: (1)
+%mutating faulty elements may cause more failed tests to pass than
+%mutating correct elements; (2) mutating correct elements may
+%cause more passed tests to fail than mutating faulty elements.
+%
+%Learning-to-Rank (LtR) has been used to improve fault localization~\cite{b2016learning, xuan2014learning, li2017transforming, sohn2017fluccs}.
+%MULTRIC \cite{xuan2014learning} combines different suspiciousness values from SBFL. Some work combines SBFL suspiciousness values with
+%other information, e.g., program invariant \cite{b2016learning} and source code complexity information \cite{sohn2017fluccs}, for more effective LtR fault localization. 
+%TraPT \cite{li2017transforming} combines suspiciousness values from both SBFL and MBFL. 
+Neural networks have been applied to fault
+localization~\cite{zheng2016fault, briand2007using, zhang2017deep,
+  wong2009bp}. However, they mainly work on the test coverage
+information, which has clear limitations (e.g., it cannot distinguish
+elements accidentally executed by failed tests and the actual faulty
+elements)~\cite{li2017transforming}. DeepFL~\cite{DeepFL},
+deep-learning based, was proposed to improve method-level FL, and it
+improves the learning-to-rank FL approach,
+TraPT~\cite{TraPT}. Extensive research has been on test case selection and prioritization in regression testing (RT), e.g., coverage-based~\cite{di2015coverage}, search-based~\cite{de2011multi,yu2010time}, historical tests~\cite{kim2002history,marijan2013test,noor2015similarity,park2008historical}, code dependencies~\cite{gligoric2015ekstazi} and information retrieval~\cite{kwon2014test,saha2015information}. 
+%RT in Continuous Integration (CI) differs from the traditional RT as 
+However, most techniques cannot be applied at the scale of modern Continuous Integration (CI) practices~\cite{elbaum2014techniques} that require frequent commits to the shared code base and cause the cost of continuous RT escalate dramatically~\cite{memon2017taming}. For example, coverage information may be infeasible and imprecise to collect at large scale and in quick cycles and code changes~\cite{elbaum2014techniques,haghighatkhah2018test,hemmati2015prioritizing,yu2018study}. 
+Recently, RT in CI has been investigated, e.g.,~\cite{elbaum2014techniques,gligoric2015practical,yu2018study,jiang2009adaptive,henard2016comparing}. 
+However, existing approaches, e.g.,~\cite{bertolino2020learning,spieker2017reinforcement} are still limited in accuracy and scalability as they lack the learning of deep features of test cases and source code and their relations. 
+%Moreover, very little research has been devoted to investigating deep learning for RT in CI. 
+
+
+%\textbf{Automated Program Repair.}
+%APR approaches have explored search-based SE to tackle more general
+%types of bugs, e.g., GenProg~\cite{le2011genprog},
+%RSRepair~\cite{qi2014strength}, MutRepair~\cite{martinez2016astor},
+%PAR~\cite{kim2013automatic}, and SPR~\cite{long2015staged}. Another
+%type of APR approaches {\bf mine and learn fixing patterns} from prior
+%bug fixes, \textit{generating the state-of-the-art performance}. The
+%fixing patterns (or namely fixing templates) could be automatically or
+%semi-automatically mined, such as SemFix~\cite{nguyen2013semfix},
+%Prophet~\cite{long2016automatic}, Genesis~\cite{long2017automatic},
+%FixMiner~\cite{koyuncu2018fixminer}, HDRepair~\cite{le2016history},
+%CapGen~\cite{wen2018context}, SimFix~\cite{jiang2018shaping},
+%Avatar~\cite{liu2019avatar}, Nopol~\cite{Nopol}, ACS~\cite{ACS},
+%SketchFix~\cite{SketchFix}, ELIXIR~\cite{saha2017elixir}, and
+%LSRepair~\cite{LSRepair}. Tbar~\cite{tbar-issta19} collects all
+%existing fix-patterns.
+
+%Recently, deep learning has been applied to APR for directly
+%generating patches.  Some work treats APR as a {\em statistical
+%  machine translation} translating the buggy code to the fixed code. A
+%natural thinking is to use neural translation models to learn to
+%recommend fixes, such as Ratchet~\cite{hata2018learning}, Tufano {\em
+%  et al.}~\cite{tufano2018empirical},
+%SequenceR~\cite{chen2018sequencer}, Tufano {\em et
+%  al.}~\cite{tufano2019learning}, CoCoNuT~\cite{lutellier2020coconut}
+%and CODIT~\cite{CODIT}.
+
+
+%learns code edits with encoding code structures in
+%an NMT model to recommend fixes. 
+
+%learn code changes using S2S NMT with code abstractions and keyword
+%replacing.
+
+%use sequence-to-sequence (S2S)
+%translation. %They use neural network machine translation (NMT) with attention-based Encoder-Decoder, and different code abstractions to
+%generate patches, while 
+%SequenceR~\cite{chen2018sequencer} uses S2S with a copy mechanism~\cite{see2017get}.
+%CODIT~\cite{codit} learns code edits with encoding code structures in
+%an NMT model to recommend fixes. 
+%The comparison with these NMT-based
+%APR approaches is provided in the introduction. 
+%Tufano {\em
+%	et al.}~\cite{tufano2019learning} learn code changes using S2S NMT with code abstractions and keyword
+%replacing. 
+%Despite of treating the APR as code transformation learning
+%problem, their approach takes entire method as a context for a bug.
+%Thus, it has too much noise, leading to lower effectiveness than our initial approach {\tool}~\cite{icse_fl}.
+
+%than {\tool}. In other words, the treatment of context from {\tool} helps improve over their model.
+
+

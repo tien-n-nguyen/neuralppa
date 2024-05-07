@@ -1,0 +1,90 @@
+\begin{figure}[t]
+	\centering
+	\lstset{
+		numbers=left,
+		numberstyle= \tiny,
+		keywordstyle= \color{blue!70},
+		commentstyle= \color{red!50!green!50!blue!50},
+		frame=shadowbox,
+		rulesepcolor= \color{red!20!green!20!blue!20} ,
+		xleftmargin=1.5em,xrightmargin=1em, aboveskip=1em,
+		framexleftmargin=1.5em,
+                numbersep= 5pt,
+		language=Python,
+    basicstyle=\tiny\ttfamily,
+    numberstyle=\tiny\ttfamily,
+    emphstyle=\bfseries,
+		escapeinside= {(*@}{@*)}
+	}
+\begin{minipage}{0.45\textwidth}        
+\begin{lstlisting}[caption = ]
+(*@{\color{red}{Error Specific Prompt@*)
+(*@{\color{red}{<modified\_code>@*)
+LLM Generated Code Snippet : 
+import oopsla.util.MyPackage;
+public class MyClass {
+    private static final int GLOBAL_NUMBER = 0;
+    @Override
+    public void main(String[] args, SessionFactory sessionFactory) {
+        if(MY_VALUE) {
+            return null;
+        }
+        else {
+            ;
+        }
+    }
+}
+
+\end{lstlisting}
+\end{minipage}
+\begin{minipage}{0.45\textwidth}        
+\begin{lstlisting}[caption = ]
+(*@{\color{red}{Compiler's Output@*)
+(*@{\color{green}{test.java:3:  error: class MyClass is public, should be declared in a file named MyClass.java@*)
+public class MyClass {
+       ^ 
+(*@{\color{green}{test.java:2: error: package oopsla.util does not exist@*)
+import oopsla.util.MyPackage;
+                  ^
+(*@{\color{green}{test.java:6: error: cannot find symbol@*)
+    public void main(String[] args, SessionFactory sessionFactory) {
+                                    ^
+  symbol:   class SessionFactory
+  location: class MyClass
+test.java:5: error: method does not override or implement a method from a supertype
+    @Override
+    ^
+(*@{\color{green}{test.java:7: error: cannot find symbol@*)
+        if(MY_VALUE) {
+           ^
+  symbol:   variable MY_VALUE
+  location: class MyClass
+test.java:7: error: illegal parenthesized expression
+        if(MY_VALUE) {
+          ^
+test.java:8: error: incompatible types: unexpected return value
+            return null;
+7 errors
+
+\end{lstlisting}
+\end{minipage}
+\begin{minipage}{0.45\textwidth}        
+\begin{lstlisting}[caption = ]
+(*@{\color{red}{<new\_error> (with error specific prompt)@*)
+error: method does not override or implement a method from a supertype at:
+@Override
+error: illegal parenthesized expression at:
+if(MY_VALUE) {
+error: incompatible types : unexpected return value at:
+return null;
+3 errors
+To fix these errors:
+for 'method does not override or implement a method from a supertype' error, make sure the method signature correctly matches an existing method in the supertype.
+for 'illegal parenthesized expression' error, make sure the parentheses are correctly placed.
+for 'unexpected return value' error, make sure the method's return type matches the actual value returned and adheres to Java's return value conventions
+\end{lstlisting}
+\end{minipage}
+\vspace{-12pt}
+\caption{Normal Error Message From Compiler{\tool}}
+\label{fig:err-speciic-prompt}
+\end{figure}

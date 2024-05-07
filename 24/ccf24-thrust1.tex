@@ -1,39 +1,99 @@
-\section{Thrust 1. Neural Structural Analysis Infrastructure}
+\section{Thrust 1. LLM-based Multi Agents for Predictive Static Program Analysis}
 \label{sec:thrust1}
 
-\subsection*{Planned Work on Syntactic Type Tagging and Partial AST Building}
 
-\begin{wrapfigure}{l}{0.33\textwidth}
-\begin{lstlisting}[basicstyle=\scriptsize\sffamily, stepnumber=1, numbers=left, numbersep=-6pt, framexleftmargin=0mm, framexrightmargin=0mm, language=Python, emph ={}]
-    for element in item_list:
-        if element > 0:
-            value += 1
-        else:
-            selected = element
-            break
-\end{lstlisting}
-\vspace{-14pt}
-\caption{Running example}
-\label{run_ex}
-\end{wrapfigure}
+\section{Approximation and Refinement}
 
-Let us consider the Python code snippet illustrated in Figure~\ref{run_ex} as a running example in this section. For the {\em syntactic type tagging} task (essentially a lexical classification), the goal is to tag the code tokens with their corresponding syntactic unit types like variables, fields, methods, classes, etc. For example, the code tokens in the running example would correspond to \code{FOR}, \code{LOCAL\_VARIABLE}, \code{IN}, ..., \code{=}, \code{LOCAL\_VARIABLE}, \code{BREAK}. Those syntactic types are important for the program analysis techniques.
+\subsection{Code Approximation with LLM}
 
-\begin{figure}[h]
-    \centering
-%    \includegraphics[width=\textwidth]{figures/ast-bt.png}
-%    \vspace{-130pt}
-%    \caption{Mapping an abstract syntax tree to its corresponding binary tree}
-%    \label{fig:ast-bt-mapping}
-    \includegraphics[width=\textwidth]{figures/seq2seq_2.png}
-    \vspace{-135pt}
-    \caption{Preliminary design for building an AST for a given code snippet, modeled as a \textit{seq}2\textit{seq} translation problem.}
-    \label{fig:ast-bt-mapping}
-\end{figure}
+\input{first-sys-prompt}
 
-Next, consider the task of building an abstract syntax tree for incomplete code. As mentioned in Section~\ref{sec:intro}, PPA~\cite{ppa08} accomplishes this task in a best-effort manner by means of a rule-based strategy that also involves eliminating tokens to achieve the desired intermediate representation. Thus, it is limited. Alternatively, we hypothesize that such a representation for partial programs can be learned from the ASTs of the whole programs in the existing code repositories. We plan to enable such a learning process by modeling the AST-building task as a {\em structured reordering} problem. First, during the training phase, we will collect pairs of source code tokens and their respective AST representations. Second, we will convert the ASTs into binary trees by: (a) merging a unary non-terminal node with its child to form a new non-terminal node; (b) adding a special {\em \#}-node to binarize the $n$-ary nodes~\cite{https://doi.org/10.48550/arxiv.2206.11719}. An example of the same is illustrated in Figure~\ref{fig:ast-bt-mapping} (center), where the sub-AST corresponding to lines 2--3 in the running example is binarized. Third, we will linearize the binary trees thus formed using a tree-traversal algorithm (inorder, pre-order, or post-order). Fourth, given sequence pairs of code tokens and corresponding linearized binary tree representations, we will carry out the structured reordering as a sequence-to-sequence neural machine translation (NMT) task. By design, the number of tokens on the target side in this NMT problem is the sum of the number of tokens in the program on the source side and the number of non-terminal tokens in the binarized AST.
+% \input{technical-details/first-usr-prompt}
 
+The initial stage of our framework involves Code Approximation, aimed at roughly filling in missing details and type details within incomplete code snippets with the help of a compiler. We employ GPT3.5~\cite{ChatGPT} in our implementation, referred to as LLMs in Fig.~\ref{fig:overview}. While GPT is utilized here, any LLM could be suitable. GPT aids in approximating the code completion since the precise edits made by developers are unknown. Our objective is to adequately fill in missing information at the class level to facilitate program analysis and derive results for the original incomplete code.
 
+To precisely navigate the LLM through code approximation, we utilize a one-shot prompting approach that includes a definitive example of the desired fix and type information alongside the expected output format. (Fig. ~\ref{fig:approx-prompt}) This prompt meticulously instructs the LLM to concentrate on class-level completions and specifies the task of reconstructing initialization variables and re-establishing missing setup method calls essential for API interactions. By presenting a representative example within the prompt, we crystallize the requirements, guiding the LLM to replicate this pattern in its code generation and ensuring that the output adheres closely to the structural and functional expectations set forth for the task.
 
-For inference, one such trained NMT model can be leveraged to predict the linearized binary tree representation of the partial program under study.
-The linearized binary tree representation can be used to reconstruct a unique binary tree (because of the one-to-one correspondence between them), and consequently the AST of the partial program. Moreover, the syntactic token types give information about a code token and its neighbors. Therefore, we plan to carry out both tasks, i.e., {\em syntactic-type tagging} and {\em partial AST-building} as a joint-learning process, which will help avoid error propagation from the former to the latter while benefiting each other. In addition, we will modify the decoding step in the NMT task to ensure that the ASTs thus generated for the partial programs are syntactically valid.
+On the left side of the Fig. ~\ref{fig:approx-prompt} is a simple showcase of our system prompt template. The System Prompt directs the LLM to analyze a partial Java code snippet along with its compiler errors and to augment the code by exclusively adding to the header. The completion must render the snippet a compilable Java method without altering the body. It also requires specifying type information for any new code elements. The prompt refines the task into two clear outputs: the first is the Code Approximation, where the LLM provides the amended header, and the second is Type Information, detailing the data types for each element involved in the fix.
+
+On the right side of Fig. ~\ref{fig:approx-prompt} is the user prompt segment of our framework; the LLM is tasked with analyzing a provided partial Java code snippet and associated compiler errors. The objective is to enhance the code by modifying the header section exclusively, ensuring the snippet evolves into a compilable Java unit while keeping the original code body intact. This focused directive requires the LLM to interpret the compiler output and errors, using these insights to determine the precise additions needed in the code's header for successful compilation.
+
+During the first approximation, we will send all compiler's output to the LLM, and the LLM's response must address the identified compiler issues and align with the expected outcome detailed in the example from the user prompt. After enhancing the code, the LLM's secondary task involves detailing the type information for any introduced or utilized elements within the snippet, ensuring clarity and consistency in the code's type usage. This process underscores the LLM's role in not just code completion but also in fostering an understanding of the type system within the Java environment.
+
+%The first step of our framework is Code Approximation, which aims to
+%approximately filling in the missing information for the incomplete
+%code snippet. We leverage GPT~\cite{ChatGPT} in our implementation,
+%designated as LLM1 in Fig.~\ref{fig:overview}. In practice, any
+%Large Language Model (LLM) could be applicable. We use GPT to
+%approximately complete the code as we do not know the exact code that
+%will be edited by developers. Our goal is to sufficiently fill in the
+%missing information at the method level in order to facilitate the
+%program analysis and derive the results for the original incomplete
+%code.
+
+%To guide LLM1 in predicting the missing code, we construct a prompt
+%that articulates the specific requirements in our approximation
+%task. The prompt explicitly instructs LLM1 to focus on method-level
+%completion, emphasizing repairing initialization variables and
+%restoring missing setup method calls for the API calls in the method's
+%function. The following points detail the aspects covered in our
+%prompts.
+
+%The System Prompt instructs LLM1 to prioritize the method's structure
+%and confine enhancements strictly to method level. Since the missing
+%information may include global variable definitions, LLM1 is asked to
+%adapt and re-frame these within the local scope of the method,
+%ensuring that variables potentially relevant on a global scale are
+%instead treated as local entities, preserving the method's
+%self-contained and facilitating integration with the existing code
+%base.
+
+%In our User Prompt, in addition to method-level completion, {\tool}
+%directs LLM1 to analyze within the method's scope: it must identify
+%and repair any missing initialization sequences and infer the types
+%and uses of variables based on the context within the given
+%partial code. So, as LLM1 completes local initialization, it performs
+%type reasoning simultaneously to maintain the logical flow and ensure
+%syntactical integrity with the existing partial code.
+
+\subsection{Refinement for Validation}
+
+% \input{technical-details/self-correction-sys-prompt}
+\input{self-correction-usr-prompt}
+
+Following LLM1's initial code completion attempt, we proceed to the refinement phase, aimed at iteratively enhancing the generated code until it meets the criteria for program analysis. Validation of this refinement can be achieved through various mechanisms, including a compiler, program analysis tools, verification tools, specification checking tools, model checkers, etc. In this study, to demonstrate our framework, we utilize a compiler to verify that the augmented code remains syntactically correct and preserves the logic and structure of the original snippet. The structure of our prompt for refinement via a compiler
+is displayed in Fig.~\ref{fig:refine-prompt}. 
+
+\subsubsection{Compiler Validation}
+
+The compiler checks the LLM1-generated code for errors. If the code passes, it is accepted for further analysis. If not, we will use the specific errors to guide the next steps.
+
+\subsubsection{Error-Specific Feedback Loop}
+
+%\input{error-specific-prompt}
+
+When the compiler detects errors, each unique error message is examined to guide the next iteration of code generation for every identified error type. The revised prompt is crafted to direct LLMs, encapsulating the essence of the necessary correction and ensuring that subsequent code generation addresses the identified issues. LLMs is provided with the original partial code, its previous output, and the new error-specific prompt as inputs for the next iteration. This iterative process continues, with each cycle targeting the elimination of a specific category of errors flagged by the compiler.
+
+%As the compiler identifies errors, all distinct error messages are analyzed to inform the next iteration of code generation for each identified error type. The newly crafted prompt is designed to guide LLM1, encapsulating the required correction's essence and ensuring that LLM1's subsequent code generation focuses on resolving the identified issues. LLM1 receives the original partial code, its previous output, and the new, error-specific prompt as inputs for the next iteration. This process is repeated, with each cycle aimed at eliminating a specific category of errors, as highlighted by the compiler.
+
+%\subsubsection{Convergence on 'Symbol Not Found' Errors}:
+
+The iterative refinement process is designed to address and resolve all detectable errors until only specific errors remain. Especially the \code{'Symbol Not Found'}, \code{'Package Does Not Exist'}, and \code{'Class name and File name do not match'} errors.
+
+This specific focus is because, given that LLMs' task is to fill in missing information and complete the Java code snippet, it might introduce variables or methods that reference types from external libraries or packages not present in the environment. In a real-world development setting, it's impractical to expect that every possible package or library referenced by GPT's suggestions would be available or installed in the developer's environment. Ignore the 'Class name and File name do not match' errors simply because, with LLMs' current potential, it is not possible for LLMs to create a Java file specifically and align it with the class name inside. Thus, by allowing the refinement process to narrow down to specific errors, we acknowledge and accommodate the limitations imposed by the environment, focusing our correction efforts on syntactical and structural accuracy within the method-level scope while acknowledging the external dependencies that might be unresolved within the current context.
+
+%\subsubsection{Sample Showcase of error-specific-prompt crafting}
+
+%Here is an example of how we will craft our error-specific-feedback prompt (Fig. ~\ref{fig:err-speciic-prompt}), represented as \code{<new\_error>} in Fig.~\ref{fig:refine-prompt}. In this example, the error-specific prompt is a strategic tool designed to instruct the LLM on addressing and correcting specific errors from the compiler's output while intentionally disregarding others.
+
+%The LLM-generated code snippet, displayed in the top box, has been compiled, yielding the errors listed in the middle part. Four of these errors, highlighted in green, must be addressed in refinement, as per the error-specific prompt in the third part. These ignored errors are:
+
+%1. The class name and file name do not match
+%2. The package \code{oopsla.util} does not exist.
+%3. The \code{SessionFactory} symbol cannot be found.
+%4. \code{MY\_VALUE} symbol cannot be found.
+
+%The bottom box then presents the new error-specific prompt, which filters out the green-highlighted errors and explicitly guides the LLM to focus only on the remaining issues identified by the compiler. It specifically instructs the LLM to correct the syntax and logic according to the code's original intent, such as ensuring that the method signature matches any existing superclass methods and that the return type is consistent with Java's conventions. This tailored approach allows the LLM to hone in on the most critical errors that need to be addressed, optimizing the refinement loop for efficiency and accuracy in code correction.
+
+%=============================== END OF REMOVAL =====================
+

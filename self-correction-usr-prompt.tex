@@ -1,0 +1,60 @@
+\begin{figure}[t]
+	\centering
+	\lstset{
+		numbers=left,
+		numberstyle= \tiny,
+		keywordstyle= \color{blue!70},
+		commentstyle= \color{red!50!green!50!blue!50},
+		frame=shadowbox,
+		rulesepcolor= \color{red!20!green!20!blue!20} ,
+		xleftmargin=2.7em,xrightmargin=2.7em, aboveskip=1em,
+		framexleftmargin=1.5em,
+                numbersep= 5pt,
+		language=Python,
+    basicstyle=\tiny\ttfamily,
+    numberstyle=\tiny\ttfamily,
+    emphstyle=\bfseries,
+                moredelim=**[is][\color{red}]{@}{@},
+		escapeinside= {(*@}{@*)}
+	}
+\begin{minipage}{.5\textwidth}        
+\begin{lstlisting}[caption = ]
+(*@{\color{red}{Iterative Prompt Setting@*)
+(*@{\color{red}{System Prompt@*)
+You are provided with the original Java code snippet, a modified version of that code, and the latest compiler output/errors. Your task is to analyze these elements to identify and correct the errors in the modified code. Ensure your corrections align with the intended functionality and logic of the original snippet while addressing the specific issues highlighted by the new compiler errors.
+Instructions:
+Original Code Snippet: (*@{\color{blue}<original\_code> @*)
+Modified Code with Errors: (*@{\color{blue}<modified\_code>@*)
+New Compiler Output/Errors: (*@{\color{blue}<new\_error>@*)
+\end{lstlisting}
+\end{minipage}
+\begin{minipage}{.5\textwidth}        
+\begin{lstlisting}[caption = ]
+(*@{\color{red}{Iterative Prompt Setting@*)
+(*@{\color{red}{User Prompt@*)
+After incorporating the suggested code enhancements to the original code snippet, the code was recompiled and resulted in new compiler output/errors. Your task is to analyze these new errors, understand the context of both the original and modified code, and apply further modifications to correct the errors without altering the core functionality or logic of the original code.
+Input:
+Partial Code Snippet (Do Not Modify): 
+```
+(*@{\color{blue}<original\_code> @*)
+```
+Modified Code with Errors: 
+```
+(*@{\color{blue}<modified\_code>@*)
+```
+New Compiler Output/Errors: 
+```
+(*@{\color{blue}<new\_error> (with error specific prompt)@*)
+```
+Expected Outcome:
+(*@{\color{blue}{**Same as First One-Shot Prompt Setting**@*)
+Here is an exampular procedure of how you should construct your answer.
+(*@{\color{blue}{**Same as First One-Shot Prompt Setting**@*)
+Disclaimer: Do not include any explanation or comments.
+\end{lstlisting}
+\end{minipage}
+
+\vspace{-12pt}
+\caption{Prompt for Refinement Loop in {\tool}}
+\label{fig:refine-prompt}
+\end{figure}

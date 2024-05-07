@@ -1,8 +1,7 @@
 \section{Thrust 1. LLM-based Multi Agents for Predictive Static Program Analysis}
 \label{sec:thrust1}
 
-
-\section{Approximation and Refinement}
+%\section{Approximation and Refinement}
 
 \subsection{Code Approximation with LLM}
 
@@ -10,13 +9,13 @@
 
 % \input{technical-details/first-usr-prompt}
 
-The initial stage of our framework involves Code Approximation, aimed at roughly filling in missing details and type details within incomplete code snippets with the help of a compiler. We employ GPT3.5~\cite{ChatGPT} in our implementation, referred to as LLMs in Fig.~\ref{fig:overview}. While GPT is utilized here, any LLM could be suitable. GPT aids in approximating the code completion since the precise edits made by developers are unknown. Our objective is to adequately fill in missing information at the class level to facilitate program analysis and derive results for the original incomplete code.
+The initial stage of our framework involves Code Approximation, aimed at roughly filling in missing details and type details within incomplete code snippets with the help of a compiler. One could use GPT~\cite{ChatGPT}, referred to as LLMs. While GPT is utilized here, any LLM could be suitable. GPT aids in approximating the code completion since the precise edits made by developers are unknown. Our objective is to adequately fill in missing information at the class level to facilitate program analysis and derive results for the original incomplete code.
+%
+To precisely navigate the LLM through code approximation, we utilize a one-shot prompting approach that includes a definitive example of the desired fix and type information alongside the expected output format (Figure~\ref{fig:approx-prompt}). This prompt meticulously instructs the LLM to concentrate on class-level completions and specifies the task of reconstructing initialization variables and re-establishing missing setup method calls essential for API interactions. By presenting a representative example within the prompt, we crystallize the requirements, guiding the LLM to replicate this pattern in its code generation and ensuring that the output adheres closely to the structural and functional expectations set forth for the task.
 
-To precisely navigate the LLM through code approximation, we utilize a one-shot prompting approach that includes a definitive example of the desired fix and type information alongside the expected output format. (Fig. ~\ref{fig:approx-prompt}) This prompt meticulously instructs the LLM to concentrate on class-level completions and specifies the task of reconstructing initialization variables and re-establishing missing setup method calls essential for API interactions. By presenting a representative example within the prompt, we crystallize the requirements, guiding the LLM to replicate this pattern in its code generation and ensuring that the output adheres closely to the structural and functional expectations set forth for the task.
+On the left side of Figure~\ref{fig:approx-prompt} is our system prompt template. The System Prompt directs the LLM to analyze a partial Java code snippet along with its compiler errors and to augment the code by exclusively adding to the header. The completion must render the snippet a compilable Java method without altering the body. It also requires specifying type information for any new code elements. The prompt refines the task into two clear outputs: the first is the Code Approximation, where the LLM provides the amended header, and the second is Type Information, detailing the data types for each element involved in the fix.
 
-On the left side of the Fig. ~\ref{fig:approx-prompt} is a simple showcase of our system prompt template. The System Prompt directs the LLM to analyze a partial Java code snippet along with its compiler errors and to augment the code by exclusively adding to the header. The completion must render the snippet a compilable Java method without altering the body. It also requires specifying type information for any new code elements. The prompt refines the task into two clear outputs: the first is the Code Approximation, where the LLM provides the amended header, and the second is Type Information, detailing the data types for each element involved in the fix.
-
-On the right side of Fig. ~\ref{fig:approx-prompt} is the user prompt segment of our framework; the LLM is tasked with analyzing a provided partial Java code snippet and associated compiler errors. The objective is to enhance the code by modifying the header section exclusively, ensuring the snippet evolves into a compilable Java unit while keeping the original code body intact. This focused directive requires the LLM to interpret the compiler output and errors, using these insights to determine the precise additions needed in the code's header for successful compilation.
+On the right side of Figure~\ref{fig:approx-prompt} is an example of the user prompt; the LLM is tasked with analyzing a provided partial Java code snippet and associated compiler errors. The objective is to enhance the code by modifying the header section exclusively, ensuring the snippet evolves into a compilable Java unit while keeping the original code body intact. This focused directive requires the LLM to interpret the compiler output and errors, using these insights to determine the precise additions needed in the code's header for successful compilation.
 
 During the first approximation, we will send all compiler's output to the LLM, and the LLM's response must address the identified compiler issues and align with the expected outcome detailed in the example from the user prompt. After enhancing the code, the LLM's secondary task involves detailing the type information for any introduced or utilized elements within the snippet, ensuring clarity and consistency in the code's type usage. This process underscores the LLM's role in not just code completion but also in fostering an understanding of the type system within the Java environment.
 
@@ -61,26 +60,27 @@ During the first approximation, we will send all compiler's output to the LLM, a
 % \input{technical-details/self-correction-sys-prompt}
 \input{self-correction-usr-prompt}
 
-Following LLM1's initial code completion attempt, we proceed to the refinement phase, aimed at iteratively enhancing the generated code until it meets the criteria for program analysis. Validation of this refinement can be achieved through various mechanisms, including a compiler, program analysis tools, verification tools, specification checking tools, model checkers, etc. In this study, to demonstrate our framework, we utilize a compiler to verify that the augmented code remains syntactically correct and preserves the logic and structure of the original snippet. The structure of our prompt for refinement via a compiler
-is displayed in Fig.~\ref{fig:refine-prompt}. 
+Following LLM1's initial attempt, we proceed to the refinement phase, aimed at iteratively enhancing the generated code until it meets the criteria for program analysis. Validation of this refinement can be achieved through various mechanisms, including a compiler, program analysis tools, verification tools, specification checking tools, model checkers, etc.
 
-\subsubsection{Compiler Validation}
+%In this study, to demonstrate our framework, we utilize a compiler to verify that the augmented code remains syntactically correct and preserves the logic and structure of the original snippet. The structure of our prompt for refinement via a compiler is displayed in Figure~\ref{fig:refine-prompt}. 
 
-The compiler checks the LLM1-generated code for errors. If the code passes, it is accepted for further analysis. If not, we will use the specific errors to guide the next steps.
+\subsubsection{Validation and Error-Specific Feedback Loop}
 
-\subsubsection{Error-Specific Feedback Loop}
-
+The verifier checks the LLM1-generated code for errors. If the code passes, it is accepted for further analysis. If not, we will use the specific errors to guide the next steps.
+%\subsubsection{Error-Specific Feedback Loop}
 %\input{error-specific-prompt}
-
-When the compiler detects errors, each unique error message is examined to guide the next iteration of code generation for every identified error type. The revised prompt is crafted to direct LLMs, encapsulating the essence of the necessary correction and ensuring that subsequent code generation addresses the identified issues. LLMs is provided with the original partial code, its previous output, and the new error-specific prompt as inputs for the next iteration. This iterative process continues, with each cycle targeting the elimination of a specific category of errors flagged by the compiler.
+Each unique error message is examined to guide the next iteration of code generation for every identified error type. The revised prompt is crafted to direct LLMs, encapsulating the essence of the necessary correction and ensuring that subsequent code generation addresses the identified issues. LLMs is provided with the original partial code, its previous output, and the new error-specific prompt as inputs for the next iteration. This iterative process continues, with each cycle targeting the elimination of a specific category of errors flagged by the compiler.
 
 %As the compiler identifies errors, all distinct error messages are analyzed to inform the next iteration of code generation for each identified error type. The newly crafted prompt is designed to guide LLM1, encapsulating the required correction's essence and ensuring that LLM1's subsequent code generation focuses on resolving the identified issues. LLM1 receives the original partial code, its previous output, and the new, error-specific prompt as inputs for the next iteration. This process is repeated, with each cycle aimed at eliminating a specific category of errors, as highlighted by the compiler.
 
 %\subsubsection{Convergence on 'Symbol Not Found' Errors}:
 
 The iterative refinement process is designed to address and resolve all detectable errors until only specific errors remain. Especially the \code{'Symbol Not Found'}, \code{'Package Does Not Exist'}, and \code{'Class name and File name do not match'} errors.
+This specific focus is because, given that LLMs' task is to fill in missing information and complete the Java code snippet, it might introduce variables or methods that reference types from external libraries or packages not present in the environment.
+%In a real-world development setting, it's impractical to expect that every possible package or library referenced by GPT's suggestions would be available or installed in the developer's environment.
+Ignore the 'Class name and File name do not match' errors simply because, with LLMs' current potential, it is not possible for LLMs to create a Java file specifically and align it with the class name inside.
 
-This specific focus is because, given that LLMs' task is to fill in missing information and complete the Java code snippet, it might introduce variables or methods that reference types from external libraries or packages not present in the environment. In a real-world development setting, it's impractical to expect that every possible package or library referenced by GPT's suggestions would be available or installed in the developer's environment. Ignore the 'Class name and File name do not match' errors simply because, with LLMs' current potential, it is not possible for LLMs to create a Java file specifically and align it with the class name inside. Thus, by allowing the refinement process to narrow down to specific errors, we acknowledge and accommodate the limitations imposed by the environment, focusing our correction efforts on syntactical and structural accuracy within the method-level scope while acknowledging the external dependencies that might be unresolved within the current context.
+%Thus, by allowing the refinement process to narrow down to specific errors, we acknowledge and accommodate the limitations imposed by the environment, focusing our correction efforts on syntactical and structural accuracy within the method-level scope while acknowledging the external dependencies that might be unresolved within the current context.
 
 %\subsubsection{Sample Showcase of error-specific-prompt crafting}
 
@@ -97,3 +97,97 @@ This specific focus is because, given that LLMs' task is to fill in missing info
 
 %=============================== END OF REMOVAL =====================
 
+%\begin{figure}[t]
+%	\centering
+%	\lstset{
+%		numbers=left,
+%		numberstyle= \tiny,
+%		keywordstyle= \color{blue!70},
+%		commentstyle= \color{red!50!green!50!blue!50},
+%		frame=shadowbox,
+%		rulesepcolor= \color{red!20!green!20!blue!20} ,
+%		xleftmargin=1.5em,xrightmargin=0em, aboveskip=1em,
+%		framexleftmargin=1.5em,
+%               numbersep= 5pt,
+%		language=Java,
+%    basicstyle=\scriptsize\ttfamily,
+%    numberstyle=\scriptsize\ttfamily,
+%    emphstyle=\bfseries,
+%                moredelim=**[is][\color{red}]{@}{@},
+%		escapeinside= {(*@}{@*)}
+%	}
+%\begin{lstlisting}[]
+%if (codec != null) {
+%  in = new LineReader(codec.createInputStream(fileIn),job);
+%  end = Long.MAX_VALUE;
+%} else {
+%    if ( start != 0 ) {
+%      skipFirstLine = true;
+%      --start;
+%      fileIn.seek ( start );
+%    }
+%    in = new LineReader(fileIn,job);
+%}
+%if (skipFirstLine) {
+%  start += in.readLine (new Text(),0,(int) Math.min((long) Integer.MAX_VALUE, end-start));
+%}
+%\end{lstlisting}
+%\vspace{-12pt}
+%\caption{Incomplete code from S/O post \#16180130}
+%\label{fig:motiv}
+%\end{figure}
+
+\begin{figure}[t]
+	\centering
+	\lstset{
+		numbers=left,
+		numberstyle= \tiny,
+		keywordstyle= \color{blue!70},
+		commentstyle= \color{red!50!green!50!blue!50},
+		frame=shadowbox,
+		rulesepcolor= \color{red!20!green!20!blue!20} ,
+		xleftmargin=1.5em,xrightmargin=0em, aboveskip=1em,
+		framexleftmargin=1.5em,
+                numbersep= 5pt,
+		language=Java,
+    basicstyle=\tiny\ttfamily,
+    numberstyle=\tiny\ttfamily,
+    emphstyle=\bfseries,
+                moredelim=**[is][\color{red}]{@}{@},
+		escapeinside= {(*@}{@*)}
+	}
+\begin{lstlisting}[]
+import java.io.IOException;
+import java.io.InputStream;
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FSDataInputStream;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.io.compress.CompressionCodec;
+import org.apache.hadoop...CompressionCodecFactory;...
+public class FileProcessing implements ... {
+  public processFile (Configuration job, String fileName, long start, long end, boolean skipFirstLine, CompressionCodec codec) throws IOException {
+    FSDataInputStream fileIn = new FSDataInputStream(fileName);
+    LineReader in;
+    // incomplete code from S/O post 16180130
+    if (codec != null) {
+      in = new LineReader(codec.createInputStream(fileIn),job);
+      end = Long.MAX_VALUE;
+    } else {
+      if (start != 0) {
+         skipFirstLine = true;
+          --start;
+         fileIn.seek(start);
+      }
+      in = new LineReader(fileIn,job);
+    }
+    if (skipFirstLine) { 
+      start += in.readLine(new Text(),0,(int) Math.min((long) Integer.MAX_VALUE,end-start));
+        }
+        this.pos = start;
+    }
+\end{lstlisting}
+\vspace{-12pt}
+\caption{The complete code predicted by {\tool}. Lines 14--29 correspond to incomplete code from S/O post 16180130.}
+\label{fig:pca}
+\end{figure}

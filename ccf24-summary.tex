@@ -1,0 +1,157 @@
+\documentclass[11pt]{article}
+
+\usepackage{graphicx,times}
+\usepackage{wrapfig}
+\usepackage{amsmath,epsfig}
+\usepackage{setspace,array}
+\usepackage{cite}
+\usepackage{xspace}
+\usepackage{enumitem}
+
+\usepackage{sectsty}
+\sectionfont{\large}
+\subsectionfont{\normalsize}
+\subsubsectionfont{\normalsize}
+
+\usepackage[compact]{titlesec}
+
+\renewcommand{\theequation}{\thesection.\arabic{equation}}
+\renewcommand{\baselinestretch}{1.0}
+
+\newtheorem{Definition}{Definition}
+\newtheorem{Claim}{Claim}
+\newtheorem{Lemma}{Lemma}
+\newtheorem{Theorem}{Theorem}
+\newtheorem{Property}{Property}
+
+\newcommand{\revise} {\bf}
+
+\newcommand{\code}[1]{{\small\texttt{#1}}}
+\newcommand{\op}{\tau}
+\newcommand{\refac}{\rho}
+\newcommand{\edit}{\sigma}
+\newcommand{\T}{\theta}
+\newcommand{\comp}{;}
+\newcommand{\pre}{\prec_P}
+\newcommand{\meth}{KSISA}
+
+
+\newcommand{\MyParagraph}[1]{\textbf{#1}{ }}
+
+\usepackage{vmargin}
+\setpapersize{USletter}
+\setmarginsrb{1.0in}{1in}{1.0in}{1in}%
+           {0pt}{0mm}{0pt}{10mm}
+\newcommand{\remove}[1]{}
+
+\usepackage{tweaklist}
+\renewcommand{\enumhook}{\setlength{\topsep}{0pt}%
+  \setlength{\itemsep}{0pt}}
+\renewcommand{\itemhook}{\setlength{\topsep}{0pt}%
+  \setlength{\itemsep}{0pt}}
+\renewcommand{\descripthook}{\setlength{\topsep}{0pt}%
+  \setlength{\itemsep}{0pt}}
+
+\newcommand{\tool}{\textsc{PredPA}\xspace}
+
+\thispagestyle{empty}
+
+\begin{document}
+
+% Collaborative Research: SHF: Small: 
+
+
+
+\begin{center}
+  {\bf Summary: SHF: Small: Predictive Program Analysis: Learning to Analyze Program Behaviors}
+\end{center}
+\vspace{-.1in}
+
+
+%\noindent {\bf Overview.}
+
+\section{Overview}
+
+The importance of programming assistant tools that understand a
+program's behaviors at runtime cannot be overstated. They aid
+developers in debugging, performance optimization, security analysis,
+and runtime error detection, etc.
+%enabling the creation of reliable, efficient, and secure code.
+However, analyzing dynamic program behaviors faces challenges,
+particularly with code under editing. Incomplete and inexecutable code
+fragments hinder accurate assessment and suggestion provision by
+analysis tools. The absence of contextual information and a
+comprehensive global context further complicates analysis, hindering
+the effectiveness of programming assistants. Static analysis, while
+useful, has limitations. Static analysis tends to overestimate program
+behavior and may produce false positives or negatives, reducing
+accuracy. Conducting runtime analysis for incomplete or inexecutable
+code during editing is challenging. Incomplete code lacks essential
+elements, making analysis difficult. Inexecutable code, due to errors
+like missing dependencies, prevents direct observation of program
+behavior. Even if analyzed, results may be unreliable, potentially
+misleading developers and impeding development progress.
+
+
+In this proposal, we seek to advance the state-of-the-art in
+traditional program analysis by means of {\tool}, a Predictive Program
+Analysis framework, with the goal to support program analysis for
+incomplete/inexecutable code. We aim to establish {\em a scientific
+  foundation, novel methodologies, frameworks, models, and algorithmic
+  solutions for predictive program analysis} with the following focus
+areas:
+
+
+(1) {\bf enabling static program analysis on incomplete code}, and
+
+(2) {\bf supporting predictive analysis for dynamic program behaviors}.
+
+The key philosophy for our work is that the analysis of
+partial code can be learned from the analysis of entire programs in
+the wealth of information obtained from large-scale, open-source
+software repositories.
+
+
+\noindent {\bf Keywords:} Data Science, ML, and AI; Software; Systems;
+
+\section{Intellectual Merit}
+
+Our first thrust advocates for a novel paradigm, called {\bf
+  predictive program analysis}, which operates on the principles of
+{\em Approximation-Refinement} for Analysis. In the Approximation
+phase, a large language model (LLM) acts as a machine learning (ML)
+agent to fill in missing information within incomplete code. The
+Refinement phase employs a program analysis (PA)-based agent to verify
+the completed code output by the LLM. We propose a tandem solution
+that combines LLMs and PA agents to leverage the strengths of both
+methodologies. Our second thrust of research advocates for an
+execution paradigm called {\bf predictive execution}. In predictive
+execution, with a specific input, the execution is not carried out
+with the computer performing the instruction in the program. Instead,
+a trained machine learning model predicts the execution steps and as a
+result, the execution trace corresponding to the input is derived
+without actual execution. Our last thrust of research is aimed to
+demonstrate the usefulness of our solution in different programming
+assistant applications: 1) vulnerability detection, 2) dynamic
+slicing, 3) runtime error prediction, etc.
+
+\section{Broader Impacts}
+
+%Our predictive program analysis framework is also beneficial in other
+%scenarios in addition to programming assistants.
+
+Our predictive program analysis and predictive execution also offer a
+solution where the actual execution is impossible, e.g., i) where the complete source code is
+not available, or ii) where the analysis or approximation on
+program behavior is needed/desired without actual execution. (1)
+{\tool} will be transformative and directly benefit to our
+  society, leading to increasing software quality.  Our validation
+involves students and professionals, promoting teaching and learning
+of software qualities that have wide impacts in industry and academic
+communities. (2) Our results will {\em foster research activities} in
+related fields, e.g., AI for code. (3) It will
+enhance the tools for teaching and research by providing tools and
+data sets for use by students and practitioners, and for enhancement
+by other researchers with related learning modules.
+
+\end{document} 

@@ -28,31 +28,30 @@ bugs or crashes.
 
 However, the journey of program analysis or dynamic program's
 behaviors is not without its challenges, especially when dealing with
-code under editing. The incompleteness and inexecutability of code
-fragments present formidable obstacles, making it difficult for
+code under editing. The {\em incompleteness and inexecutability of
+code fragments} present large obstacles, making it difficult for
 analysis tools to provide accurate assessments and
 suggestions. Moreover, the lack of contextual information further
 complicates matters, as program analysis may struggle to discern the
 broader project landscape and dependencies. Another significant
-challenge stems from the absence of a comprehensive global context for
-program analysis within the current project. Without access to the
-complete picture of the codebase and its interconnections, analysis
-tools may struggle to provide nuanced and accurate suggestions,
-hindering the effectiveness of the programming assistant.
+challenge stems from the absence of a comprehensive {\em global
+context} for program analysis within {\em the current
+project}. Without access to the complete picture of the codebase and
+program dependencies, analysis tools may struggle to provide nuanced
+and accurate suggestions, hindering the effectiveness of the
+programming assistant.
 
-Using {\em static analysis techniques} to analyze runtime program
-behaviors has several disadvantages. Firstly, static analysis operates
-solely on the source code without executing it, which means that it
-tends to overestimate the dynamic behavior of the program as it
-runs. This limitation makes it challenging to identify certain
-runtime-specific errors or issues.
-%such as concurrency issues, timing-dependent bugs, and interactions
-%with external systems or resources.
-Additionally, static analysis may produce false positives or false
-negatives, leading to inaccuracies in the analysis results.
+On the other hand, using {\em static analysis techniques to analyze
+runtime program behaviors} has several disadvantages. Firstly, static
+analysis operates solely on the source code without executing it,
+which means that it tends to overestimate the dynamic behavior of the
+program as it runs. This limitation makes it challenging to identify
+certain runtime-specific errors or issues due to {\em the inexecutability
+of incomplete code}. Moreover, static analysis may produce false
+positives or false negatives, leading to inaccuracies.
 
 Conducting runtime program analysis for incomplete and inexecutable
-code during the editing phase is fraught with challenges and
+code during the editing phase poses challenges and
 limitations. The lack of completeness and executability impedes the
 ability of runtime analysis tools to accurately predict program
 behavior and provide meaningful insights to developers.  When code is
@@ -76,9 +75,10 @@ tools. This can potentially misguide developers in their coding
 decisions and hinder the overall development process.
 
 It is desirable to have an approach that can strike a balance and
-obtain the best of both worlds. To this effect, we propose a novel
-paradigm called {\bf predictive program analysis}, which aims to learn
-to analyze program behaviors without actual program execution.
+obtain the best of both worlds of static and dynamic analysis for
+incomplete code. To this effect, we propose a novel paradigm called
+{\bf predictive program analysis}, which aims to learn to analyze
+program behaviors without actual program execution.
 
 %This is enabled via the learning of semantic and execution behaviors
 %of programs obtained from ultra-large-scale, open-source software

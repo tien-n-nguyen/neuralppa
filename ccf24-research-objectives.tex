@@ -1,19 +1,18 @@
 \subsection{Research Objectives and Anticipated Results}
 
-\begin{figure}[t]
+\begin{wrapfigure}{l}{0.62\textwidth}
+%\begin{figure}[t]
     \centering
-%    \includegraphics[width=0.83\textwidth]{graphs/neuralppa}
-%    \includegraphics[width=0.92\textwidth]{figures/infra-design-3.png}
-    \includegraphics[width=0.92\textwidth]{overview.png}
+    \includegraphics[width=0.62\textwidth]{overview-new.png}
     \vspace{-10pt}
-    \caption{Predictive Program Analysis: Learning to Analyze Program Behaviors for Incomplete Code}
+    \caption{Predictive Program Analysis: Analyzing Dynamic Program Behaviors}
     \label{fig:arch}
-\end{figure}
+\end{wrapfigure}
 
 
-In this proposal, we seek to advance the state-of-the-art in
-traditional program analysis by means of {\tool}, a Predictive Program
-Analysis framework, with the goal to support program analysis for
+We seek to advance the state-of-the-art in
+traditional program analysis by means of {\tool}, a {\bf Predictive Program
+Analysis} framework, with the goal to support program analysis for
 incomplete/inexecutable code. We aim to establish {\em a scientific
   foundation, novel methodologies, frameworks, models, and algorithmic
   solutions for predictive program analysis} with the following focus
@@ -30,13 +29,13 @@ areas:
 %techniques for (partial) code, also based on which downstream vulnerability detection and assessment applications can be built.
 
 Our predictive program analysis framework is also beneficial in other
-scenarios in addition to programming assistants. Predictive execution
-is not aimed to replace actual execution. Rather, it offers a solution
-where the actual execution is impossible, specifically in the
-scenarios 1) where the complete source code of the implementation is
-not available, or 2) where the analysis or approximation on the
-behavior of the code is needed/desired without actual execution and
-some degree of inaccuracy in prediction is tolerable.  First, the
+scenarios in addition to programming assistants for incomplete code in
+an IDE. Predictive execution is not aimed to replace actual
+execution. Rather, it offers a solution where the actual execution is
+impossible, specifically in the scenarios 1) where the complete source
+code is not available, or 2) where the analysis or approximation on
+the behavior of the code is needed/desired without actual execution
+and some degree of inaccuracy in prediction is tolerable.  First, the
 first scenario can be exhibited in several examples, e.g., in the code
 snippets in Stack Overflow or GitHub gist. They often miss contextual
 information, such as imports and definitions of variables and
@@ -62,13 +61,36 @@ code, setting~up running environments for dynamic analysis is
 undesired due to missing third-party dependencies and complex build
 configurations.
 
-The key philosophy that drives our work is that the analysis of
+The \underline{key philosophy} that drives our work is that the analysis of
 partial code can be learned from the analysis of entire programs in
 the wealth of information obtained from ultra-large-scale, open-source
 software repositories. To accomplish these tasks, we propose the
 following thrusts of research in {\tool} (Figure~\ref{fig:arch}):
 
 \noindent \textbf{Thrust 1. LLM Multi-agents and Pre-trained Language Models for Static Analysis on Incomplete Code.} ({\em Section~\ref{sec:thrust1}})
+As depicted in Figure~\ref{fig:pre-rec}, conventional Program Analysis
+(PA) techniques exhibit high precision and recall when applied to
+complete code. However, when dealing with incomplete code, these
+techniques may experience a significant decrease in recall due to
+missing information, despite maintaining reasonably high precision or
+experiencing a slight decrease in precision due to their strict and/or
+heuristic analysis rules (denoted by PA $\medblacklozenge$ in
+Figure~\ref{fig:pre-rec}). On the other hand, employing an LLM directly
+for downstream analysis tasks may yield higher recall, thanks to the
+LLM's ability to explore the solution space (denoted by LLM
+$\circledast$ in Figure~\ref{fig:pre-rec}). However, the precision of
+  LLM analysis on incomplete code tends to be lower compared to
+  conventional PA tools due to the lack of ability in specific
+  analysis in the downstream tasks.
+
+We propose a tandem solution that combines LLMs and PA agents to
+leverage the strengths of both methodologies. We aim to harnessing the
+complementary capabilities of LLMs and PA: {\em LLMs' expansive search
+  capabilities} and {\em PA-based agents' semantic verification
+  abilities}.
+%This integrated approach aims to optimize performance by
+%harnessing the complementary capabilities of LLMs and PA
+%techniques.
 
 We advocate for a novel paradigm, called {\bf predictive program
   analysis}, which operates on the principles of {\em
@@ -78,29 +100,36 @@ fill in missing information within incomplete code. The missing
 information that will be filled by the LLM could be manifested {\em
   explicitly}, e.g., in terms of missing variable declarations, setup
 API method calls, import statements, and exception handling types, or
-{\em implicitly}, e.g., in terms of missing type information of the
-program elements, missing program dependencies, etc.
+{\em implicitly}, e.g., in terms of missing type information of 
+program elements, missing dependencies, etc.
 
 %Leveraging an LLM for this is advantageous due to its capability of code understanding.
 
+\input{precision-recall-plot}
+
 A naive solution is to take whatever information the LLMs completed
-and feed to a traditional program analysis technique as is. However,
+and feed to a traditional program analysis as is. However,
 researchers have shown that while LLMs are remarkable in code
 generation with correct syntaxes, the produced code often contains
 semantic errors and even do not compilable.  Thus, the Refinement
 phase employs a program analysis (PA)-based agent to verify the
 completed code output by the LLM. This PA-based agent utilizes the
 compiler technology to ensure that the generated code is compilable
-and consistent with used external libraries.  The iterative interplay
+and consistent with used external libraries. The iterative interplay
 between the LLM-based agent and the PA-based agent continues until a
 compilable code is achieved.
 %If after a specified number of iterations the code remains
 %uncompilable, human intervention may be sought for final resolution.
-{\em Such interplay between the LLM and PA agents aims to enhance both the
-recall and precision} of the analysis when comparing with the approach
-using directly the PA technique on the incomplete code. We aim to
-leverage {\em LLMs' expansive search capabilities} and {\em PA-based
-  agents' semantic verification abilities}.
+In brief, the interplay between LLM and PA agents has two objectives:
+1) to enhance recall compared to the PA-only solution (via the
+Approximation of the incomplete code), and 2) to
+maintain or even improve precision beyond what can be achieved with
+LLM-only solution by integrating PA to ``correct'' the LLM's solution
+(via the result Refinement).
+%{\em Such interplay between the LLM and PA agents aims to enhance both the
+%recall and precision} of the analysis when comparing with the approach
+%using directly the PA technique on the incomplete code.
+
 %The LLM is used to expand the candidate list of potential complete
 %code for the current incomplete snippet, and PA is used to verify to
 %make sure the validity of the chosen candidate. Subsequently,
@@ -116,15 +145,11 @@ leverage {\em LLMs' expansive search capabilities} and {\em PA-based
 %is rendered complete and ready for analysis techniques to generate
 %more accurate results in which without our framework, these techniques
 %would be ineffective in handling incomplete code.
-We propose a tandem solution that combines LLMs and PA agents to
-leverage the strengths of both methodologies. This integrated approach
-aims to optimize performance by harnessing the complementary
-capabilities of LLMs and PA techniques. Specifically, the objective is
-twofold: 1) to enhance recall compared to the PA-only solution (via
-the Approximation phase), and 2) to maintain or even improve precision
-beyond what can be achieved with LLM-only solution by integrating PA
-techniques to ``correct'' the LLM's solution (via the Refinement
-phase).
+
+
+
+
+
 
 
 %One of the key foundations of {\tool} lies in its neural structural analysis component, which is built upon the well-defined structure and semantics of source code. This component serves two primary functions. Firstly, it draws upon the syntactic structures of comprehensive code samples from large-scale repositories in the training dataset. From this data, it constructs an abstract syntax tree (AST) that best encapsulates the syntactic arrangement of the provided partial code, aiming for the highest likelihood or probability. In contrast, existing program-analysis-based partial parsing methods~\cite{ppa08} rely on heuristics derived from the syntactic rules of programming languages, lacking the capacity to rank or score potential candidates. The second task of this component involves labeling code tokens with the corresponding types of syntactic units, encompassing statement types (\code{if}, \code{for}, etc.), variables, fields, methods, classes, and more. Both tasks can be efficiently executed through our dual-learning-based approaches.
@@ -143,10 +168,11 @@ While exploring LLM-based multi-agent solution, we also aim to develop
 smaller models via pre-trained language models. Our work is driven by
 the fundamental belief that insights gained from training by complete
 programs within vast repositories of ultra-large-scale, open-source
-software can inform the analysis of partial code. Hindle {\em et
-  al.}~\cite{naturalness-icse12} have shown that code has high
-repetitiveness and predictability and can be captured well by
-statistical models. Thus, we expect to build ML/DL models to learn
+software can inform the analysis of partial code~\cite{naturalness-icse12}.
+%Hindle {\em et al.}~\cite{naturalness-icse12} have shown that code has
+%high repetitiveness and predictability and can be captured well by
+%statistical models.
+Thus, we expect to build/fine-tune pre-trained LLM models to learn
 from those repositories.
 
 
@@ -208,21 +234,20 @@ crucial role in security analysis. By simulating potential attack
 scenarios and analyzing how the program behaves under different
 conditions, these tools can identify security vulnerabilities such as
 injection attacks, privilege escalation, or data breaches. Predictive
-execution analysis helps security professionals assess the resilience
-of software systems against various threats and vulnerabilities,
+execution helps security professionals assess the resilience
+of systems against various threats and vulnerabilities,
 enabling proactive security measures and robust defenses. Finally,
 predicting executions provides developers with a deeper understanding
 of their code's behavior without the need for actual execution. By
 simulating program flows and interactions, tools can uncover hidden
 dependencies, identify unexpected behaviors, and reveal complex
-program dynamics. This insight into program behavior helps developers
-better comprehend their code, debug more effectively, and make
-informed design decisions.
+program dynamics.
 
-In addition to the LLM-based multi-agent solutions, we also explore the
+%This insight into program behavior helps developers better comprehend their code, debug more effectively, and make informed design decisions.
+
+In addition multi-agent solutions, we also explore the
 pre-training language models. We aim to teach a smaller model to analyze
-the runtime behaviors via the learning from those of the open-source,
-complete programs in execution.
+the runtime behaviors via the learning from complete programs in execution.
 
 
 %Symbolic execution is a means of analyzing a program to determine what

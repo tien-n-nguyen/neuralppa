@@ -15,8 +15,9 @@
 \lstset{basicstyle=\scriptsize\sffamily,language={},frame=single,breaklines=true,columns=fullflexible,mathescape=true,escapechar=@}
 
 \usepackage{tikz}
-\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
-		\node[shape=circle,draw,inner sep=0.45pt] (char) {#1};}}
+
+%\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+%		\node[shape=circle,draw,inner sep=0.45pt] (char) {#1};}}
 
 
 \usepackage{xspace}
@@ -118,6 +119,39 @@
   \setlength{\itemsep}{0pt}}
 
 
+\usepackage{tikz}
+\usetikzlibrary{patterns}
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=1.5pt] (char) {#1};}}
+%\newcommand{\david}[1]{\textcolor{red}{{#1}}}
+
+\usepackage{fdsymbol}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usetikzlibrary{
+        shapes,
+    }
+\pgfplotsset{compat=1.9}
+\usepackage{listings} %For code in appendix
+\lstset
+{ %Formatting for code in appendix
+    language=Matlab,
+    basicstyle=\footnotesize,
+    numbers=left,
+    stepnumber=1,
+    showstringspaces=false,
+    tabsize=1,
+    breaklines=true,
+    breakatwhitespace=false,
+}
+% We will externalize the figures
+%\usepgfplotslibrary{external}
+\usepgfplotslibrary{groupplots}
+%\tikzexternalize
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{meatbrown}{rgb}{0.9, 0.72, 0.23}
+\definecolor{lightgray}{rgb}{211, 211, 211}
 
 %\newcommand\Tone{Thrust 1 (T1). Ongoing Evaluation of Existing Code Representation Learning in Bug Detect-Fix Processes}
 \newcommand\Tone{Thrust 1 (T1). Design Framework and Environment for Code Representation Learning (CRL): Representations, Models, and Methodologies}

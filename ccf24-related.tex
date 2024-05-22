@@ -32,7 +32,7 @@ the proposed research is loosely related to works that leverage probabilistic mo
 %our CRL is more suitable for detecting bugs than the existing baselines.
 
 
-\textbf{Bug and Vulnerability Detection.}
+\textbf{ML for Program Analysis and Vulnerability Detection.}
 %Many techniques have been developed for rule-based and learning-based bug detection. 
 Some existing rule-based bug detection approaches,
 such as
@@ -74,52 +74,7 @@ techniques~\cite{Engler-2001,Li-2005,Wasylkowski-2017,
 %a name-based bug detector.  
 DL-based approaches are still limited to detect bugs in individual
 methods.
-%without investigating the dependencies among different yet
-%relevant methods.
-
-%$Due to that, they have high false positive rates, making them less
-%practical in the daily use of software developers.
-%In practice,
-%there exist several cases that bugs occur across more than one
-%method. That is, to decide whether a given method is buggy or not, a model
-%needs to consider other methods that have data and/or control
-%dependencies with the method under investigation. 
-%Due to that, the
-%existing DL-based approaches have high false positive
-%rates, making them less practical in the daily use. % of software
-%developers. 
-%For example, DeepBugs~\cite{Pradel-2018} is reported to have a high false positive rate of 32\%. That is, approximately one out of 3 reported bugs is not a true bug, thus, wasting much developers' efforts. 
-%Our study~\cite{yioopsla19i} also showed a false positive rate of 41\% for DeepBugs on our collected dataset.
-
-
-%In this paper, our approach is also using the deep learning techniques to train the models and
-%classify methods into buggy or non-buggy. Our approach is different
-%from the existing learning-based approaches in the following ways.
-%First, like the rule-based approaches, the existing learning-based
-%approaches do not consider the relations among paths across multiple
-%methods. In our code representation learning step, we model the
-%relations among paths from different methods using the dependencies of
-%entities in the PDG and DFG, in addition to the AST nodes of a path.
-%Second, our approach uses long paths of an AST to cover all of the AST
-%nodes for representing local context, while other existing approaches
-%often use part of method information to detect bugs, such as
-%name-based identifier representation and frequent $n$-grams. Our
-%results show that our approach can outperform all of the
-%studied baselines.
-
-
-%\textit{Machine learning-based bug	detection~\cite{Wasylkowski-2017,Wang-2016b,Wang-2016,Pradel-2018}.}
-%With the advances of machine learning (ML) and especially deep
-%learning models, several approaches have been proposed to learn from
-%previously known and reported bugs and fixes to detect bugs in the
-%new code. While the ML-based bug detection models~\cite{Nam-2015}
-%rely on feature selections, the deep learning-based
-%ones~\cite{Pradel-2018,Wang-2016b} take advantages of the capability
-%to learn the important features from the training data for bug
-%detection. 
-
-
-\textbf{Fault Localization and Regression Testing.}
+%\textbf{Fault Localization and Regression Testing.}
 Spectrum-based Fault Localization (SBFL)~\cite{zhang2011localizing, abreu2007accuracy, jones2005empirical, abreu2006evaluation, naish2011model, wong2007effective, liblit2005scalable, lucia2014extended, keller2017critical} has been intensively studied in the literature, e.g., Ochiai \cite{abreu2006evaluation} and Jaccard \cite{abreu2007accuracy}. 
 %Tarantula \cite{jones2001visualization}, SBI \cite{liblit2005scalable}, Ochiai \cite{abreu2006evaluation} and Jaccard \cite{abreu2007accuracy}.  
 %they share the same basic insight, i.e., code elements mainly executed by failed tests are more suspicious. 

@@ -1,0 +1,77 @@
+\begin{wrapfigure}{l}{0.55\textwidth}
+    \centering
+    \begin{tikzpicture}
+        \pgfplotsset{width=3in,
+         }
+        \begin{axis}[
+            scale=1,
+            view={20}{35},
+            ticklabel style={font=\footnotesize},
+            xlabel={\normalsize \textbf{Precision} ($\rightarrow$)},
+            ylabel={\normalsize \textbf{Recall} ($\rightarrow$)},
+%            zlabel={\normalsize \textbf{Source Code} ($\rightarrow$)},
+            xlabel style={rotate=-10, yshift=0.1cm},
+            ylabel style={yshift=0.5cm, xshift=0.225cm,rotate=65},
+            zlabel style={yshift=-0.2cm, xshift=-0.5cm,rotate=0},
+            xmin=0, xmax=4,
+            xtick={1,2,3},
+            ymin=0, ymax=4,
+            ytick={1,2,3},
+            zmin=0, zmax=1,
+            ztick={0,1},
+            xticklabels={\textit{Low},\textit{Medium},\textit{High}}, % Set custom x-tick labels
+            yticklabels={\textit{Low},\textit{Medium},\textit{High}}, % Set custom y-tick labels
+            zticklabels={\textit{Partial Code},\textit{Complete Code}},
+            ztick pos = left,
+            xticklabel style={rotate=0},
+            yticklabel style={rotate=0, yshift=0.325cm},
+            zticklabel style={yshift=0.4cm},
+            % Set custom z-tick labels
+            axis background/.style={fill=gray!10},
+            xmajorgrids=true,
+            ymajorgrids=true,
+            zmajorgrids=true,
+            grid style={dotted, thick},
+            axis equal,
+            visualization depends on={value \thisrow{m} \as \labela},
+        ]
+        % Add a node at x=High, y=High, z=Complete
+        \draw[dashed,black,thick] (axis cs:3,3,1) -- (axis cs:0,3,1) node[midway, right] {};
+        \draw[dashed,black,thick] (axis cs:3,3,1) -- (axis cs:3,4,1) node[midway, below] {};
+        \draw[dashed,black,thick] (axis cs:3,3,1) -- (axis cs:3,3,-0.2);
+        \node[above right] at (axis cs:{2.9,2.55,1}) {\textcolor{blue}{\large $\medblacklozenge$}};
+
+        % Thick axes
+        \draw[black, thick] (axis cs:0,4,-0.3) -- (axis cs:4,4,-0.3) node[midway, right] {};
+        \draw[black, thick] (axis cs:0,4,-0.3) -- (axis cs:0,0,-0.3) node[midway, right] {};
+        \draw[black, thick] (axis cs:0,4,-0.3) -- (axis cs:0,4,1.3) node[midway, right] {};
+        
+
+        % Add points.
+        \node[above right] at (axis cs:{3,0.75,0}) {\textcolor{red}{\large $\medblacklozenge$}};
+        \node[above right] at (axis cs:{2.95,1.85,0}) {{\textcolor{meatbrown}{\small $\bigstar$}}};
+        \node[above right] at (axis cs:{2.55,1.5,0}) {\textcolor{red}{{\small $\circledast$}}};
+
+        % % Add Origin
+        % \node[above right] at (axis cs:{4,-0.2,0}) { $\circ$};
+
+        % Add optimal point
+        \node[above right] at (axis cs:{3.08,2.3,0}) { \textcolor{dkgreen}{{\footnotesize $\circ$}}};
+
+        \end{axis}
+        \draw[gray,line width=0.5pt,rotate=15,fill=red,opacity=0.125] (3.75,0.85,0) circle (1.75 and 0.85);
+
+        % Add node labels
+        \node[text width=2cm] at (6,3.75,1) 
+            {\footnotesize{\textcolor{blue}{PA}}};
+        \node[text width=2cm] at (5.0,1.275,0) 
+            {\footnotesize{\textcolor{red}{PA}}};
+        \node[text width=2cm] at (4,2.025,0) 
+            {\footnotesize{\textcolor{red}{LLM+PA}}};
+         \node[text width=2cm] at (3.875,1.7,0) 
+            {\footnotesize{\textcolor{red}{LLM}}};
+    \end{tikzpicture}
+    \vspace{-20pt}
+    \caption{Efficacy of various \textcolor{red}{\textit{\textbf{partial}}} and \textcolor{blue}{\textit{\textbf{complete}}} program analysis approaches, with ({\small $\medblacklozenge$}), and without ({\footnotesize $\circledast$}, {\footnotesize $\bigstar$}) learning-based knowledge.}
+    \label{fig:pre-rec}
+\end{wrapfigure}

@@ -26,51 +26,68 @@ areas:
 
 (3) {\bf predictive coverage-guided fuzz testing} with LLMs.
 
-%\noindent Figure~\ref{fig:arch} illustrates the framework for {\tool},
-%which will allow the construction of efficient program analysis
-%techniques for (partial) code, also based on which downstream vulnerability detection and assessment applications can be built.
+%Our predictive program analysis framework is also beneficial in other
+%scenarios in addition to programming assistants for incomplete code in
+%an IDE. Predictive execution is not aimed to replace actual
+%execution. Rather, it offers a solution where the actual execution is
+%impossible, specifically in the scenarios 1) where the complete source
+%code is not available, or 2) where the analysis or approximation on
+%the behavior of the code is needed/desired without actual execution
+%and some degree of inaccuracy in prediction is tolerable.  First, the
+%first scenario can be exhibited in several examples, e.g., in the code
+%snippets in Stack Overflow or GitHub gist. They often miss contextual
+%information, such as imports and definitions of variables and
+%functions. It can take a great deal of efforts to integrate such code
+%snippets to a codebase. Second, the instances of the second scenario
+%can include the analysis/approximation~of the behavior to check
+%properties of untrusted code or~to~detect bugs early. Moreover, even
+%with complete code, setting~up running environments for dynamic
+%analysis is undesired due to missing third-party dependencies and
+%complex build configurations.
 
-Our predictive program analysis framework is also beneficial in other
-scenarios in addition to programming assistants for incomplete code in
-an IDE. Predictive execution is not aimed to replace actual
-execution. Rather, it offers a solution where the actual execution is
-impossible, specifically in the scenarios 1) where the complete source
-code is not available, or 2) where the analysis or approximation on
-the behavior of the code is needed/desired without actual execution
-and some degree of inaccuracy in prediction is tolerable.  First, the
-first scenario can be exhibited in several examples, e.g., in the code
-snippets in Stack Overflow or GitHub gist. They often miss contextual
-information, such as imports and definitions of variables and
-functions. It can take a great deal of efforts to integrate such code
-snippets to a codebase.
-%Horton and Parnin~\cite{horton2018gistable} reported that ``75.6\% of
-%Python code snippets in gist require non-trivial configuration to
-%overcome missing dependencies, configuration files, reliance on a
-%specific operating system, or some other environment
-%configuration''. Hossain {\em et al}~\cite{hossain2019executability}
-%found that after installing the top 40~Python packages, the overall
-%execution success rate for Stack Overflow Python code snippets is only
-%27.9\% considering those running in either Python 2 or Python 3
-%environments.
-%Moreover, in~his keynote,
-%Yahav~\cite{yahav2023fse} poses a need to approximate the execution of
-%the incomplete code under editing in an AI-assisted programming
-%environment.
-Second, the instances of the second scenario can include the
-analysis/approximation~of the behavior to check properties of
-untrusted code or~to~detect bugs early. Moreover, even with complete
-code, setting~up running environments for dynamic analysis is
-undesired due to missing third-party dependencies and complex build
-configurations.
+%The \underline{key philosophy} that drives our work is that the analysis of
+%partial code can be learned from the analysis of entire programs in
+%the wealth of information obtained from ultra-large-scale, open-source
+%software repositories.
 
-The \underline{key philosophy} that drives our work is that the analysis of
-partial code can be learned from the analysis of entire programs in
-the wealth of information obtained from ultra-large-scale, open-source
-software repositories. To accomplish these tasks, we propose the
-following thrusts of research in {\tool}:
+To accomplish these tasks, we propose the following thrusts of
+research in {\tool}:
 
-\noindent \textbf{Thrust 1. LLM Multi-agents and Pre-trained Language Models for Static Analysis on Incomplete Code.} ({\em Section~\ref{sec:thrust1}})
+\noindent \textbf{Thrust 1. LLM-based Predictive Code Coverage.} ({\em
+  Section~\ref{sec:thrust1}})
 
+In {\tool}, we aim to develop a LLM-based predictive code coverage
+model to assess the quality of test cases, thereby selecting for
+execution only those predicted to contribute to the higher total code
+coverage of the test suite. Our framework involves a trade-off between
+enhancing efficiency by avoiding the execution of every test case and
+the potential risk of missing high-quality test cases due to
+mispredictions on code coverage. We expect that with a sufficiently
+high accuracy of code coverage estimation, the saving in execution
+time for a significantly high number of low-quality test cases in
+conventional coverage-guided fuzzing would outweigh any missed
+high-quality test cases. We build our predictive code coverage model
+based on our LLM-based preliminary approach in
+CodePilot~\cite{forge24}. We can help it improve coverage prediction
+via the incorporation of the actual execution results of the
+collected test cases as few-shot learning examples.
+
+We will develop a prompting approach based on program semantics that
+collaborates with the LLM to predict code coverage. Specifically, to
+tackle the intricacies of predicting code execution for coverage, we
+leverage planning, which is pivotal, enabling an LLM to
+autonomously generate plans based on exemplars. Our planning for code
+coverage is grounded in program semantics, capturing the subtleties of
+the execution of each statement. It integrates the synthesis of
+Reasoning and Acting to predict the code coverage of a given code
+snippet. The reasoning component encompasses the program-flow steps
+that would have occurred had the code been executed. Each step in the
+reasoning provides a concise explanation of whether a statement would
+or wouldn't have been executed. This reasoning process guides the LLM,
+directing its attention to detailed execution steps in its own plan
+first by discerning various types of statements in a control
+flow. Then, the LLM is requested to predict code coverage (Action)
+based on the plan generated by itself (Reasoning).
 
 
 %As depicted in Figure~\ref{fig:pre-rec}, conventional Program Analysis (PA) techniques exhibit high precision and recall when applied to complete code. However, when dealing with incomplete code, these techniques may experience a significant decrease in recall due to missing information, despite maintaining reasonably high precision or experiencing a slight decrease in precision due to their strict and/or heuristic analysis rules (denoted by PA $\medblacklozenge$ in Figure~\ref{fig:pre-rec}). On the other hand, employing an LLM directly for downstream analysis tasks may yield higher recall, thanks to the LLM's ability to explore the solution space (denoted by LLM $\circledast$ in Figure~\ref{fig:pre-rec}). However, the precision of   LLM analysis on incomplete code tends to be lower compared to conventional PA tools due to the lack of ability in specific analysis in the downstream tasks.
@@ -120,10 +137,29 @@ following thrusts of research in {\tool}:
 %Thus, we expect to build/fine-tune pre-trained LLM models to learn
 %from those repositories.
 
-%\vspace{3pt}
-%\noindent \textbf{Thrust 2. LLM Multi-agents and Pre-trained
-%  Language Models for Predictive Execution.}  ({\em
-%  Section~\ref{sec:thrust2}})
+\vspace{3pt}
+\noindent \textbf{Thrust 2. A Tandem of LLMs for Test Case Generation and Code Coverage Prediction}  ({\em Section~\ref{sec:thrust2}})
+
+In framework, we utilize a tandem of LLMs, each serving distinct
+roles: one for test generation from the source code and the other for
+code coverage prediction (CodePilot). The first LLM, which replaces
+the conventional mutation engine, collaborates with the second LLM to
+iteratively produce higher quality test cases concerning code
+coverage, thereby mitigating the impact of coverage plateaus and
+enhancing coverage of runtime exceptions based on the knowledge
+provided by the LLMs about the given code.
+
+The primary objective of the first LLM is to expand the exploration of
+the test case space for the given source code, thereby increasing the
+recall. However, this may come at the expense of precision in the
+generated test cases. To counterbalance this trade-off, the second LLM
+in the code coverage prediction module, CoPilot~\cite{forge24}, aims to
+enhance precision by assessing the quality of the generated test cases
+in terms of code coverage. Furthermore, any duplicate test cases
+generated by the first LLM are discarded to maintain efficiency and
+avoid redundancy in the test suite.
+
+
 
 %We advocate for an execution paradigm called predictive execution. In
 %predictive execution, with a specific input, the execution is not
@@ -162,9 +198,27 @@ following thrusts of research in {\tool}:
 %pre-training language models. We aim to teach a smaller model to analyze
 %the runtime behaviors via the learning from complete programs in execution.
 
-%\vspace{3pt}
-%\noindent \textbf{Thrust 3. Programming Assistant Applications with Predictive Program Analysis.}  ({\em Section~\ref{sec:thrust3}})
+\vspace{3pt}
+\noindent \textbf{Thrust 3. Predictive Coverage-Guided Intelligent Fuzzing}  ({\em Section~\ref{sec:thrust3}})
 
+{\em We design the integration/interleaving of two loops} to serve a
+dual purpose. Firstly, the first loop (1) depicted in
+Figure~\ref{fig:fuzzwise} directs the test-generating LLM to produce
+related test cases that address a specific faulty area within the
+source code. This function parallels that of a mutation mechanism,
+generating test cases centered around a seed. On the other hand, the
+second loop (2) is tailored to guide the LLM in moving on to a
+different faulty area, i.e., generating test cases that cover other
+untested areas. Furthermore, the two loops are structured to address
+two primary objectives. The first loop (1) steers the LLM towards
+generating test cases that contribute to overall code coverage, while
+the second loop (2) prioritizes the detection of bugs and runtime
+errors. In general, the incorporation of the tandem of LLMs and the
+integration of feedback loops for both aim to enhance the efficiency
+and effectiveness of the fuzzing process. By leveraging the
+complementary roles of the LLMs, the framework strives to generate
+fewer but higher-quality test cases, while also improving its ability
+to detect defects.
 
 %Our last thrust of research is aimed to demonstrate the usefulness of
 %our solution in different programming assistant applications: 1)

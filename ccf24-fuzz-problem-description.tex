@@ -1,5 +1,25 @@
-A {\em coverage-guided fuzz testing framework} is a systematic approach to
-identifying software defects or vulnerabilities through automated
+Software testing is a crucial aspect in software development, ensuring
+that applications function correctly, meet requirements, and provide a
+reliable and secure user experience. Among various testing methods,
+{\bf fuzz testing} (or {\bf fuzzing}) involves providing random or
+semi-random data inputs to a program in an attempt to trigger
+unforeseen behaviors, crashes, or security flaws. Unlike traditional
+testing methods that rely on predefined inputs, fuzz testing involves
+automatically generating a wide range of random, unexpected, or
+malformed inputs to the system under test. This approach is invaluable
+for uncovering obscure bugs and security flaws that might be missed by
+other testing strategies. By exposing software to a diverse set of
+inputs, fuzz testing can reveal how the application handles unexpected
+conditions, thus identifying potential points of failure or security
+vulnerabilities. This is particularly important for security-sensitive
+applications where robustness against unusual or malicious inputs is
+essential.
+
+%Overall, fuzz testing enhances the reliability and security of software by proactively identifying and addressing issues that could lead to crashes, data corruption, or breaches.
+
+Among fuzzing methods, a {\em coverage-guided fuzz testing framework}
+is a systematic approach to identifying software defects or
+vulnerabilities through automated
 testing. Figure~\ref{fig:coverage-fuzz} illustrates its process. The
 first stage, which is the {\em seed corpus generation}, starts with
 creating an initial set of test cases, known as the seed~corpus. These
@@ -11,16 +31,16 @@ engine generates a large number of mutated or random inputs based on
 the seed corpus. These inputs are designed to explore various paths
 and edge cases within the target program under test. In the third
 stage, {\em target program execution}, the generated inputs are fed
-into the target program. It executes the inputs and
-processes them according to its normal operation. During this stage,
-the framework {\em monitors code coverage}, tracking which parts of
-the target source code are exercised by the inputs. This is typically
-done using instrumentation techniques or by analyzing execution
-traces. During execution, if the execution of an input triggers an
-unexpected behavior, e.g., a crash, assertion failure, or memory
-corruption, the framework identifies it as a potential defect. The
-detected faults are logged and reported to developers for further
-investigation and~resolution.
+into the target program. It executes the inputs and processes them
+according to its normal operation. During this stage, the framework
+{\em monitors code coverage}, tracking which parts of the target
+source code are exercised by the inputs. This is typically done using
+instrumentation techniques or by analyzing execution traces. During
+execution, if the execution of an input triggers an unexpected
+behavior, e.g., a crash, assertion failure, or memory corruption, the
+framework identifies it as a potential defect. The detected faults are
+logged and reported to developers for further investigation
+and~resolution.
 
 In the next stage ({\em feedback loop}), the framework selects the
 best test cases with highest code coverages and adds them back to the
@@ -64,13 +84,15 @@ improved~\cite{gao2023beyond}.
     \centering
     \begin{minipage}{0.5\textwidth}
         \centering
-        \includegraphics[width=3in]{coverage-fuzz.png}
+        \includegraphics[width=3.25in]{coverage-fuzz.png}
+        \vspace{-18pt}
         \caption{Traditional Coverage-Guided Fuzz Testing}
         \label{fig:coverage-fuzz}
     \end{minipage}%
     \begin{minipage}{0.5\textwidth}
         \centering
-        \includegraphics[width=3in]{fuzzwise2.png}
+        \includegraphics[width=3.3in]{fuzzwise2.png}
+        \vspace{-18pt}
         \caption{Predictive Coverage-Guided Intelligent Fuzzing}
         \label{fig:fuzzwise}
     \end{minipage}
@@ -94,19 +116,20 @@ improved~\cite{gao2023beyond}.
 %\end{center}
 %\end{figure}
 
-In this work, we propose a novel code coverage-guided fuzz testing
-framework, called {\tool} (Figure~\ref{fig:fuzzwise}). For an upfront
-test quality assessment, our first idea is to leverage a Large
-Language Model (LLM)-based code coverage prediction tool,
-CodePilot~\cite{forge24}, that estimates the quality of the generated
-test cases with regard to their code coverages. This predictive
-approach aims to identify, prioritize, and execute only the test cases
-that are likely to contribute to higher total code coverage, thereby conserving
+In this work, we propose {\tool}, a predictive code coverage-guided
+intelligent fuzzing framework without actual test execution
+(Figure~\ref{fig:fuzzwise}). For an upfront test quality assessment,
+our \underline{first idea} is to develop a Large Language Model (LLM)-based code
+coverage prediction approach, CodePilot~\cite{forge24}, that estimates
+the quality of the generated test cases with regard to their code
+coverages. The preliminary work on code coverage prediction is
+described in~\cite{forge24}. This predictive approach aims to
+identify, prioritize, and execute only the test cases that are likely
+to contribute to higher total code coverage, thereby conserving
 computational resources in actual execution, and focusing testing time
-on the areas of the code that are likely to benefit from further
-testing.
+on the areas that likely need further testing.
 
-Our second fundamental concept aims to tackle the challenges
+Our \underline{second fundamental concept} aims to tackle the challenges
 associated with mutations and the seed corpus. Instead of relying on
 the conventional approach of mutating tests and enhancing the seed
 corpus, we propose leveraging a LLM to automatically generate test

@@ -381,11 +381,12 @@ reasoning, and action for the next block. Instead, {\orca}
 simply instructs the LLM to pause at the condition of a block to
 reduce error propagation. This streamlined approach also allows
 {\orca} to make only one API call to prompt the LLM. {\orca} lets the LLM autonomously operate the cycle of operations,
-reasoning, and actions without interruption. Note that
-ReAct~\cite{yao2023react}, as being applied to robotics, needs
-to instruct the LLM to stop after each cycle to observe the external
-environment. {\orca} instructs the LLM to manage the symbol table,
-instead of writing it to a file.
+reasoning, and actions without interruption.
+
+%Note that ReAct~\cite{yao2023react}, as being applied to robotics,
+%needs to instruct the LLM to stop after each cycle to observe the
+%external environment. {\orca} instructs the LLM to manage the symbol
+%table, instead of writing it to a file.
 
 %Another key aspect of {\orca} framwork for predictive code execution
 %is that it does not instruct the LLM to halt the process following

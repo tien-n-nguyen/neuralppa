@@ -1,0 +1,70 @@
+%\section{One-Prompt {\tool}}\label{sec:plan+predict}
+%In this section, we present our design of the unified \textit{Plan}$+$\textit{Predict}.
+
+\subsection{Basic Structure}
+In the one-prompt setting (i.e., \textit{Plan}+\textit{Predict}), we design a single, consolidated prompt comprising three primary segments: (1) the instructions to the LLM to compute the code coverage for the given code snippet, (2) the exemplar(s) comprising code snippet, corresponding manually-crafted examplary plan, corresponding code coverage, and (3) the test code snippet. The output from the LLM includes: (1) the generated plan, and (2) the predicted code coverage for the test code snippet.
+
+\subsubsection{Instructions}\label{sec:one-prompt-instructions} This segment contains specifications for the LLM to first generate a plan for understanding the execution flow in the given test code, using the manually-crafted plan for the code snippet in the exemplar(s) as a guide. Then, it instructs the LLM to follow the plan to compute the code coverage for the test code snippet, drawing parallels from the manually-crafted plan and the code coverage for the code snippet in the exemplar(s). Furthermore, the included code coverage guides the LLM to format the output code coverage prediction in the prescribed format.
+
+\subsubsection{Exemplar(s)}\label{sec:one-prompt-structure} To guide the LLM as described in Section~\ref{sec:one-prompt-instructions}, we include example(s) for the few-shot setting comprising the code snippet, manually-crafted plan, and corresponding code coverage.
+
+\subsubsection{Given Code Snippet} This is the code for which LLM~has to create a code execution plan and subsequently predict its coverage.
+
+%The plan predicted by the LLM model when prompted in this step is
+%then used later (Figure~\ref{sec:approach_overview}) to predict the
+%coverage of the test code.
+
+
+
+\subsection{Manually-Crafted Plan in Exemplar(s)}\label{sec:pfm_procedure-1}
+The essence of designing the plan resides in the formulation of a step-by-step reasoning for understanding execution-flow in an exemplar code snippet. The structure of each step within the plan is composed of three fundamental elements: the step number, the type of statement(s), and the rationale behind their potential execution.
+
+Firstly, the step numbers denote the sequence in which the code would have been executed. In Figure~\ref{fig:motiv-plan}(a), Step 4 (pertaining to the exemplar code in Figure~\ref{fig:motiv}(b)) labeled as `Main Method Execution' consistently follows Step 3, designated as `Main Method Call'.
+
+Secondly, the label assigned to each step serves as the primary distinguishing factor for that set of statement(s) in the code. For example, the statements 18-19 in Figure~\ref{fig:motiv}(b) are categorized as `Variable Initialization' and are consequently grouped together in Step 7 of the exemplary plan in Figure~\ref{fig:motiv-plan}(a). It is noteworthy that certain labels, such as `Variable Initialization', `Method Call', `If-else Statement', among others, may directly indicate whether the associated statements will be executed. Details are given in Section~\ref{subsec:statement-types-1}.
+
+%We will explain the details on different types of statements in Section~\ref{subsec:statement-types-1}.
+
+Lastly, the final element of each step in the plan is the justification for the possible execution or non-execution of the
+specific set of statements. For instance, let us consider Step 9 in Figure~\ref{fig:motiv-plan}(a), which analyzes the \code{if-else} statement in the \code{for} loop within the \code{main()} function (lines 20-22 of Figure~\ref{fig:motiv}(b)). Step 5 briefly explains that due to all the elements in list \code{A[]} being odd, only the condition in the \code{if} statement holds true, which leads to the statement(s) within the \code{if} branch to be executed. It also clearly mentions that since the condition of the \code{if} branch holds true through all iterations of the \code{for} loop, the \code{else} branch and its associated statements would have never been executed. This concise yet accurate reasoning is essential to guide the LLM to follow the step to design its own plan.
+
+%\vspace{-4pt}
+\subsection{Reasoning on Program Semantics}\label{subsec:statement-types-1}
+To compute code coverage, the LLM needs to reason correctly on the execution steps of the statements in the code. In addition to the statements whose executions follow a sequential order, there are three types of statements that could {\em alter such  sequential execution}: {\em branching statements, loop statements, and method calls}.
+
+In programming, the execution of branching statements (\code{if} or \code{switch} statements) are pivotal for controlling the flow of a program based on certain conditions. When encountering an \code{if} statement, the program evaluates a specified condition and, if true, executes the corresponding block of code; if false, it either moves to the next \code{elif} condition or proceeds to the \code{else} block if provided.
+%This allows for branching and executing different code paths
+%based on the evaluation of conditions. On the other hand,
+In contrast, a \code{switch} statement is designed to evaluate an expression against multiple possible constant values. It provides a concise way to handle multiple cases, each with its own set of code. The exemplary plan needs to explain the nuances in the branching statements.  For example, the plan in Figure~\ref{fig:motiv-plan}(a) considers the \code{if-else} construct in the code snippet (Figure~\ref{fig:motiv}(b)) by briefly outlining the condition and the statement(s) executed based on the condition mentioned in the condition. This is expressed in Steps 6 and 9 of Figure~\ref{fig:motiv-plan}(a).
+
+%The program compares the expression's value with each case and
+%executes the block associated with the matching case. If no match is
+%found, an optional `default` case can be executed. Both `if` and
+%`switch` statements are powerful constructs that enhance the
+%flexibility and logic of program execution.
+
+%A code snippet can contain 3 blocks that are primarily responsible for a low accuracy in prediction - Branches, Loops and Methods. Branches contain all the possible 'if -else' blocks that a code snippet contains.  Loops consist of instructions iterated multiple times based on specified conditions. These include for, while, and do-while loops. Lastly, Methods are essentially functions that are bound to an object, and they can be called on that object to perform specific actions or operations.
+
+The execution of a \code{for} statement and a \code{while} statement are both iterative processes.
+%in programming.
+The \code{for} statement is typically employed when the number of iterations is known beforehand. It consists of three~parts within its parentheses: initialization, condition, and increment/decrement. The loop executes as long as the specified condition remains true. In contrast, a \code{while} statement is more versatile and is used when the number of iterations is uncertain or depends on a certain condition. The \code{while} loop continues to execute as long as the specified condition holds true, and the programmer is responsible for updating the loop variable within the loop block. While both constructs facilitate iteration, the \code{for} statement is more structured and concise, while the \code{while} statement offers greater flexibility in handling variable loop conditions. Such nuances of a loop statement need to be incorporated into the exemplar plan. For example, let us consider Step 5 of Figure~\ref{fig:motiv-plan}(a). The plan for the exemplary code snippet in Figure~\ref{fig:motiv}(b) explains the number of iterations for each of the statements in the \code{for} loop. Since the \code{for} loop is not conditional, line 21 in Figure~\ref{fig:motiv}(b) will be executed.
+%
+Lastly, the plan also includes the reason behind the execution of a statement containing a method call. Upon calling a method, the plan progresses to the subsequent step, involving the execution of the called method.
+
+In addition to the statement-specific guiding, the exemplary plan accommodates additional statements found in a code snippet, such as variable initialization and print statements. This can be seen in Steps 1, 4 and 12 of Figure~\ref{fig:motiv-plan}(a), which have been created primarily for accommodating the package import statements, variable initialization within a method and print statements, respectively.
+
+%In addition to handling the three primary blocks, the plan accommodates supplementary statements found in a code snippet, such as variable initialization and print statements. This can be seen in Steps 1, 4 and 12 of Figure 2(a), which have been created with the primary aim of accommodating the package import statements, variable initialization within a method and print statements respectively. 
+
+\subsection{Illustrating Example}\label{sec:one-prompt-ex}
+
+\input{one-prompt-example}
+
+The example presented in Figure~\ref{fig:one-prompt} outlines the process of predicting code coverage using one-prompt {\tool} for a given code snippet. The objective is to first predict a plan for the test code, and then determine the executed or non-executed status of each line, denoted by '>' for executed lines and '!' for non-executed lines. The detailed instruction is illustrated in lines 2--11.
+
+The example code snippet (lines 18-22 of Figure~\ref{fig:one-prompt}) initializes a variable \code{number} to \code{15}, followed by a conditional statement checking if the number is even or odd. The provided plan (lines 25-28) details the execution steps, such as variable initialization, modulo operation, branching in the \code{if-else} block, and the corresponding output. Following the outlined steps, the final predicted code coverage is presented (lines 31--36), highlighting the lines that are expected to be executed or skipped based on the given plan.
+%This approach facilitates a systematic assessment of code
+%coverage, aiding in the evaluation and understanding of the test
+%code's execution flow.
+The subsequent request prompts a similar analysis for a different test code (line 40 onwards), encouraging a comprehensive exploration of code coverage prediction within the generated plan.
+
+

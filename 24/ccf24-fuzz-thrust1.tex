@@ -1,0 +1,401 @@
+\section{Thrust 1. Predictive Code Coverage Analysis}
+\label{sec:thrust1}
+
+\subsection{{\cctool}: LLM Planning for Code Coverage Analysis}
+\label{sec:approach_overview}
+
+
+
+%\subsection{{\cctool} Workflow}
+%\label{sec:approach_overview}
+%{\cctool} exhibits a meticulously structured architecture tailored for the systematic prediction of test code coverage, employing a well-defined two-step approach, distinguished as The Plan Formation Module and The Coverage Prediction Module. Both the prompts (in a one-shot setting) have been illustrated in Figure 5(a) and Figure 5(b) respectively. The Plan Formation Module is tasked with predicting the step-by-step reasoning that the Large Language Model (LLM) must follow in order to predict the plan essential for subsequent coverage prediction of the provided test code. This plan, generated within the Plan Formation Module, serves as a pivotal component integrated into the Coverage Prediction Module and is employed to predict the code coverage of the given test code. Further elaboration of both modules is presented in the comprehensive sections below (refer to Figure 4) - 
+
+%In Figure~\ref{fig:overview},
+
+% Paragraph with overview-2
+% This paper presents {\cctool} with two approaches to prompting: 
+% a unified \textit{Plan}+\textit{Predict} design; and a two-phase
+% \textit{Plan} $\xrightarrow{}$\textit{Predict} design.
+% Figure~\ref{fig:overview} displays the workflow of \textit{Plan}
+% $\xrightarrow{}$\textit{Predict}. For clarity, we do not show the
+% unified version in which two prompts are consolidated including the
+% examplary code, examplary plan, and given test code in
+% Figure~\ref{fig:overview}.
+%
+% Paragraph with overview-3
+This paper presents {\cctool} with two approaches to prompting: a
+unified \textit{Plan}+\textit{Predict} design; and a two-phase
+\textit{Plan} $\xrightarrow{}$\textit{Predict} design.
+Figure~\ref{fig:codepilot} illustrates the workflow of both prompting
+approaches.
+%The general idea is that
+For a given code snippet $C_T$ comprising the test input, {\cctool}
+facilitates the systematic prediction of code coverage by formulating
+a PA-based plan to navigate the code and attain an
+understanding of its execution flow.  In the rest of the paper,
+we refer to them as {\em one-prompt} and {\em two-prompt}
+approaches,~respectively.
+%Also, note that "Plan" corresponds to \textit{Plan Formulation} and "Predict" corresponds to \textit{Code Coverage Prediction}. 
+
+
+\subsubsection{One-Prompt {\cctool}}
+In this approach, for a given code snippet $C_T$ comprising the test inputs, {\cctool} facilitates the systematic prediction of code coverage by: [Step I. \textit{Plan Formulation}] constructing a plan rooted in program semantics to navigate the code and attain an understanding of the execution flow; [Step II. \textit{Code Coverage Prediction}] determining the code coverage based on such a plan. 
+
+For this purpose, we leverage an LLM $\mathcal{M}_{CCP}^{I}$ that takes as an input prompt: (a) a set of instructions $\mathcal{I}_{CCP}$ describing the task; (b) an exemplar comprising code snippet $\mathcal{C}$ (different from $\mathcal{C}_T$), a manually-crafted, examplary plan $\mathcal{P}$, 
+its code coverage $\mathit{Cov}$; and (c) the test code snippet $\mathcal{C}_T$.
+Here, $\mathcal{M}_{CCP}^{I}$ utilizes the exemplar to guide the LLM to first reason about $C_T$ and construct a program semantics-guided code execution plan $P_T$, following which, it predicts the code coverage $\mathit{Cov}_T$.
+This can be formulated as:
+\begin{equation}
+\langle \mathcal{P_T}, \textcolor{blue}{\mathit{Cov}_{T}} \rangle = \mathcal{M}_{CCP}^{I} \textbf{\ \{\ } \mathcal{I}_{CCP}, \langle \mathcal{C}, \mathcal{P}, \mathit{Cov} \rangle, \mathcal{C}_T \textbf{\ \}\ }  
+\end{equation}
+
+
+
+% We
+% %present an overview of this workflow in Figure~\ref{fig:overview}, and
+% will elaborate on two phases in Sections~\ref{sec:pfm}
+% and~\ref{sec:cpm}, respectively. Section~\ref{sec:onephase} will
+% explain the unified \textit{Plan}+\textit{Predict} design.
+% %Alternatively, we also delegate the planning and code coverage
+% %prediction tasks to the LLM in a single, consolidated prompt. Note
+% %that, even both planning and actions are expressed in one prompt,
+% %{\cctool} still consists of two phases because in the instruction, we
+% %guide the LLM to produce the plan first and use it to predict code
+% %coverage.
+
+%We will elaborate on both prompting approaches in Sections~\ref{sec:plan+predict} and~\ref{sec:plan->predict}, respectively. We experiment with both One-Prompt and Two-Prompt solutions and compare their results (Section~\ref{rq1}).
+
+%\input{codepilot-one-prompt}
+
+%\input{codepilot-two-prompt}
+
+\subsubsection{Two-Prompt {\cctool}}
+%For a given code snippet $C_T$ comprising the test inputs, {\cctool} facilitates the systematic prediction of code coverage by employing two phases: \textit{Plan Formulation}, and \textit{Code Coverage Prediction}.
+
+\begin{figure}[t] 
+    \centering
+%    \includegraphics[width=3.4in]{diagrams/overview-2.png}
+    \includegraphics[width=0.7\linewidth]{codepilot-overview.png}
+    \vspace{-19pt}
+    \caption{Overview of {\cctool} Workflow for \textit{One-Prompt} (top) and \textit{Two-Prompt} (bottom) settings.}
+    \label{fig:codepilot}
+\end{figure}
+
+Unlike in one-prompt {\cctool}, in this approach, we divide both \textit{Plan Formulation} and \textit{Code Coverage Prediction} in two prompts. The goal of the initial \textit{Plan Formulation} phase is to guide the LLM to \underline{\textit{reason}} about the given code snippet and construct a plan by itself, that is integral for navigating the code snippet and attaining an understanding of the execution flow. For this purpose, we leverage an LLM $\mathcal{M}_{PF}$ that takes as an input prompt: (a) a set of instructions $\mathcal{I}_{PF}$ describing the task; (b) an exemplar comprising a code snippet $\mathcal{C}$ (different from $\mathcal{C}_T$) and its corresponding plan $\mathcal{P}$; (c) the given code snippet $\mathcal{C}_T$. 
+Here, $\mathcal{M}_{PF}$ utilizes the exemplar to guide the LLM to generate a similar plan $\mathcal{P}_T$ for $\mathcal{C}_T$.
+%Let the LLM-generated plan for $\mathcal{C}_T$ be $\mathcal{P}_T$. 
+This can be formulated as:
+\begin{equation}\label{form:f1}
+\textcolor{dkgreen}{\mathcal{P}_T} = \mathcal{M}_{PF} \textbf{\ \{\ } \mathcal{I}_{PF}, \langle \mathcal{C}, \mathcal{P} \rangle, \mathcal{C}_T \textbf{\ \}\ }  
+\end{equation}
+
+In \textit{Code Coverage Prediction} phase, the goal is to \underline{\textit{act}} on the code snippet $\mathcal{C}_T$ as per the LLM-generated plan $\mathcal{P}_T$ to enhance its execution-flow understanding, and predict the code coverage accordingly. For this purpose, we leverage an LLM $\mathcal{M}_{CCP}^{II}$ that takes as an input prompt: (a) a set of instructions $\mathcal{I}_{CCP}$ describing the task; (b) an exemplar comprising code snippet $\mathcal{C}$ and its plan $\mathcal{P}$ (same as in the \textit{Plan Formulation} phase), as well as its code coverage $\mathit{Cov}$; (c) the test code snippet $\mathcal{C}_T$; and (d) the LLM-generated plan $\mathcal{P}_T$.
+Here, $\mathcal{M}_{CCP}^{II}$ utilizes the exemplar to guide the LLM to learn to determine the code coverage for the code example based on the program semantics-guided code execution plan. Subsequently, based on the $\mathcal{M}_{PF}$-generated plan $\mathcal{P}_T$ for the test code snippet, it predicts the code coverage $\mathit{Cov}_T$. 
+This can be formulated as:
+\begin{equation}
+\textcolor{blue}{\mathit{Cov}_{T}} = \mathcal{M}_{CCP}^{II} \textbf{\ \{\ } \mathcal{I}_{CCP}, \langle \mathcal{C}, \mathcal{P}, \mathit{Cov} \rangle, \mathcal{C}_T, \textcolor{dkgreen}{\mathcal{P}_T} \textbf{\ \}\ }  
+\end{equation}
+
+\subsection{CFG-based Planning for Code Coverage Prediction}
+
+%\subsection{Key ideas}
+
+We aim to introduce a novel planning framework for code
+execution, named \underline{O}bservation, \underline{R}easoning, and
+\underline{C}ode-Driven, \underline{A}ction ({\orca}). {\orca} prompts
+the GPT~\cite{chatGPT} to autonomously devising a plan for
+predictive execution by traversing the CFG and
+subsequently detecting the runtime errors.
+
+\subsubsection{Teaching the LLM to `execute' the CFG}
+
+%Guiding a model to navigate and predict the execution within a CFG
+%offers advantages in mitigating the limitations of the aforementioned
+%rudimentary approach, which dissects loop execution into
+%fragments. Initially, despite segmenting execution into blocks,
+%continuity of variable values from one block to the next can be
+%preserved. This is reinforced by employing a "symbol table" to monitor
+%relevant variable values within the current loop context. Secondly,
+%traversing a cycle within the CFG mirrors iteration through the
+%corresponding loop in the source code, while branching conditions in
+%the CFG signify loop entry and exit criteria. Thirdly, edges
+%connecting the blocks inherently depict control flows dictated by
+%flow-altering statements. For instance, the \code{continue} statement
+%at line 6 of Fig.~\ref{fig:motiv} is depicted by the edge labeled with '*' in Fig.~\ref{fig:cfg}.
+
+Guiding a model to traverse and predict the execution in a CFG
+provides benefits to address the issues with the above naive solution,
+which `executes' a loop by breaking it up into fragments. First,
+despite breaking the `execution' into CFG blocks, the propagation of the
+values in the context of the previous block can be maintained. To
+reinforce this, we leverage the usage of a {\em symbol table} that
+tracks the variable values relevant to the current block. Second, the
+traversal through a circle in the CFG corresponds to the iterating
+through the corresponding loop in the source code, and the branching
+condition in the CFG represents the loop-entering and loop-exiting
+conditions. Third, the edges among the blocks automatically represent
+the control flows that are decided by the flow-altering
+statements, e.g., \code{continue}, etc.
+
+%For example, the \code{continue} statement at line 6 of
+%Fig.~\ref{fig:motiv} is represented by the edge marked by `*' in
+%Fig.~\ref{fig:cfg}.
+
+
+\subsubsection{Leveraging LLM-based Planning on CFG}
+
+%Automated planning capability of a LLM is the ability to develop an
+%efficient and effective process to generate plans or sequences of
+%actions to break down a complex task to achieve a goal into smaller
+%and manageable
+%steps~\cite{valmeekam2023on,pallagani2023understanding}. Researchers
+%have proposed different planning frameworks for LLMs to effectively
+%tackle a range of tasks in several domains~\cite{tien}.
+
+The automated planning capacity of an LLM refers to its adeptness in
+devising a streamlined and productive method for crafting plans or
+sequences of actions. These plans are designed to deconstruct a
+complex task, enabling the achievement of a goal through a series of
+smaller, manageable
+steps~\cite{valmeekam2023on,pallagani2023understanding}. Researchers
+have introduced diverse planning frameworks tailored for LLMs,
+facilitating their effective handling of a multitude of tasks in
+various
+domains~\cite{zhuang2024toolchain,hu2023avis,yao2023react,prasad2023adapt}.
+%
+%In the planning techniques, reasoning traces assist the LLMs in
+%deducing, monitoring, and refining action plans, while actions
+%facilitate interaction with external sources, such as
+%environments~\cite{prasad2023adapt,yao2023react}.
+The planning techniques have demonstrated efficacy in mitigating
+issues like hallucination and error propagation in LLMs when tackling
+complex tasks~\cite{yao2023react}.
+
+%We aim to leverage LLM planning to guide it to devise a plan that
+%`executes' the code by walking through the CFG and dynamically decides
+%the paths through the conditions. Specifically, we adapted
+%ReAct~\cite{yao2023react} to our problem. ReAct~\cite{yao2023react} is
+%a novel prompting-based planning paradigm to ``generate both reasoning
+%traces and task-specific actions in an interleaved manner, allowing
+%for greater synergy between the two: reasoning traces help the model
+%induce, track, and update action plans, while actions allow it to
+%interface with and gather additional information from external sources
+%such as environments''~\cite{yao2023react}. ReAct was shown to
+%overcome the issues of hallucination and error propagation in LLM in
+%dealing with complext tasks. The three core conceptual elements in a
+%ReAct plan work in an interleaving manner: 1) {\em observations}: the
+%observations that the LLM makes regarding the current state of the
+%system and task, 2) {\em reasoning}: the thoughts on reasoning to make
+%the next move forward in the next step of the plan, and 3) {\em
+%  actions}: the list of actions to be taken according to the reasoning
+%in the next step. For example, in applying ReAct in robotics, one
+%would write prompts according to the ReAct paradigm to instruct the
+%LLM to develop a plan for a robot to observe the environment, make
+%reasoning from external sources, and perform the actions accordingly.
+
+
+\begin{wrapfigure}{r}{0.55\textwidth}
+  \centering
+  \footnotesize
+	\lstset{
+		numbers=left,
+		numberstyle= \tiny,
+		keywordstyle= \color{blue!70},
+		commentstyle= \color{red!50!green!50!blue!50},
+		frame=shadowbox,
+		rulesepcolor= \color{red!20!green!20!blue!20} ,
+		xleftmargin=1.5em,xrightmargin=0em, aboveskip=1em,
+		framexleftmargin=1.5em,
+                numbersep= 5pt,
+		language=Python,
+    basicstyle=\scriptsize\ttfamily,
+    numberstyle=\scriptsize\ttfamily,
+    emphstyle=\bfseries,
+                moredelim=**[is][\color{red}]{@}{@},
+		escapeinside= {(*@}{@*)}
+	}
+\begin{lstlisting}[]
+@Initial Symbol Table:@
+{n: (4, 'int'), total: (4, 'int'), i: (0, 'int')}
+
+@Block 1:@
+Statements: range(n)
+- Execute range(n): [0, 1, 2, 3]
+
+Condition: True (Always True for range(n))
+- Go to Block 2
+
+Updated Symbol Table:
+{n: (4, 'int'), total: (4, 'int'), i: (0, 'int')}
+
+@Block 2:@
+Statements: i <- iterator
+- Execute i <- iterator: i = 0
+
+Condition: True (Always True iterator)
+- Go to Block 3
+
+Updated Symbol Table:
+{n: (4, 'int'), total: (4, 'int'), i: (0, 'int')}
+
+@Block 3:@
+Statements: total += i, (i + total) % 2 == 0
+- Execute total += i: total = 4 + 0 = 4
+- Evaluate condition: (0 + 4) % 2 == 0 => 0 == 0
+
+Condition: True
+- Go to Block 4
+
+Updated Symbol Table:
+{n: (4, 'int'), total: (4, 'int'), i: (0, 'int')}
+... 
+...
+total = 1 / (total - 13) = 1 / (13 - 13)) = 1 / 0
+@The program crashes due to a divided by zero.@
+\end{lstlisting}
+\vspace{-6pt}
+\caption{Example on LLM Planning}
+\label{fig:motiv-gpt}
+\end{wrapfigure}
+
+Our objective is to harness planning to guide an LLM in formulating
+its own plan for ``executing'' code by traversing the CFG and detect
+the runtime errors/exceptions in the process. Inspired by
+ReAct~\cite{yao2023react} planning technique, we aim to leverage three
+conceptual elements in modeling a plan, which operates in an
+interleaved manner: 1) {\em Observations}: These encompass the LLM's
+observations regarding the current state of the system and task. 2)
+{\em Reasoning}: This entails the cognitive processes involved in
+determining the next step within the plan. 3) {\em Actions}:
+These denote the sequence of actions to be undertaken based on the
+reasoning next.
+
+Within the context of our problem in runtime error detection,
+{\em ``actions''} ($\mathcal{A}$) entail predictive execution, involving the
+prediction of statement execution within a block, and updating the
+symbol table to reflect variable values. {\em ``Observations''}
+($\mathcal{O}$) involve retrieving variable values from the symbol
+table. {\em ``Reasoning'' } ($\mathcal{R}$) encompasses evaluating conditions
+at the conclusion of a block and, based on observations from the
+symbol table, determining the subsequent actions for the next
+block. This involves updating the symbol table and proceeding to
+predictively execute statements in the next block. We introduce the
+concept of a {\em Pause} for the LLM in reasoning during the CFG
+traversal at the condition of a block. This makes the LLM focus on the
+observations of the variables' values in the symbol table. We expect
+this to help minimize the error propagation in value computation in
+the LLM.
+
+%introduce {\orca}, a novel planning framework for LLMs that is
+%%%%%%=======> customized for predictive execution.
+%Specifically, we have adapted ReAct~\cite{yao2023react} to address our
+%problem domain. ReAct~\cite{yao2023react} introduces a novel
+%prompting-based planning paradigm that enables the generation of both
+%reasoning traces and task-specific actions in an interleaved
+%manner. This approach fosters greater synergy between reasoning and
+%action generation: reasoning traces assist the model in deducing,
+%monitoring, and refining action plans, while actions facilitate
+%interaction with external sources, such as
+%environments~\cite{yao2023react}. ReAct has demonstrated efficacy in
+%mitigating issues like hallucination and error propagation in LLMs
+%when tackling complex tasks~\cite{yao2023react}.
+%
+
+%The ReAct planning framework revolves around three core conceptual
+%elements, which operate in an interleaved manner: 1) {\em
+%  Observations}: These encompass the LLM's observations regarding the
+%current state of the system and task. 2) {\em Reasoning}: This entails
+%the cognitive processes involved in determining the next step forward
+%within the plan. 3) {\em Actions}: These denote the sequence of
+%actions to be undertaken based on the reasoning in the subsequent
+%step.
+
+%In our research, we adapt ReAct to guide the LLM in formulating a plan
+%for traversing the CFG and predicting outcomes. Within this framework,
+%``actions'' entail predictive execution, involving the prediction of
+%statement execution within a block, and updating the symbol table to
+%reflect variable values. ``Observations'' involve retrieving variable
+%values from the symbol table. ``Reasoning'' encompasses evaluating
+%conditions at the conclusion of a block and, based on observations
+%from the symbol table, determining the subsequent actions for the next
+%block. This involves updating the symbol table and proceeding to
+%predictively execute statements in the next block.
+
+
+
+%In our work, we adapt ReAct to instruct the LLM to build a plan to
+%traverse the CFG and predict the results. The {\em actions} refer to
+%the {\em predictive execution} (i.e., the prediction of the execution)
+%of the statements in a block and the {\em update the symbol table}
+%regarding the variable values. The {\em observations} refer to the
+%retrieval of the variable values in the symbol table. The {\em
+%  reasoning} refers to the checking of the condition at the end of a
+%block and based on the observations regarding the symbol table, making
+%the decision on the actions to be taken for the next block (i.e.,
+%updating the symbol table and proceeding to predictively execute the
+%statements in the next block).
+
+%Compare with ReAct: For instance, when applying ReAct in a robotics
+%context, prompts are formulated following the ReAct paradigm to
+%instruct the LLM in devising a plan for observing the environment,
+%engaging with external information sources through reasoning, and
+%executing actions accordingly.
+
+
+
+Fig.~\ref{fig:motiv-gpt} partially shows the output plan and
+prediction of GPT after our planning prompt (will be explained
+later).
+%With our prompt, GPT produces the plan and prediction as follows.
+As seen, it first takes the observation on the initial symbol
+table. Then, it starts predictive execution for Block 1, which
+contains the computation of \code{range(n)}.  The reasoning at this
+branching condition is that it is always \code{true}, leading to the
+action of {\em `Go to Block 2'} and updating the symbol table.~The
+interleaving process of observations, reasoning, and actions
+continue for Block 2. The action in Block 2 includes only the
+initialization of the iterator $i$.  The condition is \code{true}
+leading to Block 3.  The series of actions in Block 3 begin with the
+predictive execution of the statement \code{total += i}. At the
+branching condition, the LLM follows its plan and stops to evaluate it
+to \code{true}, leading to the reasoning of going to Block 4 and
+updating the symbol table.  The process continues until
+\code{$<$end$>$} is encountered.  As seen, the LLM was able to
+autonomously develop a plan to predict the execution of the loop with
+four iterations.
+
+Another pivotal aspect for predictive code
+execution is its departure from instructing the LLM
+to halt the process after each cycle of observation, reasoning, and
+action, as seen in ReAct~\cite{yao2023react}. This would~lead
+to an excessive number of API calls to prompt the LLM (a call for each
+block). For instance, in the scenario described, the process would
+pause at each block, prompting the LLM to retrieve variable values
+from the symbol table, which would then be written to a
+file. Subsequently, a new prompt would be requested for the LLM to
+begin a new cycle of observation (reading from that file),
+reasoning, and action for the next block. Instead, {\orca}
+simply instructs the LLM to pause at the condition of a block to
+reduce error propagation. This streamlined approach also allows
+{\orca} to make only one API call to prompt the LLM. {\orca} lets the LLM autonomously operate the cycle of operations,
+reasoning, and actions without interruption. Note that
+ReAct~\cite{yao2023react}, as being applied to robotics, needs
+to instruct the LLM to stop after each cycle to observe the external
+environment. {\orca} instructs the LLM to manage the symbol table,
+instead of writing it to a file.
+
+%Another key aspect of {\orca} framwork for predictive code execution
+%is that it does not instruct the LLM to halt the process following
+%each cycle of observations, reasoning, and actions as in
+%ReAct~\cite{yao2023react}, which would result in too many API calls
+%for prompting to the LLM (a call for a block). For example, in the
+%above code, the process will stop at each block and the LLM would
+%retrieve the variables' values from the symbol table, which would be
+%written to a file. A new prompt is requested to the LLM for a new
+%cycle of observation, reasoning, and actions for a new block.
+%Instead, {\orca} simply tells the LLM to pause at the condition of a
+%block to reduce error propagation. This also allows {\orca} to have
+%only one API call for prompting to the LLM.
+
+%\begin{figure}[t]
+

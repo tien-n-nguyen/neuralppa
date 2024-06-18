@@ -1,0 +1,117 @@
+\section{Related Work}
+%Our project is closely related to the following research literature: 
+
+%The evolution of fuzzing techniques from their inception to the specific application of coverage-guided fuzzing in Java signifies a fascinating journey through the development of software testing methodologies. This progression reflects the growing complexity of software systems and the necessity for more sophisticated tools to ensure their reliability and security. Fuzzing, in its earliest form, entailed providing invalid, unexpected, or random data as input to computer programs, aiming to uncover bugs and vulnerabilities by triggering unusual program paths or error conditions not anticipated by developers. The simplicity of this approach enabled its broad application across various programming languages and platforms, laying the groundwork for more specialized fuzzing techniques.
+
+%This technique leverages instrumentation to gather coverage information, guiding the fuzzer to generate inputs maximizing code coverage. While highly effective in languages like C and C++, where memory corruption vulnerabilities are common, adapting coverage-guided fuzzing to languages such as Java posed new challenges. Java's managed execution environment, bytecode instrumentation complexity, and extensive standard library necessitated novel approaches.
+
+%Tools like JQF (Java QuickCheck Fuzz) {\color{blue}[REF]} and Kelinci {\color{blue}[REF]} have risen to these challenges, offering coverage-guided fuzzing capabilities tailored to Java's unique environment. JQF integrates with property-based testing frameworks, facilitating fuzz testing of Java programs guided by code coverage feedback. These tools typically dynamically instrument bytecode to collect coverage information, enabling the fuzzer to explore uncharted paths and uncover bugs difficult to detect through conventional testing.
+
+%As the fuzzer explores new paths, the number of paths to explore can
+%grow exponentially, leading to resource exhaustion and
+%inefficiency. This issue becomes more pronounced when fuzzing software
+%with deeply nested conditional branches or intricate loops, where the
+%number of possible paths can become prohibitively large. The challenge
+%of path explosion in large and complex codebases is discussed by
+
+%This limitation can hinder the fuzzer's ability to uncover certain types of bugs, such as race conditions or timing-dependent vulnerabilities.
+%Addressing the struggle with non-deterministic software behavior,
+
+%Initially, when a coverage-guided fuzzer begins exploring a software
+%application, it rapidly increases code coverage by discovering new
+%execution paths and exercising different code branches. However, as
+%the fuzzer exhausts high-coverage paths and explores less-covered
+%regions of the codebase, it may encounter diminishing returns in
+%terms of code coverage improvement. Eventually, the fuzzer reaches a
+%point where it finds it challenging to identify new paths to explore,
+%leading to stagnation in code coverage growth. However,
+
+%This approach effectively guides the fuzzer into previously underexplored areas of the code, thereby enhancing overall coverage and the likelihood of uncovering hidden vulnerabilities.
+
+%Similarly, Fuzz4All represents a groundbreaking advancement in addressing the coverage plateau problem. Its universal application across multiple programming languages and systems, combined with its utilization of LLMs for input generation, allows Fuzz4All to generate a wide variety of realistic test inputs. This capability enables Fuzz4All to explore new and different features of the input languages, pushing past the limitations of traditional, language-specific fuzzers.
+
+%The tool's innovative use of autoprompting techniques and an LLM-powered fuzzing loop iteratively refines its approach, continuously uncovering new paths and vulnerabilities that would otherwise remain hidden.
+
+%Their success marks a significant step forward in the ongoing development of more effective and efficient fuzzing methodologies, offering new strategies to enhance software reliability and security.
+
+%Both CODAMOSA and Fuzz4All illustrate the potential of integrating
+%LLMs with fuzzing techniques to overcome the coverage plateau. By
+%producing more diverse and comprehensive test inputs, these tools can
+%explore deeper into the software under test, achieving higher
+%coverage and revealing bugs that previous fuzzing efforts may have
+%missed.
+
+{\bf Fuzzing testing} techniques have been extensively studied in software
+testing. Miller {\em et al.}~\cite{miller1995fuzz} conducted an empirical
+study evaluating the reliability of UNIX utilities, pioneering the
+concept of fuzzing by exploring the effectiveness of providing
+invalid, unexpected, or random data as input to uncover bugs.
+
+As fuzzing progresses, efforts shifted to enhancing the process's
+efficiency and effectiveness. {\em Coverage-guided fuzzing}~\cite{10.1145/3293882.3339002,AFL,10.1145/3133956.3134020,10.1145/3133956.3138820} emerged as an advancement,
+addressing the need for a systematic approach to explore the vast
+input space of software. By monitoring code execution with each input
+and prioritizing inputs exploring new paths, coverage-guided fuzzers
+like AFL~\cite{AFL} discover deep-seated bugs and
+vulnerabilities. Bohme {\em et al.}~\cite{10.1145/3133956.3134020} introduced
+coverage-based greybox fuzzing as a Markov Chain, presenting AFLFast
+as an extension of AFL that significantly increases path
+coverage. Pasareanu and Visser~\cite{10.1145/3364452.3364455} surveyed new trends in
+symbolic execution with techniques closely related
+to fuzzing.
+
+
+%While coverage-guided fuzzing has shown remarkable success in bug
+%discovery, it is not without its drawbacks.
+
+One key limitation with such framework is its reliance solely on code
+coverage as a guiding metric. The fuzzers may miss vulnerabilities in
+less-covered code regions as Bohme et al.~\cite{10.1145/3133956.3134020} pointed out. To
+mitigate this, they propose techniques to prioritize not just new
+paths but also paths that are likely to uncover vulnerabilities based
+on certain heuristics.
+%Additionally, coverage-guided fuzzers cansuffer from path explosion,
+%especially in large codebases.
+Gan {\em et al.}~\cite{244046} proposes GreyOne, a coverage-guided greybox fuzzer that incorporates data flow analysis to prioritize
+paths that are more likely to lead to vulnerabilities, thus aiming to
+manage the exponential growth of paths more effectively.
+
+Furthermore, coverage-guided fuzzing may struggle to handle software
+with non-deterministic behavior effectively. With external factors or
+random inputs, achieving high code coverage becomes challenging.
+Cadar {\em et al.}~\cite{10.5555/1855741.1855756} introduced KLEE, a symbolic virtual machine built on top of the LLVM infrastructure. KLEE uses symbolic execution to systematically explore various paths,
+including those triggered by non-deterministic behaviors, to enhance
+code coverage and bug discovery.
+
+Another key problem faced by coverage guided fuzzers is the coverage
+plateau problem. This phenomenon occurs when the fuzzer struggles to
+increase code coverage beyond a certain point despite continued
+fuzzing efforts. Recent advancements in fuzzing techniques have shown
+promise in overcoming this obstacle, notably via the introduction of
+tools like CODAMOSA~\cite{10.1109/ICSE48619.2023.00085} and Fuzz4All~\cite{xia2024fuzz4all}.
+CODAMOSA leverages the synergy between search-based software testing
+(SBST) and LLMs to push beyond the coverage
+plateau. By integrating SBST with the input generation capabilities of LLMs, CODAMOSA explores the input space through the embeddings of input values to generate more diverse and
+sophisticated test cases. Fuzz4All~\cite{xia2024fuzz4all} can work across
+multiple programming languages, combined with its utilization of LLMs
+for input generation, allows Fuzz4All to generate a wide variety of
+realistic test inputs. It uses autoprompting techniques and an
+LLM-powered fuzzing loop iteratively refines its solution.
+
+
+
+
+\textbf{Representation Learning and ML for Code.}  The recent success in
+machine learning has lead to strong interests in applying machine
+learning, especially deep learning, to programming language (PL) and
+software engineering (SE) tasks, such as automated correction for
+syntax errors~\cite{Bhatia-2016}, fuzz testing~\cite{Patra-2016},
+program synthesis~\cite{Amodio-2017}, code
+clones~\cite{White-2016,Smith-2009,Li-2017}, program
+summarization~\cite{Allamanis-2016,Mou-2014}, code
+similarity~\cite{Zhao-2018,Alon-2018}, probabilistic model for
+code~\cite{Bielik-2016}, and path-based code representation,
+e.g., Code2Vec~\cite{Alon-2018} and Code2Seq~\cite{alon2018code2seq}. 
+
+%In this proposal, we seek inspiration from Chen and Manning~\cite{chen-manning-2014-fast}, who first proposed a neural network-based approach to dependency parsing. The major benefits we envision to such a formulation include a significant speedup in dependency discovery and the extendibility of program dependence analysis to partial programs. Specific to the SE domain, the proposed research is loosely related to works that leverage probabilistic models to enhance the program dependence graph (PDG). Probabilistic PDG~\cite{baah-issta08-probabilistic} is an augmentation of the structural dependencies represented by a PDG with estimates of statistical dependencies between node states derived from test cases. Feng et al.~\cite{feng-paste10} propose Error-Flow Graph as a Bayesian Network, constructed from the dynamic dependence graphs of the runs. Bayesian Network-based Program Dependence Graph (BNPDG)~\cite{yu-jss17-bayesian} is capable of inferring the dependencies across non-adjacent nodes. MOAD (Modeling Observation-based Approximate Dependency)~\cite{lee-scam19-moad} reformulates program dependency as the likelihood that one program element is dependent on another, instead of a boolean relationship.
+

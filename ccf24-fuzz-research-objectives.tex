@@ -206,17 +206,17 @@ dual purpose. Firstly, the first loop (1) depicted in
 Figure~\ref{fig:fuzzwise} directs the test-generating LLM to produce
 related test cases that address a specific faulty area within the
 source code. This function parallels that of a mutation mechanism,
-generating test cases centered around a seed. On the other hand, the
+generating test cases centered around a seed. In contrast, the
 second loop (2) is tailored to guide the LLM in moving on to a
 different faulty area, i.e., generating test cases that cover other
-untested areas. Furthermore, the two loops are structured to address
+untested areas. Moreover, the two loops are structured to address
 two primary objectives. The first loop (1) steers the LLM towards
 generating test cases that contribute to overall code coverage, while
 the second loop (2) prioritizes the detection of bugs and runtime
 errors. In general, the incorporation of the tandem of LLMs and the
-integration of feedback loops for both aim to enhance the efficiency
-and effectiveness of the fuzzing process. By leveraging the
-complementary roles of the LLMs, the framework strives to generate
+integration of feedback loops for both aim to enhance efficiency
+and effectiveness. By leveraging the
+complementary roles of the LLMs, we strive to generate
 fewer but higher-quality test cases, while also improving its ability
 to detect defects.
 

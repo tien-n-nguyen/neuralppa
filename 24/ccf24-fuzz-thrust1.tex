@@ -1,4 +1,4 @@
-\section{Thrust 1. Predictive Code Coverage Analysis}
+\section{Thrust 1. Predictive Execution and Predictive Code Coverage Analysis}
 \label{sec:thrust1}
 
 \subsection{{\cctool}: LLM Planning for Code Coverage Analysis}
@@ -45,6 +45,7 @@ For this purpose, we leverage an LLM $\mathcal{M}_{CCP}^{I}$ that takes as an in
 its code coverage $\mathit{Cov}$; and (c) the test code snippet $\mathcal{C}_T$.
 Here, $\mathcal{M}_{CCP}^{I}$ utilizes the exemplar to guide the LLM to first reason about $C_T$ and construct a program semantics-guided code execution plan $P_T$, following which, it predicts the code coverage $\mathit{Cov}_T$.
 This can be formulated as:
+
 \begin{equation}
 \langle \mathcal{P_T}, \textcolor{blue}{\mathit{Cov}_{T}} \rangle = \mathcal{M}_{CCP}^{I} \textbf{\ \{\ } \mathcal{I}_{CCP}, \langle \mathcal{C}, \mathcal{P}, \mathit{Cov} \rangle, \mathcal{C}_T \textbf{\ \}\ }  
 \end{equation}
@@ -72,14 +73,14 @@ This can be formulated as:
 \subsubsection{Two-Prompt {\cctool}}
 %For a given code snippet $C_T$ comprising the test inputs, {\cctool} facilitates the systematic prediction of code coverage by employing two phases: \textit{Plan Formulation}, and \textit{Code Coverage Prediction}.
 
-\begin{figure}[t] 
+\begin{wrapfigure}{l}{0.55\textwidth} 
     \centering
 %    \includegraphics[width=3.4in]{diagrams/overview-2.png}
-    \includegraphics[width=0.7\linewidth]{codepilot-overview.png}
-    \vspace{-19pt}
+    \includegraphics[width=3.4in]{codepilot-overview.png}
+    \vspace{-6pt}
     \caption{Overview of {\cctool} Workflow for \textit{One-Prompt} (top) and \textit{Two-Prompt} (bottom) settings.}
     \label{fig:codepilot}
-\end{figure}
+\end{wrapfigure}
 
 Unlike in one-prompt {\cctool}, in this approach, we divide both \textit{Plan Formulation} and \textit{Code Coverage Prediction} in two prompts. The goal of the initial \textit{Plan Formulation} phase is to guide the LLM to \underline{\textit{reason}} about the given code snippet and construct a plan by itself, that is integral for navigating the code snippet and attaining an understanding of the execution flow. For this purpose, we leverage an LLM $\mathcal{M}_{PF}$ that takes as an input prompt: (a) a set of instructions $\mathcal{I}_{PF}$ describing the task; (b) an exemplar comprising a code snippet $\mathcal{C}$ (different from $\mathcal{C}_T$) and its corresponding plan $\mathcal{P}$; (c) the given code snippet $\mathcal{C}_T$. 
 Here, $\mathcal{M}_{PF}$ utilizes the exemplar to guide the LLM to generate a similar plan $\mathcal{P}_T$ for $\mathcal{C}_T$.
@@ -245,18 +246,20 @@ Statements: total += i, (i + total) % 2 == 0
 
 Condition: True
 - Go to Block 4
-
-Updated Symbol Table:
-{n: (4, 'int'), total: (4, 'int'), i: (0, 'int')}
-... 
 ...
-total = 1 / (total - 13) = 1 / (13 - 13)) = 1 / 0
-@The program crashes due to a divided by zero.@
 \end{lstlisting}
-\vspace{-6pt}
+\vspace{-12pt}
 \caption{Example on LLM Planning}
 \label{fig:motiv-gpt}
 \end{wrapfigure}
+
+
+%Updated Symbol Table:
+%{n: (4, 'int'), total: (4, 'int'), i: (0, 'int')}
+%... 
+%...
+%total = 1 / (total - 13) = 1 / (13 - 13)) = 1 / 0
+%@The program crashes due to a divided by zero.@
 
 Our objective is to harness planning to guide an LLM in formulating
 its own plan for ``executing'' code by traversing the CFG and detect
@@ -398,4 +401,73 @@ instead of writing it to a file.
 %only one API call for prompting to the LLM.
 
 %\begin{figure}[t]
+
+\subsection{Preliminary Results}
+
+
+
+% Statement Level
+\begin{wraptable}{l}{0.55\textwidth}
+%\begin{table}[t]
+  \centering
+  \small
+  \tabcolsep 3pt
+%\renewcommand{\arraystretch}{1.5}
+\caption{Accuracy (\%) on Execution Traces at Statement Level}
+\label{tab:rq2a}
+\begin{tabular}{c|ccccl}
+\hline
+% \multirow{3}{*}{\textbf{Approach}} & \multicolumn{5}{c}{\textbf{Evaluation Metrics (\%)}} \\ \cline{2-6} 
+\multirow{2}{*}{\textbf{Approach}} & \multicolumn{1}{c|}{\multirow{2}{*}{\textbf{EM}}} & \multicolumn{2}{c|}{\textbf{Prefix Match}} & \multicolumn{2}{c}{\textbf{Coverage}} \\ \cline{3-6} 
+ & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{\textbf{Rec}} & \multicolumn{1}{c|}{\textbf{Pre}} & \multicolumn{1}{c|}{\textbf{Rec}} & \multicolumn{1}{c}{\textbf{Pre}} \\ \hline
+ $B_0$ ({\em CodeExecutor}) & \multicolumn{1}{c|}{20.86} & \multicolumn{1}{c|}{89.17} & \multicolumn{1}{c|}{67.42} & \multicolumn{1}{c|}{91.55} & \multicolumn{1}{c}{80.06} \\ \hline
+ $B_1$ ({\em GPT-3.5 w/o planning}) & \multicolumn{1}{c|}{23.32} & \multicolumn{1}{c|}{65.48} & \multicolumn{1}{c|}{83.87} & \multicolumn{1}{c|}{67.38} & \multicolumn{1}{c} {85.47} \\ \hline
+ $B_2$ ({\em {\tool} w/o CFG}) & \multicolumn{1}{c|}{30.21} & \multicolumn{1}{c|}{82.21} & \multicolumn{1}{c|}{85.05} & \multicolumn{1}{c|}{85.04} & \multicolumn{1}{c}{88.32} \\ \hline
+{\tool} & \multicolumn{1}{c|}{\bf 67.38} & \multicolumn{1}{c|}{\bf 94.46} & \multicolumn{1}{c|}{\bf 87.06} & \multicolumn{1}{c|}{\bf 97.19} & \multicolumn{1}{c}{\bf 92.95} \\ \hline
+\end{tabular}
+\end{wraptable}
+%\end{wrapfigure}
+
+For a preliminary evaluation on {\tool}, we used the FixEval dataset,
+%\cite{haque2022fixeval},
+derived from Project CodeNet dataset~\cite{puri2021codenet}.
+%FixEval is organized by problem IDs, each representing a unique
+%programming challenge with multiple submissions with errors.
+The dataset comprises of 2,066 unique problems with a total of 277,262
+submissions of Python code snippets.
+%Test cases were obtained for 800
+%of these problems from the Project CodeNet dataset
+%\cite{puri2021codenet}.
+%Table~\ref{tab:rq2a} presents the results for predicting execution
+%traces at the statement level.
+As seen in Table~\ref{tab:rq2a}, {\tool} achieves an exact-match
+accuracy of \textbf{67.38\%}, indicating that it accurately predicts
+execution traces matching the ground truth in 67.38\% of all
+instances. With a prefix recall of \textbf{94.46\%} and a prefix
+precision of \textbf{87.06\%}, {\tool} generates execution traces that
+match nearly 9 out of 10 statements in correct order, with at most one
+statement missing in the resulting trace. Moreover, the 33\% of
+non-exact-matched predicted traces are actually nearly correct, except
+for a small number of incorrectly predicted statements at the end of
+the traces. With a coverage recall of \textbf{97.19\%} and a coverage
+precision of \textbf{92.95\%}, on average, {\tool} misses only 3 out
+of 100~state\-ments and correctly covers 92.95\% of the statements in
+a trace.
+%
+In comparison to the baselines, {\tool} demonstrates a substantial
+relative improvement of \textbf{2.23X}, \textbf{1.88X}, and
+\textbf{1.23X} in exact-match accuracy over CodeExecutor, $B_1$, and
+$B_2$, respectively. The relative improvement figures for Prefix
+Recall stand at \textbf{5.9\%}, \textbf{44.25\%}, and \textbf{14.9\%}
+over the baselines, while {\tool} exhibits relative improvements in
+Coverage Recall, with figures of \textbf{6.2\%}, \textbf{44.2\%}, and
+\textbf{14.3\%} over the baselines.
+
+%Upon examination of the results, we observe the following reasons for {\tool} surpassing the limitations of the baselines.
+
+%Firstly, CodeExecutor~\cite{liu2023code} exhibits a constraint whereby it fails to identify a crash, thereby consistently producing an execution trace until the last statement of the provided code snippet. The reported 20.86\% accuracy for CodeExecutor primarily pertains to scenarios where a runtime error occurs at the last statement. Despite achieving a high prefix recall of 89.17\%, the prefix precision stands at only 67.42\% due to the inclusion of multiple incorrectly predicted statements. This trend similarly extends to the high recall and low precision observed in statement coverage within the predicted traces.
+
+%Second, GPT-3.5 without planning ($B_1$) exhibits a notably low exact-match accuracy. Despite demonstrating higher recall and lower precision in both prefix and coverage match accuracies than CodeExecutor, $B_1$ still falls short in performance compared to {\tool}. This underperformance can be attributed to the challenges highlighted in RQ1, including issues related to \code{if} and loop structures, symbol table updating, variable scopes, and value evaluation, all of which contribute to inaccuracies in the prediction of execution traces.
+
+%Thirdly, {\tool} without CFG ($B_2$), which represents GPT-3.5 with {\tool}'s planning on source code, exhibits higher performance in all evaluation metrics compared to GPT-3.5 without planning ($B_1$). However, it achieves lower accuracies in all metrics compared to {\tool}, for same reasons as those explained in RQ1. Despite updating variable values in the symbol table through pause and reasoning in source code, $B_2$ struggles with reasoning on iteration structures, nested conditions, and their combinations, all of which are effectively handled by {\tool} operating on CFG. Moreover, $B_2$ sometimes fails to pause at the correct location in the source code and update the symbol table accurately, possibly due to hallucinations in longer code snippets. {\tool} mitigates this issue by breaking down the code into smaller CFG blocks. While $B_2$ exhibits high accuracy in predicted traces, it misses more statements than {\tool}, leading to significantly lower prefix recall and statement coverage recall. Furthermore, $B_2$ achieves a lower exact-match accuracy than {\tool} (30.21\% versus 67.38\%), despite having high prefix precision. This suggests frequent misprediction of statements near the crash point, resulting in lower accuracy in fault localization at the statement level compared to {\tool} (Table~\ref{tab:rq1}).
 

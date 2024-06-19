@@ -1,0 +1,163 @@
+\documentclass[11pt]{article}
+
+\usepackage{graphicx,times}
+\usepackage{wrapfig}
+\usepackage{amsmath,epsfig}
+\usepackage{setspace,array}
+\usepackage{cite}
+\usepackage{xspace}
+\usepackage{enumitem}
+
+\usepackage{sectsty}
+\sectionfont{\large}
+\subsectionfont{\normalsize}
+\subsubsectionfont{\normalsize}
+
+\usepackage[compact]{titlesec}
+
+\renewcommand{\theequation}{\thesection.\arabic{equation}}
+\renewcommand{\baselinestretch}{1.0}
+
+\newtheorem{Definition}{Definition}
+\newtheorem{Claim}{Claim}
+\newtheorem{Lemma}{Lemma}
+\newtheorem{Theorem}{Theorem}
+\newtheorem{Property}{Property}
+
+\newcommand{\revise} {\bf}
+
+\newcommand{\code}[1]{{\small\texttt{#1}}}
+\newcommand{\op}{\tau}
+\newcommand{\refac}{\rho}
+\newcommand{\edit}{\sigma}
+\newcommand{\T}{\theta}
+\newcommand{\comp}{;}
+\newcommand{\pre}{\prec_P}
+\newcommand{\meth}{KSISA}
+
+
+\newcommand{\MyParagraph}[1]{\textbf{#1}{ }}
+
+\usepackage{vmargin}
+\setpapersize{USletter}
+\setmarginsrb{1.0in}{1in}{1.0in}{1in}%
+           {0pt}{0mm}{0pt}{10mm}
+\newcommand{\remove}[1]{}
+
+\usepackage{tweaklist}
+\renewcommand{\enumhook}{\setlength{\topsep}{0pt}%
+  \setlength{\itemsep}{0pt}}
+\renewcommand{\itemhook}{\setlength{\topsep}{0pt}%
+  \setlength{\itemsep}{0pt}}
+\renewcommand{\descripthook}{\setlength{\topsep}{0pt}%
+  \setlength{\itemsep}{0pt}}
+
+\newcommand{\tool}{\textsc{PredPA}\xspace}
+
+\thispagestyle{empty}
+
+\begin{document}
+
+% Collaborative Research: SHF: Small: 
+
+
+
+\begin{center}
+  {\bf SHF: Small: Predictive, Coverage-Guided, Intelligent Fuzzing Approach}
+\end{center}
+\vspace{-.1in}
+
+
+%\noindent {\bf Overview.}
+
+\section{Overview}
+
+Fuzz testing (or fuzzing) involves providing random or semi-random data inputs to a program to trigger unforeseen behaviors, crashes, or security flaws. Among fuzzing methods, coverage-guided fuzz testing is a systematic approach that uses automated testing to identify software defects or vulnerabilities. Despite its popularity and successes, it has key shortcomings. First, it can be inefficient and resource-intensive, generating many test cases without prior knowledge of their code coverage quality. This can lead to wasted computational resources and time, as many test cases may have low coverage and fail to identify new code paths or defects. Second, the feedback loop is ineffective, relying solely on actual execution during runtime to determine test case quality, which may result in executing numerous low-value test cases. This hinders the iterative process of enhancing the seed corpus with high-quality test cases. Finally, it is challenging to produce better seeds, as determining which test cases to add to the seed corpus for future iterations is difficult without a proactive strategy for identifying and prioritizing high-quality seeds. This can cause the process to stagnate, failing to improve code coverage.
+
+%Among various testing methods, fuzz testing (or fuzzing) involves
+%providing random or semi-random data inputs to a program in an attempt
+%to trigger unforeseen behaviors, crashes, or security flaws. Among
+%fuzzing methods, a coverage-guided fuzz testing framework is a
+%systematic approach to identifying software defects or
+%vulnerabilities through automated testing. Despite its popularity and
+%successes, the coverage-guided fuzzing framework still has the
+%following key shortcomings. First, the framework might suffer the
+%issue of inefficiency and high resource consumption: it generates a
+%large number of test cases without prior knowledge of their code
+%coverage quality. This can lead to inefficient resource and time
+%usage, as a significant portion of the generated test cases might have
+%lower coverage, consuming computational resources without contributing
+%meaningfully to the identification of new code paths or
+%defects. Second, it has an ineffective feedback loop: since the
+%framework relies solely on actual execution during the target
+%program's runtime to determine test case quality (in terms of code
+%coverage), there's a risk that a large number of generated test cases
+%might be executed without contributing much value to the feedback
+%loop. This hinders the effectiveness of the iterative fuzzing process
+%in terms of enhancing the seed corpus with high-quality test
+%cases. Moreover, it is challenging to produce better seeds:
+%determining which test cases should be added to the seed corpus for
+%future iterations becomes challenging when the primary mechanism for
+%inclusion is from actual execution during fault detection. The lack of
+%a proactive strategy for identifying and prioritizing high-quality
+%seeds can hinder the evolution of the seed corpus and make the process
+%stuck in the plateau where coverage is not
+%improved~\cite{gao2023beyond}.
+
+We seek to advance the state-of-the-art in fuzz testing by means of
+{\tool}, a {\bf Predictive Coverage-Guided Intelligent Fuzzing}
+framework, with the goal of overcoming the issues listed in the
+introduction. We aim to establish {\em a scientific foundation, novel
+  methodologies, frameworks, models, and algorithmic solutions for
+  predictive coverage-guided fuzz testing} with the following focus
+areas:
+
+(1) Large Language Models (LLM)-based {\bf predictive code coverage} (without test execution),
+
+(2) LLM-based, targeting, {\bf test case generation}, and
+
+(3) {\bf predictive coverage-guided fuzz testing} with LLMs.
+
+
+
+\noindent {\bf Keywords:} Software Engineering, ML and AI; Software Testing, Software; Systems.
+
+\section{Intellectual Merit}
+
+In Thrust 1, we aim to develop a LLM-based predictive code coverage
+model to assess the quality of test cases, thereby selecting for
+execution only those predicted to contribute to the higher total code
+coverage of the test suite. Our framework involves a trade-off between
+enhancing efficiency by avoiding the execution of every test case and
+the potential risk of missing high-quality test cases due to
+mispredictions on code coverage. In Thrust 2, we utilize a tandem of
+LLMs, each serving distinct roles: one for test generation from the
+source code and the other for code coverage prediction. The first LLM,
+which replaces the conventional mutation engine, collaborates with the
+second LLM to iteratively produce higher quality test cases concerning
+code coverage, thereby mitigating the impact of coverage plateaus and
+enhancing coverage of runtime exceptions based on the knowledge
+provided by the LLMs about the given code.  In Thrust 3, we put
+together the LLM for code coverage prediction and the LLM in test case
+generation in a framework for coverage-guided fuzzing.
+
+\section{Broader Impacts}
+
+%Our predictive program analysis framework is also beneficial in other
+%scenarios in addition to programming assistants.
+
+Our predictive program analysis and predictive execution also offer a
+solution where the actual execution is impossible, e.g., i) where the complete source code is
+not available, or ii) where the analysis or approximation on
+program behavior is needed/desired without actual execution. (1)
+{\tool} will be transformative and directly benefit to our
+  society, leading to increasing software quality.  Our validation
+involves students and professionals, promoting teaching and learning
+of software qualities that have wide impacts in industry and academic
+communities. (2) Our results will {\em foster research activities} in
+related fields, e.g., AI for code. (3) It will
+enhance the tools for teaching and research by providing tools and
+data sets for use by students and practitioners, and for enhancement
+by other researchers with related learning modules.
+
+\end{document} 
